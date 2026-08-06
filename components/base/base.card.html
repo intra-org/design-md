@@ -1,0 +1,41 @@
+<!-- @dsCard group="Components" viewport="700x260" name="Base" subtitle="Button, Card, Badge, Switch, Segmented, Popover, Toast" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Base</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Button, Card, Badge, Switch, Segmented, Popover, Toast } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  const [per,setPer]=React.useState('mes');
+  const [sw,setSw]=React.useState(true);
+  return (<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:22}}>
+    <div>
+      <p className="lbl">Button</p>
+      <div className="fila"><Button>Guardar</Button><Button variant="secondary">Cancelar</Button><Button variant="ghost" size="sm">Ver agenda →</Button><Button size="sm" disabled>Guardar</Button></div>
+      <p className="lbl" style={{marginTop:18}}>Badge</p>
+      <div className="fila"><Badge>6</Badge><Badge variant="tonal">Ya está resuelto</Badge><Badge variant="outline">Genérico</Badge></div>
+      <p className="lbl" style={{marginTop:18}}>Switch</p>
+      <div className="fila"><Switch checked={sw} onChange={()=>setSw(!sw)} /><Switch size="fila" checked={false} onChange={()=>{}} /><Switch size="fila" checked bloqueado /></div>
+    </div>
+    <div>
+      <p className="lbl">Segmented</p>
+      <Segmented value={per} onChange={setPer} options={[{value:'hoy',label:'Hoy'},{value:'mes',label:'Este mes'},{value:'junio',label:'Mes pasado'},{value:'90d',label:'90 días'}]} />
+      <p className="lbl" style={{marginTop:18}}>Card · Popover · Toast</p>
+      <div style={{position:'relative',display:'flex',gap:12}}>
+        <Card eyebrow="Próximas citas · hoy" style={{flex:1}}>
+          <p style={{margin:0,fontSize:13,color:'var(--ts)'}}>11:00 AM · Mariana Gutiérrez</p>
+        </Card>
+        <div style={{position:'relative',width:180}}>
+          <Popover value="reserva" items={[{value:'todos',label:'Todos'},{value:'reserva',label:'Reservas',dot:'var(--dot-reserva)'},{value:'evento',label:'Eventos',dot:'var(--dot-evento)'}]} style={{position:'static',animation:'none'}} />
+        </div>
+      </div>
+      <div style={{position:'relative',height:56,marginTop:8}}><Toast onDeshacer={()=>{}}>No se concretó · Fuera de presupuesto</Toast></div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

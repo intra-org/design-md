@@ -1,0 +1,40 @@
+<!-- @dsCard group="Components" viewport="700x160" name="Chips" subtitle="ChipProducto, ChipHero, ChipRemovible, PillFecha" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Chips</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.fila{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { ChipProducto, ChipHero, ChipRemovible, PillFecha, Icon } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  const [sel,setSel]=React.useState(['reserva']);
+  const alt=(k)=>setSel(s=>s.includes(k)?s.filter(x=>x!==k):[...s,k]);
+  return (<div style={{display:'flex',flexDirection:'column',gap:16}}>
+    <div><p className="lbl">ChipProducto · dot mate 5px</p>
+      <div className="fila">
+        <ChipProducto color="var(--dot-reserva)" fondo="var(--chip-reserva)">Reserva</ChipProducto>
+        <ChipProducto color="var(--dot-evento)" fondo="var(--chip-evento)">Evento</ChipProducto>
+        <ChipProducto color="var(--dot-daypass)" fondo="var(--chip-daypass)">Day Pass</ChipProducto>
+        <ChipProducto color="var(--chip-4)" fondo="var(--chip-bg-4)">Boda</ChipProducto>
+        <ChipProducto color="var(--chip-7)" fondo="var(--chip-bg-7)">Spa</ChipProducto>
+      </div>
+    </div>
+    <div style={{display:'grid',gridTemplateColumns:'auto 1fr',gap:18,alignItems:'end'}}>
+      <div><p className="lbl">ChipHero · sobre el hero</p>
+        <div className="fila" style={{background:'linear-gradient(170deg,#151518,#0A0A0C)',padding:'12px 14px',borderRadius:16}}>
+          <ChipHero icon={<Icon name="prod-cama" size={13}/>} n={12} activo={sel.includes('reserva')} atenuado={sel.length>0} onClick={()=>alt('reserva')}>Reservas</ChipHero>
+          <ChipHero icon={<Icon name="prod-fiesta" size={13}/>} n={4} activo={sel.includes('evento')} atenuado={sel.length>0} onClick={()=>alt('evento')}>Eventos</ChipHero>
+          <ChipHero icon={<Icon name="prod-sol" size={13}/>} n={6} activo={sel.includes('dp')} atenuado={sel.length>0} onClick={()=>alt('dp')}>Day Pass</ChipHero>
+        </div>
+      </div>
+      <div><p className="lbl">ChipRemovible · PillFecha</p>
+        <div className="fila"><ChipRemovible>Reservas</ChipRemovible><ChipRemovible>Por atender</ChipRemovible><PillFecha>Ayer</PillFecha></div>
+      </div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

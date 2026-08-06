@@ -1,0 +1,38 @@
+<!-- @dsCard group="Components" viewport="700x380" name="Registros" subtitle="RenglonPersona, BotonAtender, FeedItem, CardCita, Aviso" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Registros</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { RenglonPersona, BotonAtender, BotonesResolver, FeedItem, CardCita, Aviso, AvisoMientrasDormias } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  return (<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
+    <div>
+      <p className="lbl">RenglonPersona · 4 estados</p>
+      <RenglonPersona nombre="Mariana Gutiérrez" producto="Reserva" contexto="Suite · 3 noches · presupuesto validado" rel="hace 9 min" estado="pendiente" />
+      <RenglonPersona nombre="Carlos Ibarra" producto="Evento" productoColor="var(--dot-evento)" productoFondo="var(--chip-evento)" contexto="80 personas · Sin atender +24 h" rel="hace 2 d" urgente estado="pendiente" />
+      <RenglonPersona nombre="Sofía Delgado" producto="Day Pass" productoColor="var(--dot-daypass)" productoFondo="var(--chip-daypass)" contexto="4 personas · sábado" rel="hace 1 h" estado="seguimiento" />
+      <RenglonPersona nombre="Luis Canul" producto="Reserva" contexto="Habitación doble · 2 noches" rel="hace 3 h" estado="atendido" stamp="✓ Atendido · 9:41 AM" />
+      <p className="lbl" style={{marginTop:18}}>Botones</p>
+      <div style={{display:'flex',gap:10,alignItems:'center'}}><BotonAtender /><BotonAtender ambar /><BotonesResolver /></div>
+    </div>
+    <div>
+      <p className="lbl">CardCita</p>
+      <CardCita hora="11:00 AM" nombre="Mariana Gutiérrez" producto="Reserva" contexto="Suite · 3 noches · presupuesto validado" llego="Llegó hace 2 h" accion={<BotonAtender />} />
+      <p className="lbl" style={{marginTop:18}}>FeedItem · gol del asistente</p>
+      <FeedItem t1="9:41 AM" gol pre="Cita confirmada:" texto="Mariana Gutiérrez, jueves 11:00 AM." producto="Reserva" />
+      <FeedItem t1="8:02 AM" texto="Respondió 12 mensajes de la campaña de Day Pass." producto="Day Pass" productoColor="var(--dot-daypass)" productoFondo="var(--chip-daypass)" seg="⚡ 14 seg" />
+      <p className="lbl" style={{marginTop:18}}>Avisos</p>
+      <div style={{display:'flex',flexDirection:'column',gap:10}}>
+        <Aviso accion="Ver →">6 oportunidades esperan a tu equipo.</Aviso>
+        <AvisoMientrasDormias resumen="4 personas atendidas, 2 citas agendadas." />
+      </div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

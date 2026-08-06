@@ -1,0 +1,37 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Datos" subtitle="Hero, Sparkline, DeDondeVienen, FilaProducto" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Datos</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Hero, Sparkline, DeDondeVienen, FilaProducto, ChipHero, Icon, Card } = window.IntraHoteleroDesignSystem_27a6ea;
+const SERIE=[8,9,7,11,10,13,12,11,14,13,16,15,18,17,20,19,22];
+function Demo(){
+  const [sel,setSel]=React.useState([]);
+  const alt=(k)=>setSel(s=>s.includes(k)?s.filter(x=>x!==k):[...s,k]);
+  return (<div style={{display:'grid',gridTemplateColumns:'7fr 5fr',gap:14}}>
+    <Hero desktop valor="22" delta="22%" deltaVs="vs junio" nota={<span>De <b style={{color:'#fff'}}>34 personas atendidas</b>, 22 se convirtieron en oportunidades reales.</span>}>
+      <Sparkline puntos={SERIE} rango="últimos 90 días" alto={64} style={{marginTop:14}} />
+      <div style={{display:'flex',gap:8,marginTop:18}}>
+        <ChipHero icon={<Icon name="prod-cama" size={13}/>} n={12} activo={sel.includes('r')} atenuado={sel.length>0} onClick={()=>alt('r')}>Reservas</ChipHero>
+        <ChipHero icon={<Icon name="prod-fiesta" size={13}/>} n={4} activo={sel.includes('e')} atenuado={sel.length>0} onClick={()=>alt('e')}>Eventos</ChipHero>
+        <ChipHero icon={<Icon name="prod-sol" size={13}/>} n={6} activo={sel.includes('d')} atenuado={sel.length>0} onClick={()=>alt('d')}>Day Pass</ChipHero>
+      </div>
+    </Hero>
+    <div style={{display:'flex',flexDirection:'column',gap:12}}>
+      <DeDondeVienen insight="Tu campaña trajo 2 de cada 3 oportunidades este mes."
+        grupos={[{nombre:'Tu campaña',n:14,color:'var(--gol)',canales:[{nombre:'Meta Ads',n:9},{nombre:'Google',n:5}]},{nombre:'Orgánico',n:8,color:'var(--tt)',canales:[{nombre:'WhatsApp directo',n:8}]}]} />
+      <Card eyebrow="Catálogo" padding="6px 8px">
+        <FilaProducto nombre="Reservas" icono="prod-cama" chip={1} oportunidades={12} precio="$2,400" />
+        <FilaProducto nombre="Eventos" icono="prod-fiesta" chip={2} oportunidades={4} />
+        <FilaProducto nombre="Consultas" icono="prod-charola" chip={5} generico oportunidades={3} style={{borderBottom:'none'}} />
+      </Card>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

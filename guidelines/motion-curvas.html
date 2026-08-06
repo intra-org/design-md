@@ -1,0 +1,10 @@
+<!-- @dsCard group="Motion" viewport="700x160" name="Curvas y duraciones" subtitle="Solo transform/opacity · los botones viven quietos hasta que se tocan" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;padding:20px;font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp)}.r{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--divider)}.k{width:120px;flex:none;font-size:11px;font-weight:600}.v{width:210px;flex:none;font-size:10px;color:var(--tt);font-variant-numeric:tabular-nums}.u{flex:1;font-size:11px;color:var(--ts)}</style>
+</head><body>
+<div class="r"><span class="k">spring</span><span class="v">cubic-bezier(.34,1.2,.64,1) · 250–300ms</span><span class="u">Todo lo que entra: sheet, panel, thumb, items nuevos</span></div>
+<div class="r"><span class="k">ease-out</span><span class="v">120ms pressed · 150ms hover</span><span class="u">Pressed scale(.97), hover de fila, crossfades</span></div>
+<div class="r"><span class="k">ease-in</span><span class="v">250ms</span><span class="u">Salidas: sheet-out, panel-out, colapso de renglón</span></div>
+<div class="r"><span class="k">pulso suave</span><span class="v">cubic-bezier(.22,1,.36,1) · 2.4s</span><span class="u">Dot vivo y dot ámbar — las dos únicas animaciones en reposo</span></div>
+<div class="r" style="border:none"><span class="k">coreografía tema</span><span class="v">~750ms escalonado</span><span class="u">Superficies → texto (+120) → señales (+240) → Presencia (+300)</span></div>
+</body></html>

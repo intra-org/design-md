@@ -1,0 +1,128 @@
+<!-- @dsCard group="intra hotelero · Móvil" viewport="430x900" name="Teléfono 390×844" subtitle="Login, selector de propiedad y las 4 pestañas con tab bar de dos estados" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>intra hotelero · móvil</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>html,body{margin:0;padding:0;background:#EDEAE2}#root{display:flex;align-items:center;justify-content:center;padding:20px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel" src="datos.jsx"></script>
+<script type="text/babel" src="LoginM.jsx"></script>
+<script type="text/babel" src="InicioM.jsx"></script>
+<script type="text/babel" src="PersonasM.jsx"></script>
+<script type="text/babel" src="AgendaM.jsx"></script>
+<script type="text/babel" src="PreguntarM.jsx"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { TabBar, Ambiente, Icon, SheetDetalle, BotonAtender, BotonesResolver, HaloPensando, FeedItem } = window.IntraHoteleroDesignSystem_27a6ea;
+const BASE='../../assets/logos';
+const TABS=[{id:'inicio',label:'Inicio',icono:'inicio'},{id:'personas',label:'Personas',icono:'personas'},{id:'agenda',label:'Agenda',icono:'agenda'},{id:'ia',label:'Preguntar',icono:'preguntar'}];
+const ICO_TEMA={auto:'amanecer',dia:'amanecer',tarde:'atardecer',noche:'noche'};
+const CICLO=['auto','dia','tarde','noche'];
+function temaPorHora(){const h=new Date().getHours();return h>=20||h<6?'noche':(h>=17?'tarde':'dia');}
+
+function App(){
+  const [logueado,setLogueado]=React.useState(false);
+  const [oculto,setOculto]=React.useState(false);
+  const [hotel,setHotel]=React.useState('Hampton Demo');
+  const [tab,setTab]=React.useState('inicio');
+  const [act,setAct]=React.useState(false);
+  const [actF,setActF]=React.useState('Todo');
+  const [modo,setModo]=React.useState('auto');
+  const [periodo,setPeriodo]=React.useState('mes');
+  const [flujo,setFlujo]=React.useState({});
+  const [detalle,setDetalle]=React.useState(null);
+  const [contraida,setContraida]=React.useState(false);
+  const [sticky,setSticky]=React.useState(false);
+  const [pensando,setPensando]=React.useState(false);
+  const ultimo=React.useRef(0);
+  const tema=modo==='auto'?temaPorHora():modo;
+
+  const atender=(id)=>setFlujo(f=>({...f,[id]:'seguimiento'}));
+  const resolver=(id,estado)=>setFlujo(f=>({...f,[id]:estado,[id+'_stamp']:estado==='atendido'?'✓ Confirmado · 9:41 AM':estado==='seguimiento'?null:'No confirmado'}));
+  React.useEffect(()=>{setAct(false);setDetalle(null);setContraida(false);},[tab]);
+
+  /* scroll-edge: la tab bar se contrae al bajar y NO se reabre al detenerse;
+     la isla pasa a frosted a partir de 40px. */
+  const onScroll=(e)=>{
+    const y=e.target.scrollTop;
+    setSticky(y>40);
+    if(y<=8) setContraida(false);
+    else if(y>24 && y-ultimo.current>8) setContraida(true);
+    ultimo.current=y;
+  };
+
+  const chip=detalle?window.chipDe(detalle.producto):null;
+  const estado=detalle?(flujo[detalle.id]||detalle.estado):null;
+  const esIA=tab==='ia';
+
+  return (
+    <div data-tema={tema} style={{position:'relative',flex:'none',width:390,height:844,display:'flex',flexDirection:'column',borderRadius:38,overflow:'hidden',background:'#060607',color:'var(--tp)',fontFamily:'var(--font-sans)',boxShadow:'0 40px 90px -40px rgba(20,16,8,.55)'}}>
+      <Ambiente tema={tema} />
+      <HaloPensando activo={pensando} />
+
+      <div style={{position:'relative',zIndex:2,flex:'none',display:'flex',alignItems:'center',height:58,padding:'12px 20px 0',boxSizing:'border-box',fontSize:12,fontWeight:600,fontVariantNumeric:'tabular-nums',color:'var(--tp)'}}>
+        <span>9:41</span><span style={{flex:1}} />
+        <button type="button" title="Cambiar modo" onClick={()=>setModo(m=>CICLO[(CICLO.indexOf(m)+1)%CICLO.length])}
+          style={{display:'inline-flex',alignItems:'center',gap:6,minHeight:28,border:'none',background:'transparent',color:'var(--ts)',opacity:.55,cursor:'pointer',fontFamily:'inherit'}}>
+          <Icon name={ICO_TEMA[modo]} size={20} />
+          {modo==='auto' && <span style={{fontSize:11,fontWeight:600,color:'var(--tt)'}}>auto</span>}
+        </button>
+      </div>
+
+      {esIA
+        ? <window.PreguntarM base={BASE} setPensando={setPensando} hotel={hotel} />
+        : (
+          <div onScroll={onScroll} style={{position:'relative',zIndex:1,flex:1,minHeight:0,overflowY:'auto',display:'flex',flexDirection:'column'}}>
+            {tab==='inicio' && (act
+              ? <window.ActividadM actF={actF} setActF={setActF} onCerrar={()=>setAct(false)} />
+              : <window.InicioM sticky={sticky} periodo={periodo} setPeriodo={setPeriodo} irPersonas={()=>setTab('personas')} abrirAct={()=>setAct(true)} />)}
+            {tab==='personas' && <window.PersonasM periodo={periodo} setPeriodo={setPeriodo} flujo={flujo} atender={atender} resolver={resolver} abrirDetalle={setDetalle} />}
+            {tab==='agenda' && <window.AgendaM flujo={flujo} atender={atender} resolver={resolver} abrirDetalle={setDetalle} />}
+            <div style={{height:110,flex:'none'}} />
+          </div>
+        )}
+
+      {/* La tab bar vive anclada al lienzo, no dentro del scroller: su posición
+          no depende de cuánto contenido tenga la pestaña. */}
+      <div style={{position:'absolute',left:0,right:0,bottom:24,zIndex:35,display:'flex',justifyContent:'center',pointerEvents:'none'}}>
+        <div style={{pointerEvents:'auto'}}>
+          <TabBar items={TABS} activo={tab} onSelect={(id)=>{setContraida(false);setTab(id);}} contraida={!esIA && contraida} onInteract={()=>setContraida(false)} style={{position:'static'}} />
+        </div>
+      </div>
+
+      {detalle && (
+        <SheetDetalle nombre={detalle.nombre} producto={detalle.producto} productoColor={chip.color} productoFondo={chip.fondo}
+          onCerrar={()=>setDetalle(null)}
+          campos={[
+            {k:'Producto',v:detalle.producto},
+            {k:'Teléfono',v:detalle.tel||'+52 999 318 4402'},
+            {k:'Llegó',v:detalle.llego||detalle.rel||'hace 9 min'},
+            detalle.hora?{k:'Cita',v:'Jue 16 jul · '+detalle.hora}:null,
+          ].filter(Boolean)}
+          acciones={estado==='pendiente'
+            ? <BotonAtender onClick={()=>atender(detalle.id)} />
+            : estado==='seguimiento'
+              ? <BotonesResolver onSi={()=>resolver(detalle.id,'atendido')} onNo={()=>resolver(detalle.id,'no-confirmado')} />
+              : <span style={{fontSize:12,fontWeight:600,color:'var(--verde-tx)'}}>{flujo[detalle.id+'_stamp']||detalle.stamp}</span>}>
+          <p style={{margin:'16px 0 6px',fontSize:10.5,fontWeight:600,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--tt)'}}>Lo que pasó</p>
+          <div style={{borderRadius:16,background:'var(--card)',padding:'4px 14px'}}>
+            <FeedItem colTiempo={70} t1="hace 9 min" texto="Llegó por la campaña de Meta Ads." />
+            <FeedItem colTiempo={70} t1="hace 8 min" texto="El asistente respondió y validó presupuesto." />
+            <FeedItem colTiempo={70} t1="hace 6 min" gol pre="Cita confirmada:" texto="jueves 11:00 AM." />
+          </div>
+        </SheetDetalle>
+      )}
+
+      {!oculto && (
+        <div style={{position:'absolute',inset:0,zIndex:80,opacity:logueado?0:1,transform:logueado?'scale(1.04)':'none',pointerEvents:logueado?'none':'auto',transition:'opacity .7s ease, transform .7s cubic-bezier(0.22,1,0.36,1)'}}>
+          <window.LoginM tema={tema} modo={modo} base={BASE}
+            onCiclarTema={()=>setModo(m=>CICLO[(CICLO.indexOf(m)+1)%CICLO.length])}
+            onEntrar={(p)=>{setHotel(p.n);setLogueado(true);setTimeout(()=>setOculto(true),700);}} />
+        </div>
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

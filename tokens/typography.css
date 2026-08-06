@@ -1,0 +1,48 @@
+/* ── Tipografía · familia única Schibsted Grotesk ──────────────────────────
+   Escala de texto de 8 tamaños. Nada de cuerpo fuera de escala.
+   Los números-héroe son DISPLAY, no texto: escalan con su contenedor.
+   tabular-nums en TODA cifra. Etiquetas = misma sans en MAYÚSCULAS con tracking.
+─────────────────────────────────────────────────────────────────────────── */
+:root{
+  /* Escala de texto (8) */
+  --fs-10:10.5px;  /* etiquetas uppercase, microcopy */
+  --fs-12:12px;    /* meta, timestamps, badges */
+  --fs-13:13px;    /* cuerpo por defecto del producto */
+  --fs-15:15px;    /* nombre de persona, títulos de fila */
+  --fs-17:17px;    /* título de rango, hora de cita */
+  --fs-20:20px;    /* título de sección / sheet */
+  --fs-24:24px;
+  --fs-72:72px;    /* hero mobile estándar */
+
+  /* Display — números-héroe, fuera de la escala de lectura */
+  --fs-hero-transaccional:56px;
+  --fs-hero-mobile:72px;
+  --fs-hero-desktop:88px;
+  --fs-hero-desktop-xl:104px;
+  --fs-hero-secundario:32px;
+
+  /* Pesos */
+  --fw-regular:400; /* @kind other */
+  --fw-medium:500; /* @kind other */
+  --fw-semibold:600; /* @kind other */
+  --fw-bold:700; /* @kind other */
+
+  /* Alturas de línea */
+  --lh-tight:1; /* @kind other */      /* cifras display */
+  --lh-snug:1.4; /* @kind other */     /* aviso legal, microcopy */
+  --lh-normal:1.5; /* @kind other */   /* cuerpo */
+  --lh-relaxed:1.6; /* @kind other */  /* respuesta del asistente */
+
+  /* Tracking */
+  --tracking-display:-0.035em; /* @kind other */  /* cifras hero */
+  --tracking-title:-0.02em; /* @kind other */     /* títulos 20px */
+  --tracking-name:-0.01em; /* @kind other */      /* nombres 15-17px */
+  --tracking-label:0.12em; /* @kind other */      /* etiquetas uppercase */
+  --tracking-label-wide:0.15em; /* @kind other */ /* etiquetas de header de card */
+  --tracking-chip:0.04em; /* @kind other */
+  --tracking-wordmark:0.34em; /* @kind other */   /* "intelligence" bajo el wordmark */
+
+  /* Cifras */
+  --numeric-tabular:tabular-nums; /* @kind other */
+  --numeric-features:"tnum" 1,"lnum" 1; /* @kind other */
+}

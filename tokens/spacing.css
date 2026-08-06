@@ -1,0 +1,45 @@
+/* ── Espaciado y radios · ritmo vertical 4pt ───────────────────────────────
+   Padding/margin/gap SOLO en múltiplos de 4. Los radios no cambian por tema.
+─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --sp-1:4px;
+  --sp-2:8px;
+  --sp-3:12px;
+  --sp-4:16px;
+  --sp-5:20px;
+  --sp-6:24px;
+  --sp-7:28px;
+  --sp-8:32px;
+  --sp-9:36px;
+  --sp-10:40px;
+
+  /* Radios */
+  --r-badge:6px;
+  --r-chip:6px;
+  --r-item:9px;      /* items de popover */
+  --r-nav:12px;      /* item del nav lateral */
+  --r-popover:14px;
+  --r-pill-card:14px; /* tarjeta-píldora de Semana */
+  --r-card-sm:16px;   /* aviso Mientras dormías, tarjetas del panel */
+  --r-card:18px;      /* aviso proactivo, burbuja */
+  --r-card-lg:20px;   /* tarjetas del sistema (Inicio, Agenda, widgets) */
+  --r-hero:22px;
+  --r-sheet:24px;     /* radio superior del sheet */
+  --r-lienzo:24px;    /* lienzo desktop 1440×900 */
+  --r-pill:999px;
+
+  /* Medidas fijas del sistema */
+  --nav-w:248px;
+  --nav-w-col:84px;   /* riel colapsado */
+  --panel-w:380px;    /* panel lateral de detalle */
+  --panel-w-prod:480px;
+  --tabbar-h:64px;
+  --tabbar-h-col:48px;
+  --touch-min:44px;   /* hit-area real; ::after inset -7px */
+  --hit-inset:-7px;
+  --lienzo-w:1440px;
+  --lienzo-h:900px;
+  --telefono-w:390px;
+  --scroll-fade:24px; /* fade al borde en scroll horizontal */
+  --scrim-h:88px;     /* scroll-edge */
+}

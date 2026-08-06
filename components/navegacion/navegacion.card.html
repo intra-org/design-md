@@ -1,0 +1,38 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Navegación" subtitle="NavLateral, TabBar, PanelDetalle, SheetDetalle" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Navegación</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { NavLateral, TabBar, PanelDetalle, BotonAtender } = window.IntraHoteleroDesignSystem_27a6ea;
+const NAV=[{id:'inicio',label:'Inicio',icono:'inicio'},{id:'personas',label:'Personas',icono:'personas',conteo:6},{id:'agenda',label:'Agenda',icono:'agenda',conteo:3},{id:'historial',label:'Historial',icono:'historial'},{id:'productos',label:'Productos',icono:'productos',conteo:4},{id:'preguntar',label:'Preguntar',icono:'preguntar'}];
+const TABS=[{id:'inicio',label:'Inicio',icono:'inicio'},{id:'personas',label:'Personas',icono:'personas'},{id:'agenda',label:'Agenda',icono:'agenda'},{id:'preguntar',label:'Preguntar',icono:'preguntar'}];
+function Demo(){
+  const [v,setV]=React.useState('personas');
+  const [t,setT]=React.useState('inicio');
+  return (<div style={{display:'flex',gap:20,alignItems:'stretch',height:356}}>
+    <div style={{display:'flex',borderRadius:18,overflow:'hidden',border:'1px solid var(--divider)'}}>
+      <NavLateral hotel="Hampton Demo" items={NAV} activo={v} onSelect={setV}
+        proximaCita={{texto:'11:00 AM · Mariana Gutiérrez'}} usuario={{iniciales:'LR',nombre:'Lucía Rivas',rol:'Ventas'}} base="../../assets/logos" />
+    </div>
+    <div style={{flex:1,minWidth:0,display:'flex',flexDirection:'column',gap:14}}>
+      <div><p className="lbl">TabBar · reposo y contraída</p>
+        <div style={{display:'flex',gap:14,alignItems:'flex-end'}}>
+          <TabBar items={TABS} activo={t} onSelect={setT} style={{position:'static',justifyContent:'flex-start'}} />
+          <TabBar items={TABS} activo={t} onSelect={setT} contraida style={{position:'static',justifyContent:'flex-start'}} />
+        </div>
+      </div>
+      <div style={{flex:1,minHeight:0,display:'flex',justifyContent:'flex-end',borderRadius:18,overflow:'hidden',border:'1px solid var(--divider)'}}>
+        <PanelDetalle nombre="Mariana Gutiérrez" producto="Reserva" ancho={330}
+          campos={[{k:'Producto',v:'Reserva'},{k:'Teléfono',v:'+52 999 123 4567'},{k:'Llegó',v:'hace 2 h'},{k:'Cita',v:'Jue 16 jul · 11:00 AM'}]}
+          acciones={<BotonAtender />} />
+      </div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

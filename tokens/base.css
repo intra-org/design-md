@@ -1,0 +1,17 @@
+/* ── Base · reglas globales del producto ───────────────────────────────────
+   Extraídas del prototipo vivo. Scrollbars ocultos, hit-area de 44pt en todo
+   botón, focus visible, cifras tabulares por defecto.
+─────────────────────────────────────────────────────────────────────────── */
+body{font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1,"lnum" 1}
+a{color:var(--link);text-decoration:none}
+a:hover{color:var(--link);opacity:.82}
+*{scrollbar-width:none}
+*::-webkit-scrollbar{display:none;width:0;height:0}
+button{position:relative;font-family:inherit;transition:transform var(--dur-pressed) var(--ease-out),opacity var(--dur-pressed) var(--ease-out),filter var(--dur-pressed) var(--ease-out)}
+button::after{content:"";position:absolute;inset:var(--hit-inset);border-radius:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:var(--focus-ring) solid var(--link);outline-offset:var(--focus-offset)}
+input::placeholder{color:inherit;opacity:.62}
+/* Coreografía de cambio de tema: superficies → texto → señales (~750ms) */
+[data-tema] *{transition:background-color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease,color .45s ease .12s}
+/* El ícono de WhatsApp del botón Atender queda FUERA de la coreografía */
+svg[data-wa],svg[data-wa] *{transition:none!important}

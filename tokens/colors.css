@@ -1,0 +1,280 @@
+/* ── intra hotelero · color semántico ───────────────────────────────────────
+   85 tokens × 3 temas, extraídos 1:1 de producción (tokens.json v1.5.0).
+   Amanecer (dia) es el maestro y vive en :root — cualquier superficie sin
+   proveedor de tema rinde Amanecer. Atardecer y Noche se activan con el
+   atributo data-tema en el root de la pantalla.
+   Regla de oro: ningún #hex en pantallas de producto. Todo sale de var(--token).
+─────────────────────────────────────────────────────────────────────────── */
+
+:root{
+  /* Base cruda (no temable) */
+  --ink:#0A0A0A;
+  --graphite:#1A1A1C;
+  --slate:#5E6168;
+  --crema:#FAF9F5;
+  --tonal-base:#F1EFE8;
+  --hero-negro:linear-gradient(170deg,#151518 0%,#0A0A0C 45%,#060607 100%); /* @kind other */
+  --login-dia:linear-gradient(180deg,#F8F6F0 0%,#F9F7EE 60%,#F9F1E0 84%,#F8EBD2 94%,#F6E5C3 100%); /* @kind other */
+  --login-tarde:linear-gradient(180deg,#1C2236 0%,#212840 42%,#2A2F49 62%,#383550 76%,#4E3D52 86%,#68484E 93%,#855147 100%); /* @kind other */
+  --login-noche:linear-gradient(180deg,#07080C 0%,#090B12 58%,#0B0E17 80%,#0D1322 92%,#111B33 100%); /* @kind other */
+  --frosted:rgba(22,23,27,.78);
+
+  /* ── Tema Amanecer (dia) · maestro ── */
+  /* Superficie */
+  --card:#FFFFFF;
+  --nav-bg:#F7F5EF;
+  --panel-bg:#FAF9F5;
+  --panel-scrim:rgba(20,16,8,.14);
+  --scrim:#FAF9F5;
+  --tonal:#F1EFE8;
+  --hover:#F7F5EF;
+  --divider:#EFECE4;
+  --sec-bd:#D9D5CC;
+  --tabbar:rgba(250,249,245,.92);
+  --input-bg:rgba(255,255,255,.85);
+  --night-bg:#F7F4EC;
+  --night-bd:transparent;
+  --ag-hoy:rgba(20,16,8,.05);
+  --bg-grad:radial-gradient(120% 90% at 50% -10%, #FEFDFB 0%, #FAF9F5 42%, #F4F1E9 78%, #EFE7D8 100%); /* @kind other */
+  --hero-glow:rgba(255,178,110,.2);
+  --card-sh:0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16);
+
+  /* Texto */
+  --tp:#0A0A0A;   /* primario  */
+  --ts:#5E6168;   /* secundario */
+  --tt:#8A8C93;   /* terciario  */
+  --wm-sub:#8A7B66;
+  --chip-tx:#5E6168;
+
+  /* Señal — matiz constante en los 3 temas, solo calibra valor */
+  --link:#2F5FC0;
+  --verde:#5BD6A0;
+  --verde-tx:#1F8A5C;
+  --gol:#3E7FE6;
+  --ambar:#C8881F;
+  --warn:#8C6A14;
+  --warn-bg:rgba(140,106,20,.10);
+  --danger:#A8321F;
+  --danger-bg:rgba(168,50,31,.08);
+  --danger-bd:rgba(168,50,31,.34);
+
+  /* Controles */
+  --btn-bg:#0A0A0A;
+  --btn-tx:#FFFFFF;
+  --seg-track:#EFECE4;
+  --seg-thumb:#FFFFFF;
+  --sw-off:#DAD6CD;
+  --sw-knob:#FFFFFF;
+  --sw-on-op:1; /* @kind other */
+  --chip-in-bg:rgba(255,255,255,.85);
+  --chip-in-bd:#D9D5CC;
+
+  /* Chips de producto (legado: 3 productos canónicos) */
+  --chip-reserva:#F1EFE8;
+  --chip-evento:#ECEAE3;
+  --chip-daypass:#F5F0E4;
+  --dot-reserva:#ABC4DB;
+  --dot-evento:#CEAB8E;
+  --dot-daypass:#D6B06E;
+
+  /* Paleta del catálogo — 9 colores que el hotelero asigna a un producto */
+  --chip-1:#ABC4DB; --chip-2:#D3A17D; --chip-3:#D6B16E; --chip-4:#D1BDD6; --chip-5:#8DA099;
+  --chip-6:#DBB2BD; --chip-7:#D4E5C3; --chip-8:#B8B9D3; --chip-9:#EAB3A4;
+  --chip-bg-1:#F1EFE8; --chip-bg-2:#F1EFE8; --chip-bg-3:#F1EFE8; --chip-bg-4:#F1EFE8; --chip-bg-5:#F1EFE8;
+  --chip-bg-6:#F1EFE8; --chip-bg-7:#F1EFE8; --chip-bg-8:#F1EFE8; --chip-bg-9:#F1EFE8;
+
+  /* Marca — doble <img> dark/light con opacidad por token */
+  --iso-dark-op:1; /* @kind other */
+  --iso-light-op:0; /* @kind other */
+
+  /* Presencia V7 — núcleo, contorno, halo */
+  --siri-bodyIn:rgba(255,250,240,.30);
+  --siri-bodyOut:rgba(212,168,94,.20);
+  --siri-rim:#FFF0C8;
+  --siri-rimSoft:rgba(232,201,122,.55);
+  --siri-lA1:#FBA356;
+  --siri-lA2:#FED767;
+  --siri-lB1:#FEF1C8;
+  --siri-lB2:#FDFAF3;
+  --siri-accent:#FFF3D6;
+  --siri-core:#FFFDF4;
+  --siri-glow:rgba(232,201,122,.5);
+
+  /* Orbe del login */
+  --orb-grad:linear-gradient(180deg,#FBF9F3 0%,#F8F4E8 42%,#F4EACE 55%,#C89744 58%,#D8A945 68%,#C2903A 84%,#9E7228 100%); /* @kind other */
+  --orb-line:#FFE9A8;
+  --orb-lineB:#FFF3C8;
+  --orb-glow:rgba(216,150,60,.85);
+  --orb-halo:radial-gradient(60% 55% at 50% 42%, rgba(240,200,110,.35) 0%, transparent 72%); /* @kind other */
+  --orb-hl:rgba(255,255,255,.6);
+  --orb-bd:1px solid rgba(20,16,8,.05); /* @kind other */
+  --orb-sh:inset 0 2px 8px rgba(255,255,255,.7), inset 0 -8px 18px rgba(190,140,60,.28), 0 22px 46px -20px rgba(180,130,70,.4); /* @kind other */
+}
+
+/* ── Tema Atardecer (tarde) · 17:00–20:00 · tinta-ciruela cálida ── */
+[data-tema="tarde"]{
+  --card:#322A38;
+  --nav-bg:rgba(0,0,0,.20);
+  --panel-bg:#241E2A;
+  --panel-scrim:rgba(8,6,12,.40);
+  --scrim:#1C2236;
+  --tonal:rgba(246,224,200,.17);
+  --hover:rgba(246,232,222,.06);
+  --divider:rgba(244,230,220,.12);
+  --sec-bd:rgba(246,232,222,.4);
+  --tabbar:rgba(26,32,52,.86);
+  --input-bg:rgba(246,232,222,.09);
+  --night-bg:rgba(228,150,108,.14);
+  --night-bd:rgba(240,160,116,.24);
+  --ag-hoy:rgba(246,224,200,.17);
+  --bg-grad:linear-gradient(180deg,#1C2236 0%,#232A44 34%,#2E3049 54%,#4A3A50 70%,#8A5340 86%,#C46C45 100%); /* @kind other */
+  --hero-glow:rgba(244,152,104,.26);
+  --card-sh:0 1px 2px rgba(0,0,0,.2), 0 14px 34px -22px rgba(0,0,0,.55);
+
+  --tp:#F4EAE0;
+  --ts:rgba(244,232,222,.8);
+  --tt:rgba(244,232,222,.52);
+  --wm-sub:rgba(244,232,222,.62);
+  --chip-tx:#E4D8D1;
+
+  --link:#B7C8F2;
+  --verde:#5FD3A4;
+  --verde-tx:#7FE0BC;
+  --gol:#8AAAEA;
+  --ambar:#E2AC55;
+  --warn:#E8C36A;
+  --warn-bg:rgba(232,195,106,.16);
+  --danger:#F09A8A;
+  --danger-bg:rgba(240,154,138,.14);
+  --danger-bd:rgba(240,154,138,.44);
+
+  --btn-bg:#F4EFE4;
+  --btn-tx:#14161C;
+  --seg-track:rgba(246,224,200,.1);
+  --seg-thumb:#4A4152;
+  --sw-off:rgba(246,232,222,.22);
+  --sw-knob:#F4EFE4;
+  --sw-on-op:.8; /* @kind other */
+  --chip-in-bg:rgba(246,232,222,.09);
+  --chip-in-bd:rgba(246,232,222,.4);
+
+  --chip-reserva:rgba(246,224,200,.14);
+  --chip-evento:rgba(246,224,200,.14);
+  --chip-daypass:rgba(246,224,200,.14);
+  --dot-reserva:#9AB1D6;
+  --dot-evento:#D8AE8F;
+  --dot-daypass:#E8BC70;
+
+  --chip-1:#9BB2D6; --chip-2:#CE9167; --chip-3:#E8BC70; --chip-4:#D4B9DB; --chip-5:#93C1AE;
+  --chip-6:#F4AEC4; --chip-7:#D8EAC9; --chip-8:#B6B9E0; --chip-9:#FFC3A9;
+  --chip-bg-1:#3B3D4C; --chip-bg-2:#3B3D4C; --chip-bg-3:#3B3D4C; --chip-bg-4:#3B3D4C; --chip-bg-5:#3B3D4C;
+  --chip-bg-6:#3B3D4C; --chip-bg-7:#3B3D4C; --chip-bg-8:#3B3D4C; --chip-bg-9:#3B3D4C;
+
+  --iso-dark-op:0; /* @kind other */
+  --iso-light-op:1; /* @kind other */
+
+  --siri-bodyIn:rgba(120,90,110,.28);
+  --siri-bodyOut:rgba(45,53,89,.34);
+  --siri-rim:#F0B48C;
+  --siri-rimSoft:rgba(198,120,84,.5);
+  --siri-lA1:#E8A08B;
+  --siri-lA2:#C67854;
+  --siri-lB1:#6B4F6D;
+  --siri-lB2:#2D3559;
+  --siri-accent:#A85D3A;
+  --siri-core:#F7DCC8;
+  --siri-glow:rgba(198,120,84,.45);
+
+  --orb-grad:linear-gradient(180deg,#1C2236 0%,#232A44 36%,#2E3049 52%,#463A50 58%,#7E4B49 68%,#C46C45 80%,#8A4A30 92%,#54301F 100%); /* @kind other */
+  --orb-line:rgba(255,198,150,.9);
+  --orb-lineB:rgba(255,222,184,1);
+  --orb-glow:rgba(255,190,140,.8);
+  --orb-halo:radial-gradient(60% 55% at 50% 42%, rgba(240,150,96,.3) 0%, transparent 72%); /* @kind other */
+  --orb-hl:rgba(255,255,255,.24);
+  --orb-bd:none; /* @kind other */
+  --orb-sh:inset 0 2px 6px rgba(255,255,255,.2), inset 0 -6px 16px rgba(255,160,90,.3), 0 22px 46px -20px rgba(0,0,0,.55); /* @kind other */
+}
+
+/* ── Tema Noche · 20:00–6:00 · tinta-azul ── */
+[data-tema="noche"]{
+  --card:#14171F;
+  --nav-bg:rgba(0,0,0,.24);
+  --panel-bg:#0E1118;
+  --panel-scrim:rgba(0,0,0,.46);
+  --scrim:#07080C;
+  --tonal:rgba(241,237,228,.12);
+  --hover:rgba(241,237,228,.05);
+  --divider:rgba(241,237,228,.08);
+  --sec-bd:rgba(241,237,228,.4);
+  --tabbar:rgba(9,11,18,.9);
+  --input-bg:rgba(241,237,228,.08);
+  --night-bg:#171A26;
+  --night-bd:rgba(224,160,100,.3);
+  --ag-hoy:rgba(241,237,228,.12);
+  --bg-grad:linear-gradient(180deg,#07080C 0%,#0A0C14 46%,#111826 70%,#1B2436 86%,#2A3550 100%); /* @kind other */
+  --hero-glow:rgba(255,178,110,.24);
+  --card-sh:0 1px 2px rgba(0,0,0,.25), 0 14px 34px -22px rgba(0,0,0,.6);
+
+  --tp:#F1EDE4;
+  --ts:rgba(241,237,228,.68);
+  --tt:rgba(241,237,228,.46);
+  --wm-sub:rgba(241,237,228,.55);
+  --chip-tx:rgba(241,237,228,.68);
+
+  --link:#8FADEE;
+  --verde:#4FC392;
+  --verde-tx:#63D3A6;
+  --gol:#6E97DE;
+  --ambar:#DDB061;
+  --warn:#E3BE63;
+  --warn-bg:rgba(227,190,99,.14);
+  --danger:#EE9484;
+  --danger-bg:rgba(238,148,132,.12);
+  --danger-bd:rgba(238,148,132,.4);
+
+  --btn-bg:#F5F2EA;
+  --btn-tx:#0A0A0A;
+  --seg-track:rgba(241,237,228,.07);
+  --seg-thumb:#2A2F3A;
+  --sw-off:rgba(241,237,228,.18);
+  --sw-knob:#F5F2EA;
+  --sw-on-op:.8; /* @kind other */
+  --chip-in-bg:rgba(241,237,228,.08);
+  --chip-in-bd:rgba(241,237,228,.4);
+
+  --chip-reserva:rgba(241,237,228,.1);
+  --chip-evento:rgba(241,237,228,.1);
+  --chip-daypass:rgba(241,237,228,.1);
+  --dot-reserva:#8DA3C6;
+  --dot-evento:#B58D71;
+  --dot-daypass:#E5B765;
+
+  --chip-1:#8DA4C6; --chip-2:#E8A77C; --chip-3:#E5B766; --chip-4:#D4B6DB; --chip-5:#8DC6AF;
+  --chip-6:#DBA9B9; --chip-7:#DDF5C6; --chip-8:#B8BBE0; --chip-9:#FFCEBD;
+  --chip-bg-1:#1F1F21; --chip-bg-2:#1F1F21; --chip-bg-3:#1F1F21; --chip-bg-4:#1F1F21; --chip-bg-5:#1F1F21;
+  --chip-bg-6:#1F1F21; --chip-bg-7:#1F1F21; --chip-bg-8:#1F1F21; --chip-bg-9:#1F1F21;
+
+  --iso-dark-op:0; /* @kind other */
+  --iso-light-op:1; /* @kind other */
+
+  --siri-bodyIn:rgba(90,104,150,.26);
+  --siri-bodyOut:rgba(30,34,60,.4);
+  --siri-rim:#D6E0F0;
+  --siri-rimSoft:rgba(143,160,200,.5);
+  --siri-lA1:#6E5FA0;
+  --siri-lA2:#4A3B6B;
+  --siri-lB1:#3A4E80;
+  --siri-lB2:#B8C4D6;
+  --siri-accent:#5C4A3D;
+  --siri-core:#E4ECF8;
+  --siri-glow:rgba(90,110,180,.45);
+
+  --orb-grad:linear-gradient(180deg,#171A26 0%,#1D2233 42%,#242938 56%,#3A3140 60%,#7A4A40 72%,#C4693F 84%,#93502F 92%,#5E301F 100%); /* @kind other */
+  --orb-line:rgba(255,206,158,.9);
+  --orb-lineB:rgba(255,228,192,1);
+  --orb-glow:rgba(255,196,140,.8);
+  --orb-halo:radial-gradient(60% 55% at 50% 42%, rgba(255,178,110,.3) 0%, transparent 72%); /* @kind other */
+  --orb-hl:rgba(255,255,255,.26);
+  --orb-bd:none; /* @kind other */
+  --orb-sh:inset 0 2px 6px rgba(255,255,255,.2), inset 0 -6px 16px rgba(255,160,90,.3), 0 22px 46px -20px rgba(0,0,0,.55); /* @kind other */
+}

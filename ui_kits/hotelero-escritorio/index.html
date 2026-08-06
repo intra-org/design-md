@@ -1,0 +1,109 @@
+<!-- @dsCard group="intra hotelero · Escritorio" viewport="1440x900" name="Dashboard 1440×900" subtitle="Hampton Demo · Inicio, Personas, Agenda, Productos, Preguntar en los 3 temas" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>intra hotelero · escritorio</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>html,body{margin:0;padding:0;background:#EDEAE2}#root{min-height:100vh;display:flex;align-items:center;justify-content:flex-start;overflow:auto}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<script type="text/babel" src="datos.jsx"></script>
+<script type="text/babel" src="PantallaInicio.jsx"></script>
+<script type="text/babel" src="PantallaPersonas.jsx"></script>
+<script type="text/babel" src="PantallaAgenda.jsx"></script>
+<script type="text/babel" src="PantallaProductos.jsx"></script>
+<script type="text/babel" src="PantallaHistorial.jsx"></script>
+<script type="text/babel" src="PantallaPreguntar.jsx"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { NavLateral, Ambiente, Icon, PanelDetalle, BotonAtender, BotonesResolver, FeedItem, HaloPensando } = window.IntraHoteleroDesignSystem_27a6ea;
+const BASE = '../../assets/logos';
+const NAV = [
+  {id:'inicio',label:'Inicio',icono:'inicio'},
+  {id:'personas',label:'Personas',icono:'personas',conteo:6},
+  {id:'agenda',label:'Agenda',icono:'agenda',conteo:2},
+  {id:'historial',label:'Historial',icono:'historial'},
+  {id:'productos',label:'Productos',icono:'productos',conteo:4},
+  {id:'preguntar',label:'Preguntar',icono:'preguntar'},
+];
+const ICO_TEMA={auto:'amanecer',dia:'amanecer',tarde:'atardecer',noche:'noche'};
+const NOM_TEMA={dia:'Amanecer',tarde:'Atardecer',noche:'Noche'};
+const CICLO=['auto','dia','tarde','noche'];
+function temaPorHora(){const h=new Date().getHours();return h>=20||h<6?'noche':(h>=17?'tarde':'dia');}
+
+/* Botón de modo — vive al pie del nav lateral (gnMode), no arriba a la derecha. */
+function BotonModo({modo,tema,onChange,colapsado}){
+  const [hover,setHover]=React.useState(false);
+  return (
+    <button type="button" title="Cambiar modo" onClick={()=>onChange(CICLO[(CICLO.indexOf(modo)+1)%CICLO.length])}
+      onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}
+      style={{display:'flex',alignItems:'center',justifyContent:'flex-start',gap:10,width:colapsado?44:'100%',boxSizing:'border-box',padding:12,border:'none',borderRadius:colapsado?14:12,background:hover?'var(--tonal)':'transparent',color:'var(--ts)',cursor:'pointer',fontFamily:'inherit',overflow:'hidden'}}>
+      <Icon name={ICO_TEMA[modo]} size={18} />
+      <span style={{fontSize:13,fontWeight:500,whiteSpace:'nowrap',overflow:'hidden',color:'var(--ts)',opacity:colapsado?0:1,maxWidth:colapsado?0:160,transition:'opacity .2s ease, max-width .35s ease'}}>{NOM_TEMA[tema]}</span>
+    </button>
+  );
+}
+
+function App(){
+  const [vista,setVista]=React.useState('inicio');
+  const [modo,setModo]=React.useState('auto');
+  const [colapsado,setColapsado]=React.useState(false);
+  const [periodo,setPeriodo]=React.useState('mes');
+  const [flujo,setFlujo]=React.useState({});
+  const [detalle,setDetalle]=React.useState(null);
+  const [pensando,setPensando]=React.useState(false);
+  const tema = modo==='auto'?temaPorHora():modo;
+
+  const atender=(id)=>setFlujo(f=>({...f,[id]:'seguimiento'}));
+  const resolver=(id,estado)=>setFlujo(f=>({...f,[id]:estado,[id+'_stamp']:estado==='atendido'?'✓ Confirmado · 9:41 AM':'No confirmado'}));
+  const abrirDetalle=(p)=>setDetalle(p);
+  React.useEffect(()=>{setDetalle(null);},[vista]);
+
+  const chip = detalle ? window.chipDe(detalle.producto) : null;
+  const estado = detalle ? (flujo[detalle.id]||detalle.estado) : null;
+
+  return (
+    <div data-tema={tema} style={{position:'relative',flex:'none',width:1440,height:900,display:'flex',borderRadius:24,overflow:'hidden',background:'#060607',color:'var(--tp)',fontFamily:'var(--font-sans)',boxShadow:'0 40px 90px -40px rgba(20,16,8,.55)'}}>
+      <Ambiente tema={tema} />
+      <HaloPensando activo={pensando} />
+      <NavLateral hotel="Hampton Demo" items={NAV} activo={vista} onSelect={setVista} base={BASE}
+        colapsado={colapsado} onColapsar={()=>setColapsado(v=>!v)}
+        modo={<BotonModo modo={modo} tema={tema} onChange={setModo} colapsado={colapsado} />}
+        usuario={window.USUARIO}
+        style={{zIndex:2}} />
+      <main style={{position:'relative',zIndex:1,flex:1,minWidth:0,display:'flex',minHeight:0}}>
+        <div style={{flex:1,minWidth:0,display:'flex',flexDirection:'column',minHeight:0}}>
+          {vista==='inicio' && <window.PantallaInicio periodo={periodo} setPeriodo={setPeriodo} tema={tema} irPersonas={()=>setVista('personas')} irAgenda={()=>setVista('agenda')} abrirDetalle={abrirDetalle} />}
+          {vista==='personas' && <window.PantallaPersonas flujo={flujo} atender={atender} resolver={resolver} abrirDetalle={abrirDetalle} />}
+          {vista==='agenda' && <window.PantallaAgenda flujo={flujo} atender={atender} resolver={resolver} abrirDetalle={abrirDetalle} />}
+          {vista==='productos' && <window.PantallaProductos />}
+          {vista==='historial' && <window.PantallaHistorial abrirDetalle={abrirDetalle} />}
+          {vista==='preguntar' && <window.PantallaPreguntar base={BASE} setPensando={setPensando} />}
+        </div>
+        {detalle && (
+          <PanelDetalle nombre={detalle.nombre} producto={detalle.producto} productoColor={chip.color} productoFondo={chip.fondo}
+            onCerrar={()=>setDetalle(null)}
+            campos={[
+              {k:'Producto',v:detalle.producto},
+              {k:'Teléfono',v:detalle.tel||'+52 999 318 4402'},
+              {k:'Llegó',v:detalle.llego||detalle.rel||'hace 9 min'},
+              detalle.hora?{k:'Cita',v:'Jue 16 jul · '+detalle.hora}:null,
+            ].filter(Boolean)}
+            acciones={estado==='pendiente'
+              ? <BotonAtender onClick={()=>atender(detalle.id)} />
+              : estado==='seguimiento'
+                ? <BotonesResolver onSi={()=>resolver(detalle.id,'atendido')} onNo={()=>resolver(detalle.id,'no-confirmado')} />
+                : <span style={{fontSize:12,fontWeight:600,color:'var(--verde-tx)'}}>{flujo[detalle.id+'_stamp']||detalle.stamp}</span>}>
+            <p style={{margin:'10px 0 0',fontSize:10.5,fontWeight:600,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--tt)'}}>Lo que pasó</p>
+            <div style={{borderRadius:16,background:'var(--card)',padding:'6px 14px'}}>
+              <FeedItem colTiempo={76} t1="hace 9 min" texto="Llegó por la campaña de Meta Ads." />
+              <FeedItem colTiempo={76} t1="hace 8 min" texto="El asistente respondió y validó presupuesto." />
+              <FeedItem colTiempo={76} t1="hace 6 min" gol pre="Cita confirmada:" texto="jueves 11:00 AM." />
+            </div>
+          </PanelDetalle>
+        )}
+      </main>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

@@ -1,0 +1,64 @@
+/* ── Motion ────────────────────────────────────────────────────────────────
+   Solo transform/opacity (GPU). Los botones viven quietos hasta que se tocan:
+   prohibida la respiración en reposo — la única excepción son el dot verde
+   del sistema vivo y el dot ámbar de urgencia.
+─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --ease-spring:cubic-bezier(0.34,1.2,0.64,1); /* @kind other */   /* todo lo que entra */
+  --ease-out:ease-out; /* @kind other */                            /* pressed, hover, crossfade */
+  --ease-in:ease-in; /* @kind other */                              /* salidas */
+  --ease-pulso:cubic-bezier(0.22,1,0.36,1); /* @kind other */       /* dot vivo / dot ámbar */
+  --ease-rise:cubic-bezier(0.22,0.61,0.36,1); /* @kind other */     /* entrada de sección desktop */
+  --ease-nav:cubic-bezier(0.4,0,0.2,1); /* @kind other */           /* ancho del nav colapsable */
+
+  --dur-pressed:120ms; /* @kind other */
+  --dur-hover:150ms; /* @kind other */
+  --dur-popover:180ms; /* @kind other */
+  --dur-crossfade:250ms; /* @kind other */
+  --dur-salida:250ms; /* @kind other */
+  --dur-spring:300ms; /* @kind other */
+  --dur-rise:320ms; /* @kind other */
+  --dur-count-filtro:420ms; /* @kind other */
+  --dur-tema:600ms; /* @kind other */
+  --dur-count-hero:650ms; /* @kind other */
+  --dur-nav:500ms; /* @kind other */
+
+  --pressed-scale:0.97; /* @kind other */
+  --pressed-scale-sm:0.94; /* @kind other */ /* ✓/✕ y botones circulares */
+}
+
+@keyframes ih-pulse{0%{transform:scale(1);opacity:.55}70%{transform:scale(2.6);opacity:0}100%{transform:scale(2.6);opacity:0}}
+@keyframes ih-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ih-rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ih-fade{from{opacity:0}to{opacity:1}}
+@keyframes ih-pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@keyframes ih-sheet{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes ih-slide{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes ih-flash{from{background:rgba(77,141,255,.08)}to{background:transparent}}
+@keyframes ih-breathe{0%,100%{opacity:.9}50%{opacity:1}}
+@keyframes ih-glow{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes ih-pulse-out{0%{transform:scale(.82);opacity:.65}70%{opacity:.12}100%{transform:scale(1.28);opacity:0}}
+@keyframes ih-spin{to{transform:rotate(360deg)}}
+@keyframes ih-spin-r{to{transform:rotate(-360deg)}}
+@keyframes ih-siri-flow{to{transform:rotate(1turn)}}
+@keyframes ih-siri-breathe{0%,100%{opacity:.44}50%{opacity:.72}}
+@keyframes ih-dot{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+@keyframes ih-autofade{0%{opacity:0}15%{opacity:.75}70%{opacity:.75}100%{opacity:0}}
+@keyframes ih-spk-pulse{0%,100%{box-shadow:0 0 4px 1px rgba(255,255,255,.38);opacity:.85}50%{box-shadow:0 0 12px 3px rgba(255,255,255,.72);opacity:1}}
+@keyframes ih-col-pulse{from{background-color:var(--hover,#F7F5EF)}to{background-color:transparent}}
+@keyframes ih-compact{from{max-height:160px}to{max-height:0;padding-top:0;padding-bottom:0;margin-top:0;margin-bottom:0;border-bottom-width:0}}
+@keyframes ih-expand{from{max-height:0;padding-top:0;padding-bottom:0}to{max-height:500px}}
+@keyframes ih-fw-ring{0%{transform:scale(.24);opacity:0}22%{opacity:.62}100%{transform:scale(1.9);opacity:0}}
+@keyframes ih-fw-glow{0%{transform:scale(.35);opacity:0}24%{opacity:.5}100%{transform:scale(1.55);opacity:0}}
+@keyframes ih-arrow-glow{0%{box-shadow:0 0 0 0 rgba(232,201,122,.55)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes ih-fw-spark{0%{transform:translate(0,0) scale(1);opacity:0}18%{opacity:1}100%{transform:translate(var(--fx),var(--fy)) scale(.2);opacity:0}}
+/* Capas ambientales del lienzo — solo transform, nunca opacidad */
+@keyframes ih-amb3{0%,100%{transform:translateX(-14px) scale(1)}50%{transform:translateX(14px) scale(1.04)}}
+@keyframes ih-amb4{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes ih-drift{0%,100%{transform:translateX(-22px)}50%{transform:translateX(22px)}}
+@keyframes ih-sheet-out{to{transform:translateY(70px);opacity:0}}
+@keyframes ih-slide-out{to{transform:translateX(40px);opacity:0}}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important}
+}

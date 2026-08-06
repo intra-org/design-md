@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x200" name="Marca" subtitle="Isotipo, Wordmark, Icon (25 glifos), ToggleTema" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Marca</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 10px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Isotipo, Wordmark, Icon, ToggleTema, NOMBRES_ICONO } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  const [modo,setModo]=React.useState('auto');
+  return (<div style={{display:'flex',flexDirection:'column',gap:18}}>
+    <div style={{display:'flex',alignItems:'center',gap:34}}>
+      <div><p className="lbl">Isotipo</p><Isotipo size={34} base="../../assets/logos" /></div>
+      <div><p className="lbl">Wordmark</p><Wordmark alto={20} base="../../assets/logos" /></div>
+      <div><p className="lbl">ToggleTema</p><ToggleTema modo={modo} onChange={setModo} conNombre /></div>
+    </div>
+    <div><p className="lbl">Icon · 25 glifos oficiales</p>
+      <div style={{display:'flex',flexWrap:'wrap',gap:14,color:'var(--ts)'}}>
+        {NOMBRES_ICONO.map(n=> <span key={n} title={n} style={{display:'inline-flex',alignItems:'center',justifyContent:'center',width:30,height:30,borderRadius:9,background:'var(--tonal)'}}><Icon name={n} size={17} /></span>)}
+      </div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

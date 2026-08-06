@@ -1,0 +1,10 @@
+/* intra hotelero — familia única: Schibsted Grotesk 400/500/600/700.
+   El paquete original no incluye binarios; se sirven desde Google Fonts (misma familia, no es sustitución). */
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap");
+
+:root{
+  --font-sans:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-body:var(--font-sans);
+  --font-display:var(--font-sans);
+  --font-numeros:var(--font-sans);
+}
