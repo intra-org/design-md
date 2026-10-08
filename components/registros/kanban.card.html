@@ -1,0 +1,31 @@
+<!-- @dsCard group="6 · Componentes" viewport="760x380" name="Ventas · tabla y kanban" subtitle="ColumnaKanban, TarjetaKanban, BotonesAtender, ChipEstado · v1.6" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Kanban</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp)}.fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { ColumnaKanban, TarjetaKanban, BotonesAtender, BotonesResolver, ChipEstado } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  return (<div style={{display:'flex',flexDirection:'column',gap:16}}>
+    <div className="fila">{['pend','seg','conf','noconf'].map(e=><ChipEstado key={e} estado={e} />)}<span style={{width:12}}/>{['pendiente','proceso','resuelto'].map(e=><ChipEstado key={e} estado={e} />)}</div>
+    <div style={{display:'flex',gap:14,height:290}}>
+      <ColumnaKanban titulo="Por atender" conteo={2}>
+        <TarjetaKanban nombre="Carlos Ibarra" producto="Evento" productoColor="var(--dot-evento)" productoFondo="var(--chip-evento)" contexto="Evento para 80 personas · presupuesto $180,000 validado" acciones={<BotonesAtender />} />
+        <TarjetaKanban nombre="Andrés Cauich" urgente producto="Reserva" productoColor="var(--dot-reserva)" productoFondo="var(--chip-reserva)" contexto="3 noches, llegada 2 ago" acciones={<BotonesAtender />} />
+      </ColumnaKanban>
+      <ColumnaKanban titulo="En seguimiento" conteo={1}>
+        <TarjetaKanban nombre="Sofía Delgado" producto="Reserva" productoColor="var(--dot-reserva)" productoFondo="var(--chip-reserva)" contexto="2 noches, llegada 12 ago · 2 adultos" acciones={<BotonesResolver />} />
+      </ColumnaKanban>
+      <ColumnaKanban titulo="Atendidas · confirmadas" conteo={1}>
+        <TarjetaKanban nombre="Mariana Gutiérrez" producto="Evento" productoColor="var(--dot-evento)" productoFondo="var(--chip-evento)" contexto="Cita jueves 11:00 AM · evento 60 personas" sello="✓ Confirmado · 9:15 AM" />
+      </ColumnaKanban>
+      <ColumnaKanban titulo="Atendidas · no confirmadas" conteo={0} vacio="Ninguna cerrada sin confirmar." />
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

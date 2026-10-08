@@ -1,0 +1,32 @@
+<!-- @dsCard group="6 · Componentes" viewport="760x420" name="Equipo" subtitle="Avatar, AvatarStack, BotonAsignar + MenuAsignar, BarraSeleccion · v1.6" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Equipo</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp)}.fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Avatar, AvatarStack, BotonAsignar, MenuAsignar, BarraSeleccion, ChipFiltro, Checkbox, ToggleVista } = window.IntraHoteleroDesignSystem_27a6ea;
+const OPS=[{id:'sofia',nombre:'Sofía Herrera',sub:'Supervisora',carga:3,pend:1},{id:'marco',nombre:'Marco Alanís',sub:'Ejecutivo',carga:6,pend:2},{id:'daniela',nombre:'Daniela Ruz',sub:'Ejecutiva',carga:0}];
+function Demo(){
+  const [v,setV]=React.useState('lista');const [f,setF]=React.useState('todos');const [cb,setCb]=React.useState(true);
+  return (<div style={{display:'grid',gridTemplateColumns:'1fr 270px',gap:24}}>
+    <div>
+      <p className="lbl">Encabezado de Equipo</p>
+      <div className="fila"><AvatarStack nombres={['Sofía Herrera','Marco Alanís','Daniela Ruz','Javier Cuevas']} /><ToggleVista value={v} onChange={setV} /></div>
+      <p className="lbl" style={{marginTop:18}}>Filtros · ChipFiltro</p>
+      <div className="fila">{[['todos','Todos'],['pend','Por atender'],['seg','En seguimiento'],['conf','Confirmado']].map(([k,l])=><ChipFiltro key={k} activo={f===k} onClick={()=>setF(k)}>{l}</ChipFiltro>)}<ChipFiltro dot="var(--dot-evento)" onQuitar={()=>{}}>Evento</ChipFiltro></div>
+      <p className="lbl" style={{marginTop:18}}>BotonAsignar · sin / con vendedor · Checkbox</p>
+      <div className="fila"><Checkbox checked={cb} onChange={setCb} /><BotonAsignar opciones={OPS} /><BotonAsignar vendedor={{id:'sofia',nombre:'Sofía Herrera'}} opciones={OPS} /><Avatar nombre="Marco Alanís" size={40} /></div>
+      <div style={{position:'relative',height:90,marginTop:18}}><BarraSeleccion n={2} opciones={OPS} onIntercambiar={()=>{}} onLimpiar={()=>{}} style={{bottom:10}} /></div>
+    </div>
+    <div style={{position:'relative'}}>
+      <p className="lbl">MenuAsignar</p>
+      <MenuAsignar centrado={false} actual="marco" opciones={OPS} onQuitar={()=>{}} style={{position:'static',width:250,animation:'none'}} />
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

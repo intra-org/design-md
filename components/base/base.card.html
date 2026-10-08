@@ -1,4 +1,4 @@
-<!-- @dsCard group="Components" viewport="700x260" name="Base" subtitle="Button, Card, Badge, Switch, Segmented, Popover, Toast" -->
+<!-- @dsCard group="6 · Componentes" viewport="700x260" name="Base" subtitle="Button, Card, Badge, Switch, Segmented, ToggleVista, Popover, Toast" -->
 <!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Base</title>
 <link rel="stylesheet" href="../../styles.css">
 <style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed}.fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
@@ -8,10 +8,11 @@
 <script src="../../_ds_bundle.js"></script>
 </head><body><div id="root"></div>
 <script type="text/babel">
-const { Button, Card, Badge, Switch, Segmented, Popover, Toast } = window.IntraHoteleroDesignSystem_27a6ea;
+const { Button, Card, Badge, Switch, Segmented, ToggleVista, Popover, Toast } = window.IntraHoteleroDesignSystem_27a6ea;
 function Demo(){
   const [per,setPer]=React.useState('mes');
   const [sw,setSw]=React.useState(true);
+  const [vis,setVis]=React.useState('lista');
   return (<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:22}}>
     <div>
       <p className="lbl">Button</p>
@@ -24,6 +25,7 @@ function Demo(){
     <div>
       <p className="lbl">Segmented</p>
       <Segmented value={per} onChange={setPer} options={[{value:'hoy',label:'Hoy'},{value:'mes',label:'Este mes'},{value:'junio',label:'Mes pasado'},{value:'90d',label:'90 días'}]} />
+      <div className="fila" style={{marginTop:10}}><ToggleVista value={vis} onChange={setVis} /></div>
       <p className="lbl" style={{marginTop:18}}>Card · Popover · Toast</p>
       <div style={{position:'relative',display:'flex',gap:12}}>
         <Card eyebrow="Próximas citas · hoy" style={{flex:1}}>

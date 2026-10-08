@@ -8,7 +8,7 @@ Sistema de diseño de **intra**: Un asistente de IA atiende por WhatsApp a la ge
 
 ## Fuentes de este design system
 
-Todo lo que hay aquí sale del paquete portable **`Intra_Dashboard_V02/`** (v1.5.1, jul 2026), montado como carpeta local de solo lectura. No hubo Figma ni repositorio de GitHub asociado.
+Todo lo que hay aquí sale del paquete portable **`intra_plataforma_09/`** (**v1.6.0**, ago 2026), que sustituye al anterior `Intra_Dashboard_V02/` (v1.5.1). No hubo Figma ni repositorio de GitHub asociado. Los 85 tokens × 3 temas no cambiaron entre versiones (v1.6.0 declara "cero tokens nuevos"). Del paquete se conservan los prototipos, `DESIGN.md` y `components.md` en `ui_kits/prototipo/`; el resto de las fuentes ya está volcado en `tokens/`, `components/` y `assets/`.
 
 | Fuente | Qué aportó |
 | --- | --- |
@@ -18,10 +18,14 @@ Todo lo que hay aquí sale del paquete portable **`Intra_Dashboard_V02/`** (v1.5
 | `components.md` | Spec por componente (medidas, estados, transiciones) → `components/` |
 | `presencia.md` | Presencia V7 (el "Siri" de intra) → `components/asistente/Presencia.jsx` |
 | `themes.md` | Activación por hora, herencia y reglas de los 3 temas |
-| `dashboard-hotel-intra.dc.html` | Prototipo vivo — markup y valores exactos del hero, nav, bento y Presencia |
+| `dashboard-hotel-intra.dc.html` (v1.5, retirado) | Prototipo vivo de la versión anterior — hero, nav, bento y Presencia |
 | `Productos.dc.html`, `Captura y Reportes…`, `Preguntar historial.dc.html` | Catálogo, captura al resolver, historial de conversaciones |
+| `OG_Prototipo.dc.html` (v1.6) | Ventas en tabla y kanban, toggle de vista, encabezados ordenables, botones de Atender con hover sólido |
+| `Equipo.dc.html` | Sección Equipo: asignación por vendedor, pila de avatares, barra de selección, administrar equipo |
+| `SoporteDesk.dc.html` · `SoporteMovil.dc.html` | Sección Soporte: hero de reportes, bandeja, novedades |
+| `Inicio desktop y movil.dc.html` | Widget "Pregúntale a tu asistente" |
 | `assets/` | Isotipo y wordmark (dark/light) + 24 iconos SVG del producto |
-| `uploads/Whatsapp icon.svg` | Logo oficial de WhatsApp del botón Atender |
+| `Whatsapp icon.svg` | Logo oficial de WhatsApp del botón Atender → `assets/icons/whatsapp.svg` |
 
 **Regla de oro heredada:** ante cualquier duda entre documento y prototipo, **el prototipo es la verdad**.
 
@@ -31,7 +35,7 @@ Todo lo que hay aquí sale del paquete portable **`Intra_Dashboard_V02/`** (v1.5
 
 Un solo producto, dos superficies (ambas recreadas como UI kits):
 
-1. **Escritorio 1440×900** — re-arquitectura propia, no móvil ampliado: nav lateral de 248px con contexto vivo, bento de Inicio sin scroll, panel lateral de detalle, Agenda de 3 vistas, catálogo de Productos y Preguntar centrado.
+1. **Escritorio 1440×900** — re-arquitectura propia, no móvil ampliado: nav lateral de 248px con contexto vivo (Inicio · **Ventas** · Agenda · Historial · Productos · **Equipo** · **Soporte** · Preguntar), bento de Inicio sin scroll, Ventas en tabla o kanban, panel lateral de detalle, Agenda de 3 vistas, catálogo de Productos, asignación de Equipo, bandeja de Soporte y Preguntar centrado.
 2. **Móvil 390×844** — tab bar pill de dos estados, hero de 72px, sheet de detalle con drag-to-dismiss, riel de 7 días en Semana.
 
 Dos propiedades demo definen los dos lenguajes de datos: **Hampton Demo** (estándar: manda el número de oportunidades) y **Nikché Demo** (transaccional: manda el dinero cobrado).
@@ -59,6 +63,7 @@ Dos propiedades demo definen los dos lenguajes de datos: **Hampton Demo** (está
 | IA, inteligencia artificial | tu asistente |
 | eventos (de calendario) | **citas del asistente** |
 | notificación, alerta | aviso |
+| Personas (sección) | **Ventas** (v1.6.0; el ícono es el círculo con signo de pesos) |
 
 Frases canónicas que no se reescriben: **"Mientras dormías"**, **"Lo que pasó"**, **"N oportunidades esperan a tu equipo"**, **"Cobrado por tu asistente"**, **"Sin citas hoy. Tu asistente sigue atendiendo."**, **"Ya está resuelto"**, **"· Sin atender +24 h"**.
 
@@ -119,6 +124,13 @@ Solo `transform` y `opacity`. Entradas con spring `cubic-bezier(0.34,1.2,0.64,1)
 - **Deshabilitado**: opacidad, nunca gris nuevo. Un control bloqueado **no cambia de color**: el motivo se explica en microcopy y toast.
 - **Excepción documentada**: el botón Atender no anima el color — texto e ícono cambian en el mismo frame, solo el `scale` del pressed se interpola.
 
+### Overlays (v1.6.0)
+
+- **Un solo toast**: pastilla frosted, 3.6s informativo o 5s con Deshacer. Se **centra sobre la columna de contenido, nunca sobre la ventana**: `left = 16 + ancho del nav (248 u 84) + 32`, `right: 28`, `bottom: 22`. Con panel lateral descuenta su ancho.
+- **Menús de barra**: cada popover ancla su borde derecho al de su botón (`top: 44px`, `ih-pop .18s`, origen `top right`). El menú de Asignar se centra bajo su botón.
+- **Salir siempre es posible**: todo menú abierto monta un `Scrim` (`inset:0; z-index:30`) — clic fuera cierra.
+- **Cada tabla trae sus cuatro estados**: cargando, error con reintento, vacío sin filtros y vacío por filtros (que siempre ofrece cómo quitarlos).
+
 ### Scroll
 
 Scrollbars ocultos globalmente. Todo scroll horizontal lleva un fade de 24px al borde. El scroll vertical del móvil produce el *scroll-edge*: scrim de 88px del color `--scrim` y la isla mutando a frosted.
@@ -129,12 +141,13 @@ Scrollbars ocultos globalmente. Todo scroll horizontal lleva un fade de 24px al 
 
 **Un solo set, propio.** 24 SVG del producto + el logo oficial de WhatsApp, copiados tal cual a `assets/icons/` y expuestos por el componente `Icon`. **No se usa ninguna librería externa** (nada de Lucide, Heroicons o Font Awesome) y no hay icon font ni sprite: cada glifo es un `<path>` con `fill: currentColor`.
 
-- **Navegación**: `inicio` `personas` `agenda` `preguntar` `productos` `historial` `soporte` `descargar` `check-circle`.
+- **Navegación**: `inicio` `ventas` `personas` (también Equipo) `agenda` `preguntar` `productos` `historial` `soporte` `descargar` `check-circle` `campana` (novedades de Soporte).
+- **Vista**: `lista` `kanban` — solo dentro de `ToggleVista`.
 - **Tema**: `amanecer` `atardecer` `noche` (sol / media luna / luna).
 - **Catálogo (12, asignables a un producto)**: `prod-cama` `prod-copa` `prod-sol` `prod-boda` `prod-pastel` `prod-charola` `prod-cubiertos` `prod-fiesta` `prod-maleta` `prod-podio` `prod-premio` `prod-presentacion`.
 - **WhatsApp**: contorno dibujado como relleno, 14px, `fill: currentColor` — solo dentro del botón Atender. Prohibido el verde de marca, el glifo macizo tipo app-icon y animarlo.
 
-Detalles del set: casi todos son **fill** sobre viewBox propios (≈104–115 unidades); solo `descargar` y `soporte` son **stroke 1.8** sobre grid de 24. Tamaños de uso: 18px en el nav lateral, 21px en la tab bar, 16–17px en filas y chips, 14px en el botón Atender. Un ícono solo, sin label, nunca carga significado ("señal nunca sólo-color/ícono").
+Detalles del set: casi todos son **fill** sobre viewBox propios (≈104–115 unidades); `descargar`, `soporte` y `lista` son **stroke** sobre grid de 24; `ventas` y `campana` son fill sobre 24; `kanban` es fill sobre 800. Tamaños de uso: 18px en el nav lateral, 21px en la tab bar, 16–17px en filas y chips, 14px en el botón Atender. Un ícono solo, sin label, nunca carga significado ("señal nunca sólo-color/ícono").
 
 **Emoji: nunca.** Unicode como icono: solo `✓ ✕ ▲ › ‹ × ⚡ ·`. Si falta un glifo, se dibuja en el set y se copia aquí — no se sustituye por emoji ni por otra librería.
 
@@ -150,20 +163,24 @@ Detalles del set: casi todos son **fill** sobre viewBox propios (≈104–115 un
 
 **`tokens/`** — `fonts.css` (Schibsted Grotesk) · `colors.css` (85 tokens × 3 temas) · `typography.css` · `spacing.css` · `elevation.css` · `motion.css` (curvas + keyframes `ih-*`) · `base.css` (resets, hit-area, coreografía de tema).
 
-**`assets/`** — `logos/` (isotipo y wordmark, dark + light) · `icons/` (25 SVG).
+**`assets/`** — `logos/` (isotipo y wordmark, dark + light) · `icons/` (29 SVG).
 
-**`components/`** — 30 componentes en 7 grupos:
+**`components/`** — 43 componentes en 8 grupos:
 
-- `base/` — Button · Card · Badge · Switch · Segmented · Popover · Toast · DialogoConfirmar · Ambiente- `chips/` — ChipProducto · ChipHero · ChipRemovible · PillFecha
+- `base/` — Button · Card · Badge · Switch · Segmented · **ToggleVista** · Popover · **Scrim** · Toast · DialogoConfirmar · Ambiente · **ChipFiltro** · **Checkbox**
+- `chips/` — ChipProducto · ChipHero · ChipRemovible · PillFecha · **ChipEstado**
 - `marca/` — Icon · Isotipo · Wordmark · ToggleTema
-- `registros/` — RenglonPersona (+ DotAmbar) · BotonAtender · BotonesResolver · CapturaResolver (+ Chispas) · FeedItem · CardCita · Aviso · AvisoMientrasDormias
-- `asistente/` — Presencia · HaloPensando · IslaViva · Burbuja · InputPreguntar
-- `datos/` — Hero · Sparkline · DeDondeVienen · FilaProducto
+- `registros/` — RenglonPersona (+ DotAmbar) · BotonAtender · **BotonesAtender** · BotonesResolver · CapturaResolver (+ Chispas) · FeedItem · CardCita · Aviso · AvisoMientrasDormias · **TarjetaKanban** (+ **ColumnaKanban**)
+- `equipo/` — **Avatar** (+ **AvatarStack**) · **BotonAsignar** (+ **MenuAsignar**, **ItemMenu**) · **BarraSeleccion**
+- `asistente/` — Presencia · HaloPensando · IslaViva · Burbuja · InputPreguntar · **WidgetPregunta**
+- `datos/` — Hero · Sparkline · DeDondeVienen · FilaProducto · **EncabezadoOrdenable** (+ `MinutosDesde`) · **HeroReportes**
+
+En **negrita**, lo nuevo de v1.6.0.
 - `navegacion/` — NavLateral · TabBar · SheetDetalle · PanelDetalle
 
-**`ui_kits/`** — `hotelero-escritorio/` (1440×900, 5 vistas) · `hotelero-movil/` (390×844, 4 pestañas). Cada uno con su `README.md`.
+**`ui_kits/prototipo/`** — el prototipo v1.6 original, copiado sin modificar: `OG_Prototipo.dc.html` (escritorio + móvil, 3 temas), `Equipo`, `SoporteDesk`, `SoporteMovil`, `Productos`, `Inicio`, `Preguntar historial`, `Halo`, más `DESIGN.md` y `components.md`. **Es la fuente de verdad**: ante cualquier diferencia con un componente, gana el prototipo.
 
-**`templates/`** — puntos de partida que los proyectos consumidores copian: `dashboard-escritorio/` (lienzo 1440×900) y `pantalla-movil/` (teléfono 390×844). Cada uno carga el sistema con su `ds-base.js` (una línea que editar).
+**`templates/`** — puntos de partida que los proyectos consumidores copian: `prototipo-intra/` — el prototipo v1.6 completo e idéntico al original, autocontenido (trae su `support.js` y `assets/`).
 
 **`guidelines/`** — 20 fichas de fundamentos (Colors, Type, Spacing, Brand, Motion) que pueblan la pestaña Design System.
 
@@ -180,9 +197,20 @@ El inventario de componentes sale de `components.md`. Tres piezas se agregaron p
 
 Token nuevo: **`--sw-on-op`** (1 en Amanecer, .8 en Atardecer/Noche). No inventa un valor: codifica la regla ya documentada de la pista del switch en temas oscuros.
 
+## v1.6.0 — qué cambió
+
+- **Personas pasa a llamarse Ventas** en nav, tab bar y título; abre en tabla y el `ToggleVista` cambia a kanban de 4 columnas. Encabezados ordenables (Detalle no ordena; "Llegó" por recencia real).
+- **Botones de Atender con hover sólido** (`BotonesAtender`): mismo peso que los ✓/✕ de seguimiento.
+- **Inicio**: "Pregúntale a tu asistente" sustituye los avisos de mensajes respondidos y de campaña resuelta; envía la pregunta a Preguntar ya respondiendo.
+- **Secciones nuevas**: Equipo (asignación por vendedor) y Soporte (bandeja de reportes).
+- **Overlays**: un solo toast centrado sobre el contenido, popovers anclados a su botón y scrim de clic-fuera.
+- Cero tokens nuevos.
+
 ## Notas y pendientes
 
 - **Fuentes**: el paquete no incluía binarios de Schibsted Grotesk. Se sirve la **misma familia** desde Google Fonts (`tokens/fonts.css`). Si tienen los `.woff2` de producción, reemplacen el `@import` por `@font-face` locales.
 - **Iconos de enviar / historial** en `InputPreguntar`: son dos glifos geométricos (flecha y reloj) descritos en `components.md` pero no incluidos como SVG en el paquete. Si existen los archivos, se copian a `assets/icons/` y se agregan a `Icon`.
+- **Móvil v1.6**: el UI kit móvil conserva Personas; los cambios de v1.6 móvil (encabezado fijo de Ventas con blur, composer comprimido 38/35/12.5) están documentados pero aún no recreados. `SoporteMovil.dc.html` tampoco.
+- **Administrar equipo** (alta/edición de integrantes, roles Supervisor/Ejecutivo, reasignación al eliminar) vive en `Equipo.dc.html` y no se recreó en el kit.
 - **Nikché Demo** (propiedad transaccional) está soportada por los componentes (`Hero modo="cobrado"`) pero los UI kits muestran solo Hampton Demo.
 - Las hojas marcadas como exploración en el paquete original (`Navbar experimento`, `comparacion-halo`, `dashboard-desktop`, `Atender WhatsApp (propuesta)`) **no** se consideraron canon.

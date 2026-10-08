@@ -8,10 +8,9 @@ Este paquete es el sistema de diseño de **intra hotelero**: tokens, componentes
 2. Ellos crean un proyecto nuevo y, en el selector de sistema de diseño, eligen **intra hotelero · Design System**.
 3. A partir de ahí escriben lo que quieren ("una pantalla de reportes", "un correo de bienvenida") y el agente ya trabaja con los tokens, los componentes y el tono correctos.
 
-También verán la pestaña **Design System** con las fichas de color, tipografía, espaciado y componentes, y los dos **Templates** como punto de partida:
+También verán la pestaña **Design System** con las fichas de color, tipografía, espaciado y componentes, y el **Template** como punto de partida:
 
-- **Dashboard de escritorio** — el lienzo 1440×900 completo, con Inicio, Personas, Agenda, Historial, Productos y Preguntar.
-- **Pantalla móvil** — la app 390×844, desde el login y el selector de propiedad hasta las cuatro pestañas.
+- **Prototipo intra hotelero** — el prototipo v1.6 completo (escritorio y móvil, 3 temas), idéntico al original.
 
 ## Opción B — Claude Code u otro agente
 
@@ -30,7 +29,7 @@ El agente leerá `readme.md`, que trae la guía completa: contenido y tono de vo
 | `tokens/` | Color (85 tokens × 3 temas), tipografía, espaciado, elevación y motion |
 | `assets/` | Isotipo y wordmark (claro y oscuro) + los 25 iconos oficiales |
 | `components/` | 32 componentes en 7 grupos, cada uno con su contrato de props y su guía de uso |
-| `ui_kits/` | Recreaciones navegables del producto: escritorio y móvil |
+| `ui_kits/prototipo/` | El prototipo v1.6 original sin modificar — fuente de verdad |
 | `templates/` | Puntos de partida que se copian tal cual |
 | `guidelines/` | 20 fichas de fundamentos |
 | `readme.md` | La guía de marca completa |

@@ -20,11 +20,11 @@
               "components/base/**",
               "components/chips/**",
               "components/datos/**",
+              "components/equipo/**",
               "components/marca/**",
               "components/navegacion/**",
               "components/registros/**",
-              "ui_kits/hotelero-escritorio/**",
-              "ui_kits/hotelero-movil/**"
+              "ui_kits/prototipo/**"
             ],
             "message": "Import design-system components from 'index.js', not component internals."
           }
@@ -54,6 +54,10 @@
         "message": "<Ambiente> tema must be one of 'dia' | 'tarde' | 'noche'."
       },
       {
+        "selector": "JSXOpeningElement[name.name='Avatar'] > JSXAttribute > JSXIdentifier[name!=/^(?:nombre|ini|size|key|ref|className|style|children)$/]",
+        "message": "<Avatar> doesn't accept that prop. Declared props: nombre, ini, size."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='Aviso'] > JSXAttribute > JSXIdentifier[name!=/^(?:dot|accion|resuelto|children|key|ref|className|style|children)$/]",
         "message": "<Aviso> doesn't accept that prop. Declared props: dot, accion, resuelto, children."
       },
@@ -70,8 +74,20 @@
         "message": "<Badge> variant must be one of 'conteo' | 'tonal' | 'outline'."
       },
       {
+        "selector": "JSXOpeningElement[name.name='BarraSeleccion'] > JSXAttribute > JSXIdentifier[name!=/^(?:n|opciones|onAsignar|onQuitar|onIntercambiar|onLimpiar|style|key|ref|className|style|children)$/]",
+        "message": "<BarraSeleccion> doesn't accept that prop. Declared props: n, opciones, onAsignar, onQuitar, onIntercambiar, onLimpiar, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Vendedor'] > JSXAttribute > JSXIdentifier[name!=/^(?:id|nombre|key|ref|className|style|children)$/]",
+        "message": "<Vendedor> doesn't accept that prop. Declared props: id, nombre."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='BotonAtender'] > JSXAttribute > JSXIdentifier[name!=/^(?:ambar|children|key|ref|className|style|children)$/]",
         "message": "<BotonAtender> doesn't accept that prop. Declared props: ambar, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='BotonesAtender'] > JSXAttribute > JSXIdentifier[name!=/^(?:onWhatsApp|onYaAtendi|style|key|ref|className|style|children)$/]",
+        "message": "<BotonesAtender> doesn't accept that prop. Declared props: onWhatsApp, onYaAtendi, style."
       },
       {
         "selector": "JSXOpeningElement[name.name='BotonesResolver'] > JSXAttribute > JSXIdentifier[name!=/^(?:onSi|onNo|key|ref|className|style|children)$/]",
@@ -114,6 +130,18 @@
         "message": "<CardCita> doesn't accept that prop. Declared props: hora, nombre, producto, productoColor, productoFondo, contexto, llego, urgente, accion."
       },
       {
+        "selector": "JSXOpeningElement[name.name='Checkbox'] > JSXAttribute > JSXIdentifier[name!=/^(?:checked|onChange|size|key|ref|className|style|children)$/]",
+        "message": "<Checkbox> doesn't accept that prop. Declared props: checked, onChange, size."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ChipEstado'] > JSXAttribute > JSXIdentifier[name!=/^(?:estado|children|key|ref|className|style|children)$/]",
+        "message": "<ChipEstado> doesn't accept that prop. Declared props: estado, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ChipFiltro'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|activo|dot|onQuitar|key|ref|className|style|children)$/]",
+        "message": "<ChipFiltro> doesn't accept that prop. Declared props: children, activo, dot, onQuitar."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='ChipHero'] > JSXAttribute > JSXIdentifier[name!=/^(?:n|icon|activo|atenuado|children|key|ref|className|style|children)$/]",
         "message": "<ChipHero> doesn't accept that prop. Declared props: n, icon, activo, atenuado, children."
       },
@@ -134,6 +162,14 @@
         "message": "<DialogoConfirmar> doesn't accept that prop. Declared props: abierto, pregunta, microcopy, confirmar, cancelar, onConfirmar, onCancelar."
       },
       {
+        "selector": "JSXOpeningElement[name.name='EncabezadoOrdenable'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|activo|dir|ordenable|onOrdenar|key|ref|className|style|children)$/]",
+        "message": "<EncabezadoOrdenable> doesn't accept that prop. Declared props: children, activo, dir, ordenable, onOrdenar."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='EncabezadoOrdenable'] > JSXAttribute[name.name='dir'] > Literal[value!=/^(?:asc|desc)$/]",
+        "message": "<EncabezadoOrdenable> dir must be one of 'asc' | 'desc'."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='FeedItem'] > JSXAttribute > JSXIdentifier[name!=/^(?:t1|t2|gol|pre|texto|producto|productoColor|productoFondo|seg|colTiempo|nuevo|key|ref|className|style|children)$/]",
         "message": "<FeedItem> doesn't accept that prop. Declared props: t1, t2, gol, pre, texto, producto, productoColor, productoFondo, seg, colTiempo, nuevo."
       },
@@ -152,6 +188,10 @@
       {
         "selector": "JSXOpeningElement[name.name='Hero'] > JSXAttribute[name.name='modo'] > Literal[value!=/^(?:oportunidades|cobrado)$/]",
         "message": "<Hero> modo must be one of 'oportunidades' | 'cobrado'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='HeroReportes'] > JSXAttribute > JSXIdentifier[name!=/^(?:pendientes|enProceso|resueltos|filtro|onFiltrar|titulo|key|ref|className|style|children)$/]",
+        "message": "<HeroReportes> doesn't accept that prop. Declared props: pendientes, enProceso, resueltos, filtro, onFiltrar, titulo."
       },
       {
         "selector": "JSXOpeningElement[name.name='Icon'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|size|color|title|key|ref|className|style|children)$/]",
@@ -198,6 +238,10 @@
         "message": "<RenglonPersona> estado must be one of 'pendiente' | 'seguimiento' | 'atendido' | 'no-confirmado'."
       },
       {
+        "selector": "JSXOpeningElement[name.name='Scrim'] > JSXAttribute > JSXIdentifier[name!=/^(?:onCerrar|z|key|ref|className|style|children)$/]",
+        "message": "<Scrim> doesn't accept that prop. Declared props: onCerrar, z."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='SegmentedOption'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|label|key|ref|className|style|children)$/]",
         "message": "<SegmentedOption> doesn't accept that prop. Declared props: value, label."
       },
@@ -226,8 +270,16 @@
         "message": "<ItemTab> doesn't accept that prop. Declared props: id, label, icono."
       },
       {
-        "selector": "JSXOpeningElement[name.name='Toast'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|onDeshacer|visible|key|ref|className|style|children)$/]",
-        "message": "<Toast> doesn't accept that prop. Declared props: children, onDeshacer, visible."
+        "selector": "JSXOpeningElement[name.name='TarjetaKanban'] > JSXAttribute > JSXIdentifier[name!=/^(?:nombre|producto|productoColor|productoFondo|contexto|rel|urgente|densidad|seleccionada|objetivo|arrastrando|acciones|sello|selloColor|casilla|key|ref|className|style|children)$/]",
+        "message": "<TarjetaKanban> doesn't accept that prop. Declared props: nombre, producto, productoColor, productoFondo, contexto, rel, urgente, densidad, seleccionada, objetivo, arrastrando, acciones, sello, selloColor, casilla."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TarjetaKanban'] > JSXAttribute[name.name='densidad'] > Literal[value!=/^(?:extendida|compacta)$/]",
+        "message": "<TarjetaKanban> densidad must be one of 'extendida' | 'compacta'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Toast'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|onDeshacer|visible|navW|derecha|abajo|key|ref|className|style|children)$/]",
+        "message": "<Toast> doesn't accept that prop. Declared props: children, onDeshacer, visible, navW, derecha, abajo."
       },
       {
         "selector": "JSXOpeningElement[name.name='ToggleTema'] > JSXAttribute > JSXIdentifier[name!=/^(?:modo|onChange|conNombre|key|ref|className|style|children)$/]",
@@ -236,6 +288,14 @@
       {
         "selector": "JSXOpeningElement[name.name='ToggleTema'] > JSXAttribute[name.name='modo'] > Literal[value!=/^(?:auto|dia|tarde|noche)$/]",
         "message": "<ToggleTema> modo must be one of 'auto' | 'dia' | 'tarde' | 'noche'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='OpcionVista'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|icono|titulo|key|ref|className|style|children)$/]",
+        "message": "<OpcionVista> doesn't accept that prop. Declared props: value, icono, titulo."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='WidgetPregunta'] > JSXAttribute > JSXIdentifier[name!=/^(?:onPreguntar|sugerencias|movil|placeholder|key|ref|className|style|children)$/]",
+        "message": "<WidgetPregunta> doesn't accept that prop. Declared props: onPreguntar, sugerencias, movil, placeholder."
       },
       {
         "selector": "JSXOpeningElement[name.name='Wordmark'] > JSXAttribute > JSXIdentifier[name!=/^(?:alto|base|intelligence|key|ref|className|style|children)$/]",
@@ -258,6 +318,9 @@
       "Ambiente": {
         "replaces": []
       },
+      "Avatar": {
+        "replaces": []
+      },
       "Aviso": {
         "replaces": []
       },
@@ -267,7 +330,16 @@
       "Badge": {
         "replaces": []
       },
+      "BarraSeleccion": {
+        "replaces": []
+      },
+      "Vendedor": {
+        "replaces": []
+      },
       "BotonAtender": {
+        "replaces": []
+      },
+      "BotonesAtender": {
         "replaces": []
       },
       "BotonesResolver": {
@@ -288,6 +360,15 @@
       "CardCita": {
         "replaces": []
       },
+      "Checkbox": {
+        "replaces": []
+      },
+      "ChipEstado": {
+        "replaces": []
+      },
+      "ChipFiltro": {
+        "replaces": []
+      },
       "ChipHero": {
         "replaces": []
       },
@@ -303,6 +384,9 @@
       "DialogoConfirmar": {
         "replaces": []
       },
+      "EncabezadoOrdenable": {
+        "replaces": []
+      },
       "FeedItem": {
         "replaces": []
       },
@@ -313,6 +397,9 @@
         "replaces": []
       },
       "Hero": {
+        "replaces": []
+      },
+      "HeroReportes": {
         "replaces": []
       },
       "Icon": {
@@ -345,6 +432,9 @@
       "RenglonPersona": {
         "replaces": []
       },
+      "Scrim": {
+        "replaces": []
+      },
       "SegmentedOption": {
         "replaces": []
       },
@@ -360,10 +450,19 @@
       "ItemTab": {
         "replaces": []
       },
+      "TarjetaKanban": {
+        "replaces": []
+      },
       "Toast": {
         "replaces": []
       },
       "ToggleTema": {
+        "replaces": []
+      },
+      "OpcionVista": {
+        "replaces": []
+      },
+      "WidgetPregunta": {
         "replaces": []
       },
       "Wordmark": {

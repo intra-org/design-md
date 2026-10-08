@@ -1,0 +1,125 @@
+<!-- @dsCard group="7 · Prototipo v1.6" viewport="1200x700" name="Halo del asistente" subtitle="Focus de pantalla completa · original v1.6" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EAE7DF;font-family:'Manrope',system-ui,sans-serif;}
+a{color:#2F5FC0;} a:hover{color:#1F4AA0;}
+@property --sweep{syntax:'<angle>';inherits:true;initial-value:0deg;}
+@keyframes haloSweep{0%{--sweep:0deg;opacity:0;}8%{opacity:1;}58%{--sweep:430deg;opacity:1;}66%{--sweep:430deg;opacity:1;}100%{--sweep:430deg;opacity:0;}}
+@keyframes haloBloom{0%{opacity:0;}50%{opacity:1;}68%{opacity:1;}100%{opacity:0;}}
+</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;padding:56px 40px 72px;display:flex;flex-direction:column;gap:36px;align-items:center;">
+  <div style="width:100%;max-width:1320px;display:flex;flex-direction:column;gap:8px;">
+    <p style="margin:0;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#8A8C93;">Inicio · Pregúntale a tu asistente</p>
+    <h1 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.02em;color:#0A0A0A;">Halo al enfocar el campo</h1>
+    <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5E6168;max-width:640px;">Haz clic en cualquier campo. El halo recorre el óvalo desde el lado izquierdo, lo completa y se desvanece en {{ durLabel }}. Los colores salen de la paleta siri de cada tema.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:6px;">
+      <button onClick="{{ replayAll }}" style-hover="background:#1F1F1F;" style-active="transform:scale(0.97);" style="border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:10px 16px;border-radius:999px;background:#0A0A0A;color:#fff;">Reproducir en los tres</button>
+      <span style="font-size:12px;color:#8A8C93;">o haz clic en cada campo</span>
+    </div>
+  </div>
+
+  <div style="width:100%;max-width:1320px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;">
+    <sc-for list="{{ temas }}" as="t" hint-placeholder-count="3">
+      <div style="{{ t.fondo }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tt);">{{ t.nombre }}</span>
+          <span style="font-size:11px;color:var(--tt);">{{ t.hora }}</span>
+        </div>
+        <div style="border-radius:20px;background:var(--card);padding:18px 22px 20px;box-shadow:var(--card-sh);display:flex;flex-direction:column;gap:12px;">
+          <p style="margin:0;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--tt);">Pregúntale a tu asistente</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="position:relative;flex:1;min-width:0;height:44px;">
+              {{ t.halo }}
+              <input placeholder="¿Cómo vamos este mes?" onFocus="{{ t.onFocus }}" style-focus="border-color:var(--sec-bd);" style="position:relative;z-index:1;width:100%;box-sizing:border-box;height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--in-bd);background:var(--input-bg);color:var(--tp);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s ease-out;" />
+            </div>
+            <button title="Preguntar" aria-label="Preguntar" style="flex:none;width:44px;height:44px;border-radius:999px;border:none;font-family:inherit;font-size:18px;font-weight:600;background:var(--send-bg);color:var(--send-tx);cursor:pointer;">↑</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="border:1px solid var(--divider);border-radius:999px;padding:8px 13px;font-size:12px;color:var(--ts);">¿Qué tengo en la agenda esta semana?</span>
+            <span style="border:1px solid var(--divider);border-radius:999px;padding:8px 13px;font-size:12px;color:var(--ts);">¿Quién sigue sin ser atendido?</span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="width:100%;max-width:1320px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8C93;">Trazo</span><span style="font-size:13px;line-height:1.5;color:#5E6168;">Dos bandas difuminadas (3.5 y 9 px de blur) que envuelven el óvalo desde la izquierda en sentido horario, con un frente suave de 70°. Solo viven fuera del borde; el interior queda limpio.</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8C93;">Resplandor</span><span style="font-size:13px;line-height:1.5;color:#5E6168;">Un blur suave del mismo gradiente crece con el trazo y se apaga junto con él. Nunca compite con el borde del campo.</span></div>
+    <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8C93;">Duración</span><span style="font-size:13px;line-height:1.5;color:#5E6168;">{{ durLabel }} en total: el óvalo se cierra al 58 %, se sostiene un instante y se disuelve. Se dispara solo al enfocar (clic o tab); teclear no lo reinicia.</span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;duracion&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1000,&quot;min&quot;:600,&quot;max&quot;:2400,&quot;step&quot;:100,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Halo&quot;}}">
+class Component extends DCLogic {
+  state = { runs: { dia: 0, tarde: 0, noche: 0 } };
+  THEME = {
+    dia:   { nombre: 'Amanecer', hora: '7:40 AM', bg: '#FAF9F5', card: '#FFFFFF', sh: '0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16)', tp: '#0A0A0A', ts: '#5E6168', tt: '#8A8C93', divider: '#EFECE4', secBd: 'rgba(20,16,8,.28)', inBd: 'rgba(20,16,8,.12)', inputBg: 'rgba(255,255,255,.85)', sendBg: '#E4E0D8', sendTx: '#8A8C93',
+             halo: ['#FBA356', '#FED767', '#FEF1C8', '#FBA356'], glow: 'rgba(232,201,122,.5)' },
+    tarde: { nombre: 'Atardecer', hora: '6:52 PM', bg: '#1C2236', card: '#322A38', sh: '0 1px 2px rgba(0,0,0,.2), 0 14px 34px -22px rgba(0,0,0,.55)', tp: '#F4EAE0', ts: 'rgba(244,232,222,.8)', tt: 'rgba(244,232,222,.52)', divider: 'rgba(244,230,220,.12)', secBd: 'rgba(20,16,8,.28)', inBd: 'rgba(20,16,8,.12)', inputBg: 'rgba(246,232,222,.09)', sendBg: '#E4E0D8', sendTx: '#8A8C93',
+             halo: ['#E8A08B', '#C67854', '#6B4F6D', '#E8A08B'], glow: 'rgba(198,120,84,.45)' },
+    noche: { nombre: 'Noche', hora: '11:36 PM', bg: '#07080C', card: '#14171F', sh: '0 1px 2px rgba(0,0,0,.25), 0 14px 34px -22px rgba(0,0,0,.6)', tp: '#F1EDE4', ts: 'rgba(241,237,228,.68)', tt: 'rgba(241,237,228,.46)', divider: 'rgba(241,237,228,.08)', secBd: 'rgba(20,16,8,.28)', inBd: 'rgba(20,16,8,.12)', inputBg: 'rgba(241,237,228,.08)', sendBg: '#E4E0D8', sendTx: '#8A8C93',
+             halo: ['#6E5FA0', '#3A4E80', '#B8C4D6', '#6E5FA0'], glow: 'rgba(90,110,180,.45)' }
+  };
+  dur() { return this.props.duracion ?? 1000; }
+  trigger(k) { this.setState(s => ({ runs: { ...s.runs, [k]: s.runs[k] + 1 } })); }
+  halo(k, t, run) {
+    if (!run) return null;
+    const d = this.dur(), e = React.createElement, c = t.halo;
+    // Ring = pill-shaped box masked to a thin band that hugs the input border; conic mask reveals it from the left, clockwise.
+    const ring = (inset, thick, extra) => ({ position: 'absolute', inset: inset + 'px', borderRadius: '999px', padding: thick + 'px', boxSizing: 'border-box', pointerEvents: 'none',
+      WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', maskComposite: 'exclude', ...extra });
+    const grad = 'conic-gradient(from 270deg, ' + c[0] + ' 0deg, ' + c[1] + ' 120deg, ' + c[2] + ' 240deg, ' + c[0] + ' 360deg)';
+    // Soft-edged reveal: a 70° feathered head so the glow "pours" around the pill instead of drawing a line.
+    const reveal = 'conic-gradient(from 270deg, #000 0deg, #000 calc(var(--sweep) - 70deg), transparent var(--sweep), transparent 360deg)';
+    const ease = 'cubic-bezier(.25,.1,.2,1)';
+    // Blur lives on an OUTER wrapper so it softens the masked band after the cut — no hard edges anywhere.
+    const band = (inset, thick, blur, op) => e('div', { style: { position: 'absolute', inset: 0, filter: 'blur(' + blur + 'px)', opacity: op } },
+      e('div', { style: ring(inset, thick, {}) },
+        e('div', { style: { position: 'absolute', inset: 0, borderRadius: '999px', background: grad, WebkitMaskImage: reveal, maskImage: reveal, animation: 'haloSweep ' + d + 'ms ' + ease + ' forwards' } })));
+    // Outer clip: hides everything inside the pill so the glow only lives outside the border.
+    const clip = { position: 'absolute', inset: '-30px', padding: '30px', boxSizing: 'border-box', borderRadius: '999px', pointerEvents: 'none', zIndex: 0,
+      WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', WebkitMaskComposite: 'xor', mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)', maskComposite: 'exclude' };
+    return e('div', { key: k + run, style: clip },
+      e('div', { style: { position: 'absolute', inset: '30px' } },
+        // ambient glow
+        band(-8, 10, 9, .55),
+        // inner glow hugging the border
+        band(-2, 5, 3.5, .8),
+        // soft bloom, fades with the sweep
+        e('div', { style: { position: 'absolute', inset: '-1px', borderRadius: '999px', boxShadow: '0 0 12px 1px ' + t.glow, animation: 'haloBloom ' + d + 'ms ' + ease + ' forwards' } })));
+  }
+  renderVals() {
+    const d = this.dur();
+    const temas = Object.keys(this.THEME).map(k => {
+      const t = this.THEME[k];
+      return {
+        key: k, nombre: t.nombre, hora: t.hora,
+        fondo: { borderRadius: '28px', background: t.bg, padding: '22px', display: 'flex', flexDirection: 'column', gap: '16px', minHeight: '220px', boxSizing: 'border-box',
+          '--card': t.card, '--card-sh': t.sh, '--tp': t.tp, '--ts': t.ts, '--tt': t.tt, '--divider': t.divider, '--sec-bd': t.secBd, '--in-bd': t.inBd, '--input-bg': t.inputBg, '--send-bg': t.sendBg, '--send-tx': t.sendTx },
+        onFocus: () => this.trigger(k),
+        halo: this.halo(k, t, this.state.runs[k])
+      };
+    });
+    return {
+      temas,
+      durLabel: (d / 1000).toFixed(1).replace('.0', '') + ' s',
+      replayAll: () => this.setState(s => ({ runs: { dia: s.runs.dia + 1, tarde: s.runs.tarde + 1, noche: s.runs.noche + 1 } }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,964 @@
+<!-- @dsCard group="7 · Prototipo v1.6" viewport="1520x1000" name="Equipo" subtitle="Asignar, kanban por vendedor, Administrar equipo · original v1.6" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./equipo-icons.js"></script>
+<style>
+html,body{margin:0;padding:0;}
+body{font-family:'Schibsted Grotesk',system-ui,-apple-system,sans-serif;color:#0A0A0A;-webkit-font-smoothing:antialiased;}
+a{color:#2F5FC0;text-decoration:none;} a:hover{color:#2F5FC0;}
+input::placeholder{color:var(--tt,#8A8C93);opacity:.62;}
+@keyframes eq-pop{from{opacity:0;transform:scale(.96) translateY(-4px);}to{opacity:1;transform:none;}}
+@keyframes eq-rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+@keyframes eq-flash{0%{background-color:var(--tonal,#F1EFE8);}100%{background-color:transparent;}}
+@keyframes eq-pulse{0%{transform:scale(1);opacity:.7;}100%{transform:scale(2.6);opacity:0;}}
+@keyframes eq-amb3{0%,100%{transform:translate3d(0,0,0);}50%{transform:translate3d(0,-1.5%,0);}}
+@keyframes eq-amb4{0%,100%{opacity:.85;}50%{opacity:1;}}
+@keyframes eq-rail-in{from{width:0;opacity:.3;}to{width:380px;opacity:1;}}
+@keyframes eq-rail-out{from{width:380px;opacity:1;}to{width:0;opacity:0;}}
+*{scrollbar-width:none;} *::-webkit-scrollbar{display:none;width:0;height:0;}
+@keyframes eq-fade{from{opacity:0;}to{opacity:1;}}
+@keyframes eq-pop-out{from{opacity:1;transform:none;}to{opacity:0;transform:scale(.96) translateY(6px);}}
+@keyframes eq-drift{0%,100%{transform:translate3d(0,0,0);}50%{transform:translate3d(2%,-1%,0);}}
+</style>
+</helmet>
+<div style="{{ wrapEstilo }}">
+<div data-screen-label="Equipo · desktop" style="{{ root }}">
+  <sc-if value="{{ conNav }}" hint-placeholder-val="{{ true }}">
+  <sc-for list="{{ capas }}" as="cp" hint-placeholder-count="6"><div style="{{ cp.estilo }}"></div></sc-for>
+
+  <!-- NAV · isla -->
+  <button onClick="{{ navToggle }}" title="{{ navTogTitulo }}" style-hover="background:var(--tonal,#F1EFE8);color:var(--ts,#5E6168);" style="{{ navTogBtn }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="{{ navTogIcon }}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+  <nav style="{{ navCard }}">
+    <div style="position:absolute;top:0;left:0;width:248px;box-sizing:border-box;padding:26px 20px 0;display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:0 6px 6px;height:34px;">
+        <span style="position:relative;width:28px;height:28px;display:inline-block;flex:none;"><img src="assets/isotipo-dark.png" alt="intra" style="position:absolute;inset:0;width:28px;height:28px;object-fit:contain;opacity:var(--iso-dark-op,1);"><img src="assets/isotipo-light.png" alt="" style="position:absolute;inset:0;width:28px;height:28px;object-fit:contain;opacity:var(--iso-light-op,0);"></span>
+        <div style="{{ navLbl }}">
+          <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;">Casa Áurea</span>
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.01em;white-space:nowrap;color:var(--tt,#8A8C93);">Asistente Comercial</span>
+        </div>
+      </div>
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+        <button title="{{ n.label }}" style-hover="background:var(--tonal,#F1EFE8);" style-active="opacity:.6;" style="{{ n.estilo }}">{{ n.icono }}<span style="{{ navItemLbl }}">{{ n.label }}<span style="flex:1;"></span><sc-if value="{{ n.hasCnt }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ts,#5E6168);background:var(--tonal,#F1EFE8);border-radius:6px;padding:2px 7px;">{{ n.cnt }}</span></sc-if></span></button>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:0;bottom:74px;width:248px;box-sizing:border-box;padding:0 20px;display:flex;align-items:center;">
+      <button onClick="{{ cicla }}" title="Cambiar modo" style-hover="background:var(--tonal,#F1EFE8);" style-active="opacity:.7;" style="{{ modoBtn }}">{{ modoIcono }}<span style="{{ modoLbl }}">{{ modoNombre }}</span></button>
+    </div>
+    <div style="position:absolute;left:0;bottom:20px;width:248px;box-sizing:border-box;padding:0 26px;display:flex;align-items:center;gap:10px;">
+      <span style="flex:none;width:30px;height:30px;border-radius:999px;background:var(--tonal,#F1EFE8);color:var(--ts,#5E6168);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">{{ yoIni }}</span>
+      <span style="{{ navLbl }}"><span style="font-size:12.5px;font-weight:600;white-space:nowrap;">{{ yoNombre }}</span><span style="font-size:10.5px;color:var(--tt,#8A8C93);">{{ yoRol }}</span></span>
+    </div>
+  </nav>
+  </sc-if>
+
+  <!-- CONTENIDO -->
+  <main style="position:relative;z-index:1;flex:1;min-width:0;display:flex;min-height:0;">
+    <sc-if value="{{ menusOn }}" hint-placeholder-val="{{ false }}"><div onMouseDown="{{ cerrarMenus }}" style="position:absolute;inset:0;z-index:30;"></div></sc-if>
+    <div style="{{ contenidoEstilo }}">
+      <sc-if value="{{ sinAcceso }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) both;">
+          <div style="max-width:380px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 0 60px;">
+            <span style="width:48px;height:48px;border-radius:999px;background:var(--tonal,#F1EFE8);color:var(--ts,#5E6168);display:inline-flex;align-items:center;justify-content:center;margin-bottom:6px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2.5" stroke="currentColor" stroke-width="1.8"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></span>
+            <p style="margin:0;font-size:17px;font-weight:700;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);">Equipo es para supervisores y administración</p>
+            <p style="margin:0;font-size:13px;line-height:1.55;color:var(--ts,#5E6168);">Tus oportunidades están en Ventas. Si necesitas ver el equipo, pídele acceso a tu supervisor.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ADMINISTRACIÓN DEL EQUIPO -->
+      <sc-if value="{{ vAdmin }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:10px;flex:none;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) both;">
+        <button onClick="{{ cerrarAdmin }}" title="Volver" style-hover="background:var(--tonal,#F1EFE8);" style-active="opacity:.6;" style="flex:none;width:32px;height:32px;border-radius:999px;border:none;background:transparent;color:var(--ts,#5E6168);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;margin-left:-8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;">Administrar equipo</span>
+        <span style="flex:1;"></span>
+        <div style="position:relative;display:flex;align-items:center;flex:none;width:240px;height:34px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:var(--input-bg,rgba(255,255,255,.85));box-sizing:border-box;padding:0 10px 0 12px;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex:none;color:var(--tt,#8A8C93);"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"></circle><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+          <input value="{{ qa }}" onInput="{{ onQa }}" placeholder="Buscar integrante" style="flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:inherit;font-size:12.5px;font-weight:500;color:var(--tp,#0A0A0A);">
+          <sc-if value="{{ qaOn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ limpiarQa }}" title="Limpiar" style="border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:12px;line-height:1;color:var(--ts,#5E6168);padding:2px 4px;">✕</button></sc-if>
+        </div>
+        <sc-if value="{{ esAdmin }}" hint-placeholder-val="{{ true }}"><button onClick="{{ nuevoIntegrante }}" style-hover="opacity:.85;" style-active="transform:scale(0.97);" style="display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 12px;border-radius:999px;border:none;background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#FFFFFF);font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;transition:opacity .15s ease-out, transform .12s ease-out;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg>Agregar integrante</button></sc-if>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:var(--ts,#5E6168);animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .05s both;">{{ adminResumen }}</p>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:18px 0 26px;display:flex;flex-direction:column;gap:22px;">
+        <sc-if value="{{ adminVacio }}" hint-placeholder-val="{{ false }}"><p style="margin:24px 4px 0;font-size:13px;color:var(--tt,#8A8C93);">Nadie coincide con esa búsqueda.</p></sc-if>
+        <sc-for list="{{ adminGrupos }}" as="ag" hint-placeholder-count="2">
+          <div style="{{ ag.estilo }}">
+            <div style="display:flex;align-items:center;gap:7px;margin:0 4px 10px;">
+              <span style="font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">{{ ag.titulo }}</span>
+              <span style="font-size:10.5px;font-weight:600;color:var(--tt,#8A8C93);">{{ ag.cnt }}</span>
+            </div>
+            <div style="margin-top:8px;border-radius:20px;background:var(--card,#FFFFFF);padding:8px 8px;box-shadow:var(--card-sh,0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16));display:flex;flex-direction:column;">
+              <div role="row" style="display:flex;gap:16px;align-items:center;padding:6px 14px 10px;border-bottom:1px solid var(--divider,#EFECE4);">
+                <span style="flex:0 1 260px;width:260px;min-width:160px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;">Nombre</span>
+                <span style="flex:1 1 200px;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;">Correo</span>
+                <span style="flex:0 1 170px;width:170px;min-width:130px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;">WhatsApp</span>
+                <span style="flex:none;width:130px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;">Rol</span>
+                <span style="flex:none;width:110px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;text-align:center;">Oportunidades</span>
+              </div>
+              <sc-for list="{{ ag.items }}" as="am" hint-placeholder-count="2">
+                <div onClick="{{ am.abrirPerfil }}" style-hover="background:var(--hover,#F7F5EF);" style="display:flex;gap:16px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--divider,#F1EFE8);border-radius:12px;transition:background .15s ease-out;cursor:pointer;">
+                  <div style="flex:0 1 260px;width:260px;min-width:160px;display:flex;align-items:center;gap:10px;min-width:0;">
+                    <span style="{{ am.avatar }}">{{ am.ini }}</span>
+                    <span style="{{ am.txtNom }}">{{ am.nombre }}</span>
+                  </div>
+                  <span style="{{ am.txtMail }}">{{ am.email }}</span>
+                  <span style="flex:0 1 170px;width:170px;min-width:130px;font-size:13px;color:var(--ts,#5E6168);white-space:nowrap;font-variant-numeric:tabular-nums;">{{ am.whatsapp }}</span>
+                  <span style="flex:none;width:130px;display:flex;align-items:center;gap:6px;"><span style="{{ am.rolChip }}">{{ am.rol }}</span><sc-if value="{{ am.inact }}" hint-placeholder-val="{{ false }}"><span style="{{ am.inChip }}">Inactivo</span></sc-if></span>
+                  <span style="flex:none;width:110px;display:flex;justify-content:center;"><button onClick="{{ am.irLista }}" title="Ver sus oportunidades" style-hover="background:var(--tonal,#F1EFE8);border-color:transparent;" style="min-width:34px;height:26px;padding:0 9px;border-radius:999px;border:1px solid var(--divider,#EFECE4);background:transparent;font-family:inherit;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--tp,#0A0A0A);cursor:pointer;transition:background .15s ease-out, border-color .15s ease-out;">{{ am.cnt }}</button></span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ vMain }}" hint-placeholder-val="{{ true }}">
+      <div style="{{ mainAnim }}">
+        <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;">Equipo</span>
+        <span style="flex:1;"></span>
+        <button onClick="{{ abrirAdmin }}" title="Administrar equipo" style-hover="opacity:.85;" style-active="transform:scale(0.97);" style="display:inline-flex;align-items:center;padding:0;border:none;background:transparent;cursor:pointer;font-family:inherit;transition:opacity .15s ease-out, transform .12s ease-out;">
+          <sc-for list="{{ stackAv }}" as="sa" hint-placeholder-count="3"><span style="{{ sa.estilo }}">{{ sa.ini }}</span></sc-for>
+          <sc-if value="{{ stackMas }}" hint-placeholder-val="{{ true }}"><span style="flex:none;width:28px;height:28px;margin-left:-7px;border-radius:999px;background:linear-gradient(var(--seg-track,#EFECE4), var(--seg-track,#EFECE4)) var(--card,#FFFFFF);box-shadow:0 0 0 2px var(--stack-ring, transparent);box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:var(--ts,#5E6168);">{{ stackN }}</span></sc-if>
+        </button>
+        <sc-if value="{{ esAdmin }}" hint-placeholder-val="{{ true }}"><button onClick="{{ nuevoIntegrante }}" title="Agregar integrante" style-hover="background:var(--tonal,#F1EFE8);" style-active="transform:scale(0.96);" style="flex:none;width:28px;height:28px;margin-left:10px;margin-right:4px;border-radius:999px;border:none;background:var(--seg-track,#EFECE4);color:var(--ts,#5E6168);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease-out, transform .12s ease-out;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button></sc-if>
+        <div role="group" aria-label="Vista" style="position:relative;flex:none;display:flex;padding:3px;border-radius:999px;background:var(--seg-track,#EFECE4);margin-left:10px;">
+          <span style="{{ tgThumb }}"></span>
+          <button onClick="{{ setLista }}" title="Vista de lista" style="{{ tgLista }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path></svg></button>
+          <button onClick="{{ setTablero }}" title="Vista de columnas" style="{{ tgTablero }}"><svg width="15" height="15" viewBox="0 0 800 800" fill="currentColor"><path d="M348.29,0H37.98C17.04,0,0,19.94,0,44.45v711.1c0,24.51,17.04,44.45,37.98,44.45h310.3c20.94,0,37.98-19.94,37.98-44.45V44.45c0-24.51-17.04-44.45-37.98-44.45ZM344.57,71.22v657.55c0,13.9-11.27,25.16-25.16,25.16H66.86c-13.9,0-25.16-11.27-25.16-25.16V71.22c0-13.9,11.27-25.16,25.16-25.16h252.55c13.9,0,25.16,11.27,25.16,25.16Z"></path><path d="M762.02,0h-310.3c-20.94,0-37.98,19.94-37.98,44.45v387.87c0,24.51,17.04,44.45,37.98,44.45h310.3c20.94,0,37.98-19.94,37.98-44.45V44.45c0-24.51-17.04-44.45-37.98-44.45ZM758.3,71.22v334.32c0,13.9-11.27,25.16-25.16,25.16h-252.55c-13.9,0-25.16-11.27-25.16-25.16V71.22c0-13.9,11.27-25.16,25.16-25.16h252.55c13.9,0,25.16,11.27,25.16,25.16Z"></path></svg></button>
+        </div>
+        <div style="{{ kbDensWrap }}">
+          <button onClick="{{ kbToggleDens }}" title="{{ kbDensTitulo }}" style-active="opacity:.6;" style="position:relative;border:none;background:transparent;cursor:pointer;font-family:inherit;padding:8px;color:var(--ts,#5E6168);display:inline-flex;flex:none;">
+            <sc-if value="{{ kbEsExt }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4.5 4.5 10 10M10 6v4H6M19.5 4.5 14 10M14 6v4h4M4.5 19.5 10 14M10 18v-4H6M19.5 19.5 14 14M14 18v-4h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+            <sc-if value="{{ kbEsComp }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M10 10 4.5 4.5M4.5 9V4.5h4.5M14 10l5.5-5.5M19.5 9V4.5H15M10 14l-5.5 5.5M4.5 15v4.5H9M14 14l5.5 5.5M19.5 15v4.5H15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+          </button>
+        </div>
+        <button title="Exportar" style-active="opacity:.6;" style="border:none;background:transparent;cursor:pointer;font-family:inherit;padding:8px;color:var(--ts,#5E6168);display:inline-flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:var(--ts,#5E6168);">{{ resumen }}</p>
+      <div style="display:flex;margin-top:12px;margin-bottom:10px;">
+        <div style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:var(--input-bg,rgba(255,255,255,.85));border:1px solid var(--divider,#EFECE4);box-sizing:border-box;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--tt,#8A8C93)" stroke-width="1.6" stroke-linecap="round" style="flex:none;"><circle cx="11" cy="11" r="7"></circle><path d="M16.2,16.2,21,21"></path></svg>
+          <input placeholder="Buscar persona o vendedor" value="{{ q }}" onInput="{{ onQ }}" style="flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:inherit;font-size:13px;color:var(--tp,#0A0A0A);">
+          <sc-if value="{{ qOn }}" hint-placeholder-val="{{ false }}"><button onClick="{{ limpiarQ }}" style-hover="color:var(--tp,#0A0A0A);" style="flex:none;border:none;background:transparent;padding:0;cursor:pointer;font-family:inherit;font-size:15px;line-height:1;color:var(--tt,#8A8C93);">×</button></sc-if>
+        </div>
+      </div>
+      <div style="flex:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 18px;">
+        <sc-for list="{{ fEstado }}" as="fc" hint-placeholder-count="5"><button onClick="{{ fc.click }}" style-active="transform:scale(0.97);" style="{{ fc.estilo }}">{{ fc.label }}</button></sc-for>
+        <span style="flex:none;width:8px;"></span>
+        <sc-for list="{{ pfSel }}" as="ps" hint-placeholder-count="0"><button onClick="{{ ps.quitar }}" title="{{ ps.label }}" style-active="transform:scale(0.97);" style="{{ ps.estilo }}"><span style="{{ ps.dot }}"></span><span style="min-width:0;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ps.label }}</span><span style="flex:none;font-size:13px;line-height:1;opacity:.75;">×</span></button></sc-for>
+        <sc-if value="{{ pfMasOn }}" hint-placeholder-val="{{ false }}"><span style="{{ pfMasEstilo }}">{{ pfMas }}</span></sc-if>
+        <div style="position:relative;display:flex;">
+          <button onClick="{{ togglePf }}" title="Filtrar por producto" style-hover="background:var(--hover,#F7F5EF);" style-active="transform:scale(0.97);" style="{{ pfBtn }}"><sc-if value="{{ pfSinSel }}" hint-placeholder-val="{{ true }}"><span style="white-space:nowrap;">Producto ▾</span></sc-if><sc-if value="{{ pfConSel }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none;"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path></svg></sc-if></button>
+          <sc-if value="{{ pfMenu }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ pfMenuStyle }}">
+              <sc-if value="{{ pfBuscaOn }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border-radius:10px;background:var(--tonal,#F1EFE8);margin:0 0 6px;box-sizing:border-box;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--tt,#8A8C93)" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><circle cx="11" cy="11" r="7"></circle><path d="M16.2,16.2,21,21"></path></svg>
+                <input value="{{ pfQ }}" onInput="{{ onPfQ }}" autoFocus="{{ true }}" placeholder="Buscar producto" style="flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:inherit;font-size:13px;color:var(--tp,#0A0A0A);">
+              </div></sc-if>
+              <div style="max-height:264px;overflow-y:auto;display:flex;flex-direction:column;">
+                <sc-for list="{{ pfItems }}" as="pi" hint-placeholder-count="4">
+                  <button onClick="{{ pi.click }}" title="{{ pi.label }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ pi.estilo }}"><span style="{{ pi.txt }}">{{ pi.label }}</span></button>
+                </sc-for>
+                <sc-if value="{{ pfVacio }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding:14px 10px;font-size:12.5px;color:var(--tt,#8A8C93);">Ningún producto coincide.</p></sc-if>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ chipsOn }}" hint-placeholder-val="{{ false }}">
+          <span style="margin-left:auto;font-size:12px;color:var(--ts,#5E6168);">{{ conteoFiltro }}</span>
+          <button onClick="{{ limpiarTodo }}" style="border:none;background:transparent;padding:0;color:var(--link,#2F5FC0);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;">Limpiar todo</button>
+        </sc-if>
+      </div>
+
+      <!-- LISTA -->
+      <sc-if value="{{ vLista }}" hint-placeholder-val="{{ true }}">
+      <div data-lista="1" style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;padding-bottom:26px;display:flex;flex-direction:column;scroll-behavior:smooth;">
+        <sc-for list="{{ grupos }}" as="gp" hint-placeholder-count="3">
+          <div data-grupo="{{ gp.key }}" style="display:flex;flex-direction:column;">
+            <sc-if value="{{ gp.hasPuesto }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ gp.toggleCol }}" style-hover="background:var(--hover,#F7F5EF);" style-active="transform:scale(0.995);" style="{{ gp.filaEstilo }}">
+                <span style="{{ gp.avatarL }}">{{ gp.ini }}</span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;text-align:left;">
+                  <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ gp.titulo }}</span>
+                  <span style="font-size:12.5px;color:var(--tt,#8A8C93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ gp.rol }}</span>
+                </span>
+                <span style="flex:none;display:flex;align-items:flex-start;gap:28px;margin-right:6px;">
+                  <span style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:64px;">
+                    <span style="{{ gp.nPendEstilo }}">{{ gp.nPend }}</span>
+                    <span style="font-size:11px;font-weight:400;color:var(--tt,#8A8C93);opacity:.75;white-space:nowrap;">por atender</span>
+                  </span>
+                  <span style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:70px;">
+                    <span style="{{ gp.nSegEstilo }}">{{ gp.nSeg }}</span>
+                    <span style="font-size:11px;font-weight:400;color:var(--tt,#8A8C93);opacity:.75;white-space:nowrap;">en seguimiento</span>
+                  </span>
+                  <span style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:66px;">
+                    <span style="{{ gp.nConfEstilo }}">{{ gp.nConf }}</span>
+                    <span style="font-size:11px;font-weight:400;color:var(--tt,#8A8C93);opacity:.75;white-space:nowrap;">confirmados</span>
+                  </span>
+                </span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="{{ gp.chev }}"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </button>
+            </sc-if>
+            <sc-if value="{{ gp.sinAsig }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ gp.toggleCol }}" style-hover="background:var(--hover,#F7F5EF);" style-active="transform:scale(0.995);" style="{{ gp.filaEstilo }}">
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;text-align:left;">
+                  <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);white-space:nowrap;">{{ gp.titulo }}</span>
+                  <span style="font-size:12.5px;color:var(--tt,#8A8C93);white-space:nowrap;">{{ gp.subSin }}</span>
+                </span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="{{ gp.chev }}"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </button>
+            </sc-if>
+            <div style="{{ gp.body }}">
+            <div data-clip="1" style="{{ gp.bodyIn }}">
+            <div style="margin-top:8px;border-radius:20px;background:var(--card,#FFFFFF);padding:8px 8px;box-shadow:var(--card-sh,0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16));display:flex;flex-direction:column;">
+              <div role="row" style="display:flex;gap:16px;align-items:center;padding:6px 14px 10px;border-bottom:1px solid var(--divider,#EFECE4);">
+                <span onClick="{{ gp.selAll }}" title="Seleccionar todo" style="{{ gp.cbAll }}"><sc-if value="{{ gp.allSel }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                <sc-for list="{{ gp.cols }}" as="co" hint-placeholder-count="5">
+                  <span role="columnheader" onClick="{{ co.ordenar }}" style-hover="color:var(--tp,#0A0A0A);" style="{{ co.th }}"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ co.label }}</span><sc-if value="{{ co.on }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:11px;line-height:1;">{{ co.flecha }}</span></sc-if></span>
+                </sc-for>
+                <span style="flex:none;width:168px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);white-space:nowrap;">{{ gp.colAccion }}</span>
+              </div>
+              <sc-for list="{{ gp.items }}" as="pr" hint-placeholder-count="4">
+                <div onClick="{{ pr.abrir }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ pr.row }}">
+                  <div style="flex:0 1 210px;width:210px;min-width:140px;display:flex;align-items:center;gap:8px;">
+                    <span onClick="{{ pr.toggleSel }}" style="{{ pr.cb }}"><sc-if value="{{ pr.sel }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                    <sc-if value="{{ pr.ambar }}" hint-placeholder-val="{{ false }}"><span title="Sin atender +24 h" style="position:relative;flex:none;width:7px;height:7px;"><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#C8881F);"></span><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#C8881F);animation:eq-pulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite;"></span></span></sc-if>
+                    <span style="font-size:14.5px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ pr.nombre }}</span>
+                  </div>
+                  <span style="flex:none;width:136px;display:flex;align-items:center;min-width:0;"><span title="{{ pr.producto }}" style="{{ pr.chip }}"><span style="{{ pr.dot }}"></span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ pr.producto }}</span></span></span>
+                  <span style="flex:1 1 120px;min-width:0;font-size:13px;color:var(--ts,#5E6168);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ pr.contexto }}</span>
+                  <span style="flex:0 1 110px;width:110px;min-width:80px;white-space:nowrap;font-size:10.5px;color:var(--tt,#8A8C93);overflow:hidden;text-overflow:ellipsis;">{{ pr.rel }}</span>
+                  <span style="flex:0 1 128px;width:128px;min-width:100px;display:flex;align-items:center;"><span style="{{ pr.estChip }}"><span style="{{ pr.estDot }}"></span>{{ pr.estadoTxt }}</span></span>
+                  <div style="flex:none;width:168px;display:flex;align-items:center;">
+                  <div style="position:relative;display:inline-flex;max-width:100%;">
+                    <button onClick="{{ pr.toggleMenu }}" style-hover="{{ pr.asgHover }}" style-active="transform:scale(0.96);" style="{{ pr.asgBtn }}">
+                      <sc-if value="{{ pr.asignado }}" hint-placeholder-val="{{ false }}"><span style="{{ pr.avatar }}">{{ pr.ini }}</span></sc-if>
+                      <span style="flex:1;min-width:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ pr.asgLabel }}</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex:none;opacity:.7;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </button>
+                    <sc-if value="{{ pr.menuOn }}" hint-placeholder-val="{{ false }}">
+                      <div data-asgmenu="1" style="{{ pr.menuEstilo }}">
+                        <span style="padding:6px 10px 8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Asignar a</span>
+                        <sc-for list="{{ pr.opciones }}" as="o" hint-placeholder-count="3">
+                          <button onClick="{{ o.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ o.estilo }}"><span style="{{ o.avatar }}">{{ o.ini }}</span><span style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0;"><span style="font-size:13px;font-weight:600;color:var(--tp,#0A0A0A);">{{ o.nombre }}</span><span style="font-size:11px;color:var(--tt,#8A8C93);">{{ o.sub }}</span></span><span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:1px;margin-left:6px;"><span style="font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--tp,#0A0A0A);">{{ o.carga }}</span></span><sc-if value="{{ o.actual }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--ts,#5E6168);">✓</span></sc-if></button>
+                        </sc-for>
+                        <sc-if value="{{ pr.asignado }}" hint-placeholder-val="{{ false }}"><div style="height:1px;background:var(--divider,#EFECE4);margin:6px 4px;"></div><button onClick="{{ pr.quitar }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ menuItem }}">Quitar asignación</button></sc-if>
+                      </div>
+                    </sc-if>
+                  </div>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ gp.vacio }}" hint-placeholder-val="{{ false }}"><div style="padding:22px 14px;text-align:center;font-size:13px;color:var(--tt,#8A8C93);">{{ gp.vacioTxt }}</div></sc-if>
+            </div>
+            </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <!-- TABLERO -->
+      <sc-if value="{{ vTablero }}" hint-placeholder-val="{{ false }}">
+      <div ref="{{ kbRef }}" onScroll="{{ kbOnScroll }}" style="flex:1;min-height:0;display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;padding-bottom:12px;">
+        <sc-for list="{{ kbCols }}" as="kc" hint-placeholder-count="4">
+          <div style="flex:1 0 0;min-width:calc((100% - 64px) / 5);max-width:320px;display:flex;flex-direction:column;min-height:0;">
+            <div data-kbcol="{{ kc.key }}" style="{{ kc.track }}">
+              <sc-if value="{{ kc.hasPuesto }}" hint-placeholder-val="{{ false }}">
+                <div style="flex:none;display:flex;align-items:center;gap:10px;padding:2px 4px 12px;min-width:0;">
+                  <span style="{{ kc.avatarK }}">{{ kc.ini }}</span>
+                  <span style="display:flex;flex-direction:column;gap:1px;min-width:0;flex:1;"><span style="font-size:13.5px;font-weight:700;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ kc.titulo }}</span><span style="font-size:11px;color:var(--tt,#8A8C93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ kc.rol }}</span></span>
+                  <span style="font-size:12px;font-weight:600;color:var(--tt,#8A8C93);">{{ kc.cnt }}</span>
+                  <span onPointerDown="{{ kc.selAll }}" title="Seleccionar todas" style="{{ kc.cbAll }}"><sc-if value="{{ kc.allSel }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ kc.sinAsig }}" hint-placeholder-val="{{ true }}">
+                <div style="flex:none;display:flex;align-items:baseline;gap:8px;padding:2px 4px 12px;min-width:0;height:48px;box-sizing:border-box;align-items:center;">
+                  <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ts,#5E6168);white-space:nowrap;">{{ kc.titulo }}</span>
+                  <span style="font-size:12px;font-weight:600;color:var(--tt,#8A8C93);">{{ kc.cnt }}</span>
+                  <span style="flex:1;"></span>
+                  <span onPointerDown="{{ kc.selAll }}" title="Seleccionar todas" style="{{ kc.cbAll }}"><sc-if value="{{ kc.allSel }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                </div>
+              </sc-if>
+              <div style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:14px;border-radius:12px;">
+                <sc-for list="{{ kc.secciones }}" as="ks" hint-placeholder-count="4">
+                  <div style="display:flex;flex-direction:column;gap:8px;">
+                    <button onClick="{{ ks.toggle }}" title="{{ ks.titulo }}" style-hover="opacity:.7;" style="display:flex;align-items:center;gap:6px;padding:2px 4px;border:none;background:transparent;cursor:pointer;font-family:inherit;text-align:left;">
+                      <span style="{{ ks.dot }}"></span>
+                      <span style="font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">{{ ks.titulo }}</span>
+                      <span style="font-size:10.5px;font-weight:600;color:var(--tt,#8A8C93);">{{ ks.cnt }}</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" style="{{ ks.chev }}"><path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </button>
+                    <div style="{{ ks.body }}"><div style="{{ ks.bodyIn }}"><div style="display:flex;flex-direction:column;gap:8px;">
+                    <sc-for list="{{ ks.items }}" as="kr" hint-placeholder-count="2">
+                      <div data-kbcard="{{ kr.id }}" onPointerDown="{{ kr.down }}" style-hover="background-image:linear-gradient(var(--hover,#F7F5EF),var(--hover,#F7F5EF));" style="{{ kr.card }}">
+                        <div style="display:flex;align-items:center;gap:7px;min-width:0;">
+                          <sc-if value="{{ kr.ambar }}" hint-placeholder-val="{{ false }}"><span title="Sin atender +24 h" style="position:relative;flex:none;width:6px;height:6px;"><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#C8881F);"></span><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#C8881F);animation:eq-pulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite;"></span></span></sc-if>
+                          <span style="font-size:15.5px;font-weight:700;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ kr.nombre }}</span>
+                          <span style="flex:1;"></span>
+                          <span onPointerDown="{{ kr.cbDown }}" style="{{ kr.cbK }}"><sc-if value="{{ kr.sel }}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                        </div>
+                        <span title="{{ kr.producto }}" style="{{ kr.kbChip }}"><span style="{{ kr.dot }}"></span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ kr.producto }}</span></span>
+                        <div style="{{ kr.kbCtx }}"><span style="display:block;font-size:13px;line-height:1.45;color:var(--ts,#5E6168);max-height:38px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">{{ kr.contexto }}</span><span style="display:block;margin-top:6px;font-size:11px;line-height:1.4;color:var(--tt,#8A8C93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ kr.rel }}</span></div>
+                      </div>
+                    </sc-for>
+                    </div></div></div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ kc.ph }}" hint-placeholder-val="{{ false }}"><div style="{{ kc.phEstilo }}"></div></sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="{{ kbBarWrap }}">
+        <div onPointerDown="{{ kbBarDown }}" style="{{ kbBarTrack }}"><span style="{{ kbBarThumb }}"></span></div>
+        <button onClick="{{ kbIzq }}" title="Columna anterior" style-hover="opacity:1;" style="{{ kbFlechaIzq }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:block;flex:none;"><path d="M14.5 6 9 12l5.5 6"></path></svg></button>
+        <button onClick="{{ kbDer }}" title="Columna siguiente" style-hover="opacity:1;" style="{{ kbFlechaDer }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:block;flex:none;"><path d="M9.5 6 15 12l-5.5 6"></path></svg></button>
+      </div>
+      </sc-if>
+      <sc-if value="{{ dragOn }}" hint-placeholder-val="{{ false }}"><div style="{{ ghost }}"><span style="font-size:15.5px;font-weight:700;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);">{{ ghostNombre }}</span><span style="font-size:12px;color:var(--ts,#5E6168);margin-top:4px;display:block;">{{ ghostSub }}</span><sc-if value="{{ ghostMulti }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-9px;right:-9px;min-width:22px;height:22px;box-sizing:border-box;padding:0 7px;border-radius:999px;background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#fff);font-size:11.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;">{{ ghostN }}</span></sc-if></div></sc-if>
+      </sc-if>
+
+    </div>
+    <sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}"><div style="{{ toastWrap }}"><div style="{{ toastEstilo }}"><span style="font-size:12.5px;font-weight:600;color:var(--tp,#0A0A0A);">{{ toastTxt }}</span><sc-if value="{{ puedeDeshacer }}" hint-placeholder-val="{{ false }}"><button onClick="{{ deshacer }}" style="border:none;background:transparent;color:var(--link,#2F5FC0);font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:0;">Deshacer</button></sc-if></div></div></sc-if>
+      <sc-if value="{{ selOn }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ selWrap }}"><div style="{{ selBar }}">
+          <span style="font-size:13px;font-weight:600;white-space:nowrap;">{{ selTxt }}</span>
+          <span style="flex:none;width:1px;height:16px;background:var(--divider,#EFECE4);"></span>
+          <div style="position:relative;display:flex;">
+            <button onClick="{{ selToggleMenu }}" style-hover="opacity:.8;" style="{{ selBtn }}">Asignar a<svg width="11" height="11" viewBox="0 0 24 24" fill="none" style="flex:none;opacity:.8;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <sc-if value="{{ selMenuOn }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ selMenuStyle }}">
+                <span style="padding:6px 10px 8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Asignar a</span>
+                <sc-for list="{{ selOpciones }}" as="o" hint-placeholder-count="3">
+                  <button onClick="{{ o.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ o.estilo }}"><span style="{{ o.avatar }}">{{ o.ini }}</span><span style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0;"><span style="font-size:13px;font-weight:600;color:var(--tp,#0A0A0A);">{{ o.nombre }}</span><span style="font-size:11px;color:var(--tt,#8A8C93);">{{ o.sub }}</span></span><span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:1px;margin-left:6px;"><span style="font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--tp,#0A0A0A);">{{ o.carga }}</span><sc-if value="{{ o.hasPend }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--ts,#5E6168);white-space:nowrap;"><span style="width:5px;height:5px;border-radius:999px;background:var(--chip-3);flex:none;"></span>{{ o.pend }}</span></sc-if></span></button>
+                </sc-for>
+                <div style="height:1px;background:var(--divider,#EFECE4);margin:6px 4px;"></div>
+                <button onClick="{{ selQuitar }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ menuItem }}">Quitar asignación</button>
+              </div>
+            </sc-if>
+          </div>
+          <sc-if value="{{ selDos }}" hint-placeholder-val="{{ false }}"><button onClick="{{ selSwap }}" title="Intercambiar vendedores" style-hover="opacity:.8;" style="{{ selBtn }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none;"><path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3 3m-3-3 3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Intercambiar</button></sc-if>
+          <button onClick="{{ selClear }}" title="Quitar selección (Esc)" style-hover="opacity:.8;" style="{{ selX }}">✕</button>
+        </div></div>
+      </sc-if>
+    <!-- PANEL LATERAL DE PERFIL -->
+    <sc-if value="{{ hasPerfil }}" hint-placeholder-val="{{ false }}">
+      <aside onMouseDown="{{ perfilDown }}" style="{{ perfilCard }}">
+        <div style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;">
+        <div style="width:380px;box-sizing:border-box;padding:22px 22px 24px;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:12px;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) both;">
+            <span style="{{ perfil.avatar }}">{{ perfil.ini }}</span>
+            <span style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;"><span style="font-size:18px;font-weight:700;letter-spacing:-0.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ perfil.nombre }}</span><span style="font-size:12.5px;color:var(--tt,#8A8C93);">{{ perfil.rolTxt }}</span></span>
+            <button onClick="{{ cerrarPerfil }}" title="Cerrar" style-active="opacity:.6;" style="border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:15px;line-height:1;color:var(--ts,#5E6168);padding:4px 6px;">✕</button>
+          </div>
+
+          <div style="margin-top:22px;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .05s both;">
+            <p style="margin:0 0 10px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Datos</p>
+            <div style="border-radius:16px;background:var(--card,#FFFFFF);box-shadow:0 1px 2px rgba(20,16,8,.04);padding:16px;display:flex;flex-direction:column;gap:12px;">
+              <sc-for list="{{ perfil.campos }}" as="pc" hint-placeholder-count="3">
+                <label style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;"><span style="font-size:12px;color:var(--tt,#8A8C93);">{{ pc.k }}</span><input value="{{ pc.v }}" onInput="{{ pc.onInput }}" placeholder="{{ pc.ph }}" style-focus="border-color:var(--tp,#0A0A0A);" style="height:40px;border-radius:12px;border:1px solid var(--sec-bd,#D9D5CC);background:var(--input-bg,rgba(255,255,255,.85));color:var(--tp,#0A0A0A);font-family:inherit;font-size:13px;font-weight:600;padding:0 13px;outline:none;box-sizing:border-box;width:100%;transition:border-color .15s ease-out;"></label>
+              </sc-for>
+              <p style="margin:0;font-size:12px;line-height:1.5;color:var(--tt,#8A8C93);">{{ perfil.micro }}</p>
+            </div>
+          </div>
+
+          <div style="{{ perfil.rolWrap }}">
+            <p style="margin:0 0 10px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Rol</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <sc-for list="{{ perfil.roles }}" as="ro" hint-placeholder-count="2">
+                <button onClick="{{ ro.click }}" style-hover="{{ ro.hover }}" style-active="transform:scale(0.99);" style="{{ ro.estilo }}">
+                  <span style="{{ ro.radio }}"><sc-if value="{{ ro.on }}" hint-placeholder-val="{{ false }}"><span style="width:8px;height:8px;border-radius:999px;background:var(--btn-tx,#fff);"></span></sc-if></span>
+                  <span style="display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left;"><span style="{{ ro.titulo }}">{{ ro.label }}</span><span style="{{ ro.desc }}">{{ ro.descTxt }}</span></span>
+                </button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ perfil.esEjec }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ perfil.cardEstilo }}">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="flex:1;font-size:13.5px;font-weight:500;color:var(--tp,#0A0A0A);">Supervisor</span>
+                  <div data-supmenu="1" style="position:relative;display:inline-flex;min-width:0;">
+                    <button onClick="{{ perfil.toggleSupMenu }}" style-hover="border-color:var(--tt,#8A8C93);" style-active="transform:scale(0.96);" style="{{ perfil.supBtn }}">
+                      <span style="{{ perfil.supAvatar }}">{{ perfil.supIni }}</span>
+                      <span style="flex:1;min-width:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ perfil.supNombre }}</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex:none;opacity:.7;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </button>
+                    <sc-if value="{{ perfil.supMenuOn }}" hint-placeholder-val="{{ false }}">
+                      <div style="{{ supMenuStyle }}">
+                        <span style="padding:6px 10px 8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Supervisor</span>
+                        <sc-for list="{{ perfil.supOpc }}" as="so" hint-placeholder-count="2">
+                          <button onClick="{{ so.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ so.estilo }}"><span style="{{ so.avatar }}">{{ so.ini }}</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--tp,#0A0A0A);text-align:left;">{{ so.nombre }}</span><sc-if value="{{ so.on }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--ts,#5E6168);">✓</span></sc-if></button>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+                <p style="margin:0;font-size:12px;line-height:1.5;color:var(--tt,#8A8C93);">Todo ejecutivo reporta a un supervisor.</p>
+              </div>
+            </sc-if>
+          </div>
+
+        </div>
+        </div>
+        <div style="flex:none;display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:16px 22px;border-top:1px solid var(--divider,#EFECE4);">
+          <sc-if value="{{ perfil.existe }}" hint-placeholder-val="{{ true }}"><button onClick="{{ perfil.pedirEliminar }}" title="Eliminar usuario" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:transparent;color:var(--ts,#5E6168);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Eliminar</button></sc-if>
+          <sc-if value="{{ perfil.activo }}" hint-placeholder-val="{{ false }}"><button onClick="{{ perfil.pedirDesactivar }}" title="Conserva su historial; deja de recibir oportunidades" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:transparent;color:var(--ts,#5E6168);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Desactivar</button></sc-if>
+          <sc-if value="{{ perfil.inact }}" hint-placeholder-val="{{ false }}"><button onClick="{{ perfil.reactivar }}" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--tp,#0A0A0A);background:transparent;color:var(--tp,#0A0A0A);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Reactivar</button></sc-if>
+          <sc-if value="{{ perfil.esNuevo }}" hint-placeholder-val="{{ false }}"><button onClick="{{ cerrarPerfil }}" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:transparent;color:var(--ts,#5E6168);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Cancelar</button></sc-if>
+          <span style="flex:1;"></span>
+          <button onClick="{{ perfil.guardar }}" style-hover="opacity:.9;" style-active="transform:scale(0.97);" style="{{ perfil.btnGuardar }}">{{ perfil.guardarTxt }}</button>
+        </div>
+        <sc-if value="{{ reasigOn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--panel-scrim,rgba(20,16,8,.14));backdrop-filter:blur(10px) saturate(.9);-webkit-backdrop-filter:blur(10px) saturate(.9);animation:eq-fade .2s ease-out both;">
+            <div style="width:100%;max-width:360px;max-height:100%;box-sizing:border-box;padding:22px 20px 18px;border-radius:20px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--divider,#EFECE4);background:var(--card,#FFFFFF);box-shadow:var(--card-sh);animation:eq-pop .22s cubic-bezier(0.34,1.2,0.64,1) both;overflow-y:auto;">
+              <p style="margin:0;font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);">{{ reasig.titulo }}</p>
+              <p style="margin:0 0 8px;font-size:12.5px;line-height:1.55;color:var(--tt,#8A8C93);">{{ reasig.desc }}</p>
+              <p style="margin:6px 0 6px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Pasan a</p>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <sc-for list="{{ reasig.opc }}" as="rq" hint-placeholder-count="2">
+                  <button onClick="{{ rq.click }}" style-hover="{{ rq.hover }}" style="{{ rq.estilo }}">
+                    <span style="{{ rq.radio }}"><sc-if value="{{ rq.on }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:999px;background:var(--btn-tx,#fff);"></span></sc-if></span>
+                    <span style="{{ rq.avatar }}">{{ rq.ini }}</span>
+                    <span style="display:flex;flex-direction:column;gap:1px;min-width:0;text-align:left;flex:1;"><span style="font-size:13px;font-weight:600;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ rq.nombre }}</span><span style="font-size:11px;color:var(--tt,#8A8C93);">{{ rq.sub }}</span></span>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ reasig.esEliminar }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ reasig.toggleOpps }}" style="display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--divider,#EFECE4);background:transparent;cursor:pointer;font-family:inherit;text-align:left;width:100%;box-sizing:border-box;">
+                  <span style="{{ reasig.cbOpps }}"><sc-if value="{{ reasig.opps }}" hint-placeholder-val="{{ true }}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="var(--btn-tx,#fff)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if></span>
+                  <span style="font-size:12.5px;font-weight:500;color:var(--tp,#0A0A0A);flex:1;">{{ reasig.oppsTxt }}</span>
+                </button>
+              </sc-if>
+              <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;">
+                <button onClick="{{ cancelarReasig }}" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:transparent;color:var(--tp,#0A0A0A);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Cancelar</button>
+                <button onClick="{{ confirmarReasig }}" style-hover="opacity:.9;" style="{{ reasig.btn }}">{{ reasig.btnTxt }}</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ confirmDelOn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:28px;background:var(--panel-scrim,rgba(20,16,8,.14));backdrop-filter:blur(10px) saturate(.9);-webkit-backdrop-filter:blur(10px) saturate(.9);animation:eq-fade .2s ease-out both;">
+            <div style="width:100%;max-width:330px;padding:22px 20px;border-radius:20px;display:flex;flex-direction:column;gap:8px;text-align:center;align-items:center;border:1px solid var(--divider,#EFECE4);background:var(--card,#FFFFFF);box-shadow:var(--card-sh);animation:eq-pop .22s cubic-bezier(0.34,1.2,0.64,1) both;">
+              <p style="margin:0;font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);">¿Eliminar a {{ perfil.nombre }}?</p>
+              <p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--tt,#8A8C93);">{{ perfil.impacto }} Esta acción no se puede deshacer.</p>
+              <div style="display:flex;gap:8px;margin-top:6px;justify-content:center;">
+                <button onClick="{{ perfil.eliminar }}" style-hover="opacity:.9;" style="height:38px;padding:0 16px;border-radius:999px;border:none;background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#FFFFFF);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">Sí, eliminar</button>
+                <button onClick="{{ cancelarEliminar }}" style-hover="background:var(--hover,#F7F5EF);" style="height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--sec-bd,#D9D5CC);background:transparent;color:var(--tp,#0A0A0A);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;flex:none;">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </aside>
+    </sc-if>
+    <!-- PANEL LATERAL DE DETALLE -->
+    <sc-if value="{{ hasDet }}" hint-placeholder-val="{{ false }}">
+      <aside style="position:relative;z-index:31;flex:none;width:380px;box-sizing:border-box;border-left:1px solid var(--divider,#EFECE4);background:var(--nav-bg,#F7F5EF);overflow-x:hidden;overflow-y:auto;animation:{{ detAnim }};">
+        <div style="width:380px;box-sizing:border-box;padding:22px 22px 26px;">
+          <div style="display:flex;align-items:center;gap:10px;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) both;">
+            <span style="font-size:18px;font-weight:700;letter-spacing:-0.015em;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ det.nombre }}</span>
+            <button onClick="{{ cerrarDet }}" title="Cerrar" style-active="opacity:.6;" style="border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:15px;line-height:1;color:var(--ts,#5E6168);padding:4px 6px;">✕</button>
+          </div>
+          <div style="margin-top:8px;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .05s both;"><span style="{{ det.chip }}"><span style="{{ det.dot }}"></span>{{ det.producto }}</span></div>
+          <div style="{{ det.cardEstilo }}">
+            <sc-for list="{{ det.campos }}" as="cp2" hint-placeholder-count="3">
+              <div style="display:flex;align-items:baseline;gap:12px;padding:8px 0;border-bottom:1px solid var(--divider,#F1EFE8);">
+                <span style="font-size:12px;color:var(--tt,#8A8C93);flex:none;width:92px;">{{ cp2.k }}</span>
+                <span style="font-size:13px;font-weight:600;">{{ cp2.v }}</span>
+              </div>
+            </sc-for>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--divider,#F1EFE8);">
+              <span style="font-size:12px;color:var(--tt,#8A8C93);flex:none;width:92px;">Estado</span>
+              <span style="{{ det.estChip }}"><span style="{{ det.estDot }}"></span>{{ det.estadoTxt }}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+              <span style="font-size:12px;color:var(--tt,#8A8C93);flex:none;width:92px;">Vendedor</span>
+              <div style="position:relative;display:inline-flex;min-width:0;">
+              <button onClick="{{ det.toggleMenu }}" style-hover="{{ det.asgHover }}" style-active="transform:scale(0.96);" style="{{ det.asgBtn }}">
+                <sc-if value="{{ det.asignado }}" hint-placeholder-val="{{ false }}"><span style="{{ det.avatar }}">{{ det.ini }}</span></sc-if>
+                <span style="flex:1;min-width:0;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ det.asgLabel }}</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="flex:none;opacity:.7;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </button>
+              <sc-if value="{{ det.menuDetOn }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ asgMenuDetStyle }}">
+                  <span style="padding:6px 10px 8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Asignar a</span>
+                  <sc-for list="{{ det.opcionesDet }}" as="o" hint-placeholder-count="3">
+                    <button onClick="{{ o.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ o.estilo }}"><span style="{{ o.avatar }}">{{ o.ini }}</span><span style="flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0;"><span style="font-size:13px;font-weight:600;color:var(--tp,#0A0A0A);">{{ o.nombre }}</span><span style="font-size:11px;color:var(--tt,#8A8C93);">{{ o.sub }}</span></span><span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:1px;margin-left:6px;"><span style="font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--tp,#0A0A0A);">{{ o.carga }}</span><sc-if value="{{ o.hasPend }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--ts,#5E6168);white-space:nowrap;"><span style="width:5px;height:5px;border-radius:999px;background:var(--chip-3);flex:none;"></span>{{ o.pend }}</span></sc-if></span><sc-if value="{{ o.actual }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:var(--ts,#5E6168);">✓</span></sc-if></button>
+                  </sc-for>
+                  <sc-if value="{{ det.asignado }}" hint-placeholder-val="{{ false }}"><div style="height:1px;background:var(--divider,#EFECE4);margin:6px 4px;"></div><button onClick="{{ det.quitarDet }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ menuItem }}">Quitar asignación</button></sc-if>
+                </div>
+              </sc-if>
+              </div>
+            </div>
+          </div>
+          <p style="margin:20px 0 10px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .15s both;">Lo que pasó</p>
+          <div style="border-radius:16px;background:var(--card,#FFFFFF);padding:2px 16px;box-shadow:0 1px 2px rgba(20,16,8,.04);display:flex;flex-direction:column;animation:eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .2s both;">
+            <sc-for list="{{ det.tl }}" as="m2" hint-placeholder-count="2">
+              <div style="{{ m2.rowEstilo }}">
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:none;width:76px;"><span style="font-size:12px;font-weight:600;color:var(--ts,#5E6168);text-align:right;">{{ m2.t1 }}</span><span style="font-size:10.5px;color:var(--tt,#8A8C93);text-align:right;">{{ m2.t2 }}</span></div>
+                <span style="flex:none;width:1px;align-self:stretch;background:var(--divider,rgba(20,16,8,.07));margin:2px 0;"></span>
+                <div style="display:flex;flex-direction:column;gap:7px;min-width:0;">
+                  <div style="display:flex;align-items:baseline;gap:7px;">
+                    <sc-if value="{{ m2.gol }}" hint-placeholder-val="{{ false }}"><span style="flex:none;width:6px;height:6px;border-radius:999px;background:var(--gol,#3E7FE6);align-self:center;"></span></sc-if>
+                    <p style="margin:0;font-size:13px;line-height:1.5;color:var(--tp,#0A0A0A);"><span style="font-weight:700;">{{ m2.pre }}</span>{{ m2.rest }}</p>
+                  </div>
+                  <sc-if value="{{ m2.hasSeg }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:var(--tt,#8A8C93);"><svg width="9" height="9" viewBox="0 0 24 24" style="flex:none;"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2Z" fill="var(--tt,#8A8C93)"></path></svg>{{ m2.seg }}</span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </aside>
+    </sc-if>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dia&quot;,&quot;options&quot;:[&quot;dia&quot;,&quot;tarde&quot;,&quot;noche&quot;],&quot;tsType&quot;:&quot;'dia'|'tarde'|'noche'&quot;,&quot;section&quot;:&quot;Apariencia&quot;},&quot;tema&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;string|null&quot;},&quot;onBadge&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;(n:number)=>void&quot;},&quot;vistaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;lista&quot;,&quot;options&quot;:[&quot;lista&quot;,&quot;tablero&quot;],&quot;tsType&quot;:&quot;'lista'|'tablero'&quot;,&quot;section&quot;:&quot;Equipo&quot;},&quot;verComo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;admin&quot;,&quot;options&quot;:[&quot;admin&quot;,&quot;supervisor&quot;,&quot;ejecutivo&quot;],&quot;tsType&quot;:&quot;'admin'|'supervisor'|'ejecutivo'&quot;,&quot;section&quot;:&quot;Permisos&quot;}}">
+class Component extends DCLogic {
+  THEME = {
+    dia:   { '--card':'#FFFFFF','--nav-bg':'#F7F5EF','--card-sh':'0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16)','--tp':'#0A0A0A','--ts':'#5E6168','--tt':'#8A8C93','--divider':'#EFECE4','--tonal':'#F1EFE8','--hover':'#F7F5EF','--verde-tx':'#1F8A5C','--ambar':'#C8881F','--sec-bd':'#D9D5CC','--btn-bg':'#0A0A0A','--btn-tx':'#FFFFFF','--seg-track':'#EFECE4','--seg-thumb':'#FFFFFF','--input-bg':'rgba(255,255,255,.85)','--chip-reserva':'#F1EFE8','--chip-evento':'#ECEAE3','--chip-daypass':'#F5F0E4','--dot-reserva':'#ABC4DB','--dot-evento':'#CEAB8E','--dot-daypass':'#D6B06E','--chip-tx':'#5E6168','--gol':'#3E7FE6','--link':'#2F5FC0','--chip-1':'#ABC4DB','--chip-3':'#D6B16E','--chip-5':'#8DA099','--chip-9':'#EAB3A4','--chip-bg':'#F1EFE8','--iso-dark-op':'1','--iso-light-op':'0','--stack-ring':'#F8F6F0' },
+    tarde: { '--card':'#322A38','--nav-bg':'rgba(0,0,0,.20)','--card-sh':'0 1px 2px rgba(0,0,0,.2), 0 14px 34px -22px rgba(0,0,0,.55)','--tp':'#F4EAE0','--ts':'rgba(244,232,222,.8)','--tt':'rgba(244,232,222,.52)','--divider':'rgba(244,230,220,.12)','--tonal':'rgba(246,224,200,.17)','--hover':'rgba(246,232,222,.06)','--verde-tx':'#7FE0BC','--ambar':'#E2AC55','--sec-bd':'rgba(246,232,222,.4)','--btn-bg':'#F4EFE4','--btn-tx':'#14161C','--seg-track':'rgba(246,224,200,.1)','--seg-thumb':'#4A4152','--input-bg':'rgba(246,232,222,.09)','--chip-reserva':'rgba(246,224,200,.14)','--chip-evento':'rgba(246,224,200,.14)','--chip-daypass':'rgba(246,224,200,.14)','--dot-reserva':'#9AB1D6','--dot-evento':'#D8AE8F','--dot-daypass':'#E8BC70','--chip-tx':'#E4D8D1','--gol':'#8AAAEA','--link':'#B7C8F2','--chip-1':'#9BB2D6','--chip-3':'#E8BC70','--chip-5':'#93C1AE','--chip-9':'#FFC3A9','--chip-bg':'#3B3D4C','--iso-dark-op':'0','--iso-light-op':'1','--stack-ring':'#232A44' },
+    noche: { '--card':'#14171F','--nav-bg':'rgba(0,0,0,.24)','--card-sh':'0 1px 2px rgba(0,0,0,.25), 0 14px 34px -22px rgba(0,0,0,.6)','--tp':'#F1EDE4','--ts':'rgba(241,237,228,.68)','--tt':'rgba(241,237,228,.46)','--divider':'rgba(241,237,228,.08)','--tonal':'rgba(241,237,228,.12)','--hover':'rgba(241,237,228,.05)','--verde-tx':'#63D3A6','--ambar':'#DDB061','--sec-bd':'rgba(241,237,228,.4)','--btn-bg':'#F5F2EA','--btn-tx':'#0A0A0A','--seg-track':'rgba(241,237,228,.07)','--seg-thumb':'#2A2F3A','--input-bg':'rgba(241,237,228,.08)','--chip-reserva':'rgba(241,237,228,.1)','--chip-evento':'rgba(241,237,228,.1)','--chip-daypass':'rgba(241,237,228,.1)','--dot-reserva':'#8DA3C6','--dot-evento':'#B58D71','--dot-daypass':'#E5B765','--chip-tx':'rgba(241,237,228,.68)','--gol':'#6E97DE','--link':'#8FADEE','--chip-1':'#8DA4C6','--chip-3':'#E5B766','--chip-5':'#8DC6AF','--chip-9':'#FFCEBD','--chip-bg':'#1F1F21','--iso-dark-op':'0','--iso-light-op':'1','--stack-ring':'#090B12' }
+  };
+  CAPAS = {
+    dia: [
+      { bg: 'linear-gradient(180deg,#F8F6F0 0%,#F9F7EE 60%,#F9F1E0 84%,#F8EBD2 94%,#F6E5C3 100%)', anim: 'none' },
+      { bg: 'radial-gradient(160% 120% at 12% -20%, rgba(168,186,214,.14) 0%, rgba(168,186,214,.07) 40%, transparent 68%)', anim: 'eq-amb3 36s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 90%, rgba(255,204,98,.08) 96%, rgba(255,200,90,.12) 100%)', anim: 'eq-amb4 14s ease-in-out infinite' },
+      { bg: 'radial-gradient(110% 17% at 50% 103%, rgba(255,208,125,.16) 0%, rgba(254,205,120,.08) 44%, rgba(253,202,115,.04) 64%, transparent 78%)', anim: 'eq-amb4 18s ease-in-out 6s infinite' },
+      { bg: 'radial-gradient(46% 7% at 36% 91%, rgba(255,208,125,.09) 0%, transparent 72%)', anim: 'eq-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 66% 95%, rgba(254,205,120,.07) 0%, transparent 72%)', anim: 'eq-drift 34s ease-in-out 8s infinite reverse' }
+    ],
+    tarde: [
+      { bg: 'linear-gradient(180deg,#1C2236 0%,#212840 42%,#2A2F49 62%,#383550 76%,#4E3D52 86%,#68484E 93%,#855147 100%)', anim: 'none' },
+      { bg: 'linear-gradient(180deg, rgba(12,16,30,.5) 0%, rgba(12,16,30,.22) 26%, transparent 48%)', anim: 'eq-amb3 38s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 76%, rgba(228,132,100,.07) 86%, rgba(238,144,100,.14) 94%, rgba(244,152,104,.2) 100%)', anim: 'eq-amb4 15s ease-in-out infinite' },
+      { bg: 'radial-gradient(120% 21% at 50% 104%, rgba(242,152,104,.2) 0%, rgba(238,140,100,.1) 42%, rgba(234,132,96,.04) 62%, transparent 80%)', anim: 'eq-amb4 19s ease-in-out 4s infinite' },
+      { bg: 'radial-gradient(46% 7% at 38% 90%, rgba(242,152,104,.12) 0%, transparent 72%)', anim: 'eq-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 64% 95%, rgba(238,144,100,.09) 0%, transparent 72%)', anim: 'eq-drift 34s ease-in-out 8s infinite reverse' }
+    ],
+    noche: [
+      { bg: 'linear-gradient(180deg,#07080C 0%,#090B12 58%,#0B0E17 80%,#0D1322 92%,#111B33 100%)', anim: 'none' },
+      { bg: 'linear-gradient(180deg, rgba(96,126,190,.06) 0%, rgba(96,126,190,.02) 24%, transparent 45%)', anim: 'eq-amb3 38s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 82%, rgba(92,134,220,.16) 93%, rgba(114,152,228,.26) 100%)', anim: 'eq-amb4 16s ease-in-out infinite' },
+      { bg: 'radial-gradient(130% 24% at 50% 105%, rgba(108,150,232,.19) 0%, rgba(108,150,232,.08) 44%, transparent 70%)', anim: 'eq-amb4 20s ease-in-out 5s infinite' },
+      { bg: 'radial-gradient(46% 7% at 38% 91%, rgba(108,150,232,.1) 0%, transparent 72%)', anim: 'eq-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 64% 95%, rgba(114,152,228,.08) 0%, transparent 72%)', anim: 'eq-drift 34s ease-in-out 8s infinite reverse' }
+    ]
+  };
+  ICO_TEMA = { dia: 'amanecer', tarde: 'atardecer', noche: 'noche' };
+  NOMBRE_TEMA = { dia: 'Amanecer', tarde: 'Atardecer', noche: 'Noche' };
+  modo() { return this.props.verComo || 'admin'; }
+  yo() { const m = this.modo(); if (m === 'admin') return { id: null, nombre: 'Andrea Cámara', rolTxt: 'Administradora', ini: 'AC' }; const v = m === 'supervisor' ? (this.ACT.find(x => this.rolDe(x) === 'sup') || this.ACT[0]) : (this.ACT.find(x => this.rolDe(x) === 'ejec') || this.ACT[0]); return v ? { id: v.id, nombre: v.nombre, rolTxt: this.rolLabel(v), ini: this.ini(v.nombre) } : { id: null, nombre: '—', rolTxt: '', ini: '' }; }
+  get EQUIPO() { const m = this.modo(); if (m !== 'supervisor') return this.ACT; const yo = this.yo(); if (!yo.id) return []; const ids = [yo.id, ...this.ejecsDe(yo.id).map(e => e.id)]; return this.ACT.filter(v => ids.includes(v.id)); }
+  irLista(id) { this.setState(st => ({ admin: false, volvio: true, perfil: null, perfilClose: false, supMenu: false, reasig: null, vista: 'lista', col: { ...st.col, [id]: false } })); this.persist({ vista: 'lista' });
+    setTimeout(() => { const sc = document.querySelector('[data-lista]'), el = sc && sc.querySelector('[data-grupo="' + id + '"]'); if (!sc || !el) return; sc.scrollTop += el.getBoundingClientRect().top - sc.getBoundingClientRect().top - 4; }, 60); }
+  get ACT() { const inact = (this.state || {}).inactivos || []; return this.VEND.filter(v => !inact.includes(v.id)); }
+  get VEND() { const s = this.state || {}; const ed = s.vendEdits || {}, del = s.eliminados || []; return [...this._VEND, ...(s.agregados || [])].filter(v => !del.includes(v.id)).map(v => ({ ...v, ...(ed[v.id] || {}) })); }
+  _VEND = [
+    { id: 'sofia', nombre: 'Sofía Herrera', puesto: 'Ejecutiva de ventas', g: 'f', sup: null, email: 'sofia.herrera@casaaurea.mx', whatsapp: '+52 999 214 7730' },
+    { id: 'marco', nombre: 'Marco Alanís', puesto: 'Ejecutivo de ventas', g: 'm', sup: 'sofia', email: 'marco.alanis@casaaurea.mx', whatsapp: '+52 999 508 1142' },
+    { id: 'dani', nombre: 'Daniela Ruz', puesto: 'Ejecutiva de ventas', g: 'f', sup: 'javier', email: 'daniela.ruz@casaaurea.mx', whatsapp: '+52 998 331 6095' },
+    { id: 'javier', nombre: 'Javier Cuevas', puesto: 'Supervisor de ventas', g: 'm', sup: null, email: 'javier.cuevas@casaaurea.mx', whatsapp: '+52 999 776 2018' }
+  ];
+  LEADS = [
+    { id: 'l1', nombre: 'Carlos Ibarra', producto: 'Evento', contexto: 'Evento para 80 personas · presupuesto $180,000 validado', rel: 'anoche', t: 1, estado: 'pend', v: null },
+    { id: 'l2', nombre: 'Andrés Cauich', producto: 'Reserva', contexto: '3 noches, llegada 2 ago', rel: 'hace 2 días', t: 48, estado: 'pend', ambar: true, v: null },
+    { id: 'l3', nombre: 'Fernanda Solís', producto: 'Evento', contexto: 'Junta corporativa · 25 personas', rel: 'hace 2 días', t: 50, estado: 'pend', ambar: true, v: null },
+    { id: 'l4', nombre: 'Miguel Tun', producto: 'Day Pass', contexto: 'Familia, domingo', rel: 'hace 6 h', t: 6, estado: 'pend', v: null },
+    { id: 'l5', nombre: 'Regina Castillo', producto: 'Reserva', contexto: '1 noche, fin de semana', rel: 'hace 4 h', t: 4, estado: 'pend', v: null },
+    { id: 'l6', nombre: 'Renata Villaseñor', producto: 'Day Pass', contexto: 'Liga de pago enviada · 2 adultos', rel: 'anoche', t: 2, estado: 'seg', v: null },
+    { id: 'l7', nombre: 'Ricardo Osorio', producto: 'Evento', contexto: 'Boda · 150 personas', rel: 'hace 2 días', t: 52, estado: 'pend', ambar: true, v: 'sofia' },
+    { id: 'l8', nombre: 'Mariana Gutiérrez', producto: 'Evento', contexto: 'Cita jueves 11:00 AM · evento 60 personas', rel: 'hace 12 min', t: 0.2, estado: 'conf', v: 'sofia' },
+    { id: 'l9', nombre: 'Paulina Escalante', producto: 'Evento', contexto: 'Cumpleaños · 40 personas', rel: 'hace 3 días', t: 72, estado: 'seg', v: 'sofia' },
+    { id: 'l10', nombre: 'Alejandro Baeza', producto: 'Reserva', contexto: '3 noches, llegada 9 ago', rel: 'hace 2 semanas', t: 336, estado: 'noconf', v: 'sofia' },
+    { id: 'l11', nombre: 'Diego Manrique', producto: 'Reserva', contexto: '2 noches, fin de semana', rel: 'ayer', t: 20, estado: 'seg', v: 'marco' },
+    { id: 'l12', nombre: 'Lucía Manzanero', producto: 'Day Pass', contexto: '4 adultos, sábado', rel: 'hace 3 h', t: 3, estado: 'conf', v: 'marco' },
+    { id: 'l13', nombre: 'Jorge Peraza', producto: 'Reserva', contexto: '3 noches, llegada 2 ago', rel: 'hace 2 días', t: 49, estado: 'pend', ambar: true, v: 'marco' },
+    { id: 'l14', nombre: 'Valentina Rosado', producto: 'Evento', contexto: 'Evento social · 60 personas', rel: 'la semana pasada', t: 168, estado: 'conf', v: 'dani' },
+    { id: 'l15', nombre: 'Emilio Pat', producto: 'Evento', contexto: 'Aniversario · 45 personas', rel: 'hace 9 h', t: 9, estado: 'seg', v: 'dani' },
+    { id: 'l16', nombre: 'Ximena Batún', producto: 'Reserva', contexto: 'Fin de semana largo, septiembre', rel: 'hace 1 h', t: 1, estado: 'noconf', v: 'javier' }
+  ];
+  DET = {"l1":{"tel":"+52 999 205 8841","det":[["Personas","80"],["Presupuesto","$180,000 MXN validado"]],"tl":[["12:07 AM","anoche","Presupuesto validado: $180,000",true],["11:52 PM","anoche","Preguntó por un evento para 80 personas",false,"8 seg"]]},"l2":{"tel":"+52 999 318 4402","det":[["Noches","3"],["Llegada","2 ago"]],"tl":[["4:10 PM","hace 2 días","Pidió disponibilidad para 3 noches",false,"7 seg"]]},"l3":{"tel":"+52 999 728 5514","det":[["Personas","25"],["Tipo","Junta corporativa"]],"tl":[["11:20 AM","hace 2 días","Preguntó por salón para junta de 25",false,"6 seg"]]},"l4":{"tel":"+52 998 441 0923","det":[["Personas","Familia · 4"],["Día","domingo"]],"tl":[["3:48 AM","hoy","Preguntó por Day Pass familiar",false,"7 seg"]]},"l5":{"tel":"+52 999 415 2278","det":[["Noches","1"],["Fechas","fin de semana"]],"tl":[["5:52 AM","hoy","Pidió tarifa de fin de semana",false,"6 seg"]]},"l6":{"tel":"+52 998 441 0923","det":[["Personas","2 adultos"],["Pago","Liga enviada"]],"tl":[["10:48 PM","anoche","Liga de pago enviada",true],["10:41 PM","anoche","Preguntó por Day Pass para 2",false,"5 seg"]]},"l7":{"tel":"+52 998 227 4415","det":[["Personas","150"],["Tipo","Boda"]],"tl":[["9:15 AM","hace 2 días","Sofía tomó la oportunidad",false],["8:02 AM","hace 2 días","Preguntó por boda de 150 personas",false,"9 seg"]]},"l8":{"tel":"+52 999 610 2288","det":[["Cita","Jue 16 jul · 11:00 AM"],["Personas","60"]],"tl":[["9:41 AM","hoy","Confirmado: cita jueves 11:00 AM",true],["7:39 AM","hoy","Preguntó por disponibilidad de salón",false,"9 seg"]]},"l9":{"tel":"+52 999 402 7710","det":[["Personas","40"],["Tipo","Cumpleaños"]],"tl":[["6:30 PM","hace 3 días","Sofía envió propuesta por WhatsApp",false],["2:14 PM","hace 3 días","Preguntó por cumpleaños de 40",false,"7 seg"]]},"l10":{"tel":"+52 999 118 3390","det":[["Noches","3"],["Llegada","9 ago"]],"tl":[["1:05 PM","hace 2 sem","No confirmado: sin respuesta",false],["10:25 AM","hace 2 sem","Pidió 3 noches en agosto",false,"7 seg"]]},"l11":{"tel":"+52 999 554 8821","det":[["Noches","2"],["Fechas","fin de semana"]],"tl":[["7:20 PM","ayer","Marco respondió por WhatsApp",false],["1:12 PM","ayer","Pidió 2 noches de fin de semana",false,"6 seg"]]},"l12":{"tel":"+52 998 316 7702","det":[["Personas","4 adultos"],["Día","sábado"]],"tl":[["8:12 AM","hoy","Confirmado: Day Pass sábado",true],["6:50 AM","hoy","Preguntó por Day Pass para 4",false,"6 seg"]]},"l13":{"tel":"+52 999 771 0034","det":[["Noches","3"],["Llegada","2 ago"]],"tl":[["5:33 PM","hace 2 días","Pidió disponibilidad para 3 noches",false,"8 seg"]]},"l14":{"tel":"+52 999 415 2278","det":[["Cita","Vie 10 jul · 12:40 PM"],["Personas","60"]],"tl":[["12:40 PM","la semana pasada","Confirmado: evento social 60 personas",true],["11:02 AM","la semana pasada","Preguntó por evento social",false,"8 seg"]]},"l15":{"tel":"+52 999 903 4471","det":[["Personas","45"],["Tipo","Aniversario"]],"tl":[["1:40 AM","hoy","Daniela envió propuesta",false],["12:30 AM","hoy","Preguntó por aniversario de 45",false,"7 seg"]]},"l16":{"tel":"+52 999 262 1188","det":[["Fechas","Fin de semana largo · sep"]],"tl":[["8:41 AM","hoy","No confirmado: eligió otra fecha",false],["8:10 AM","hoy","Preguntó por puente de septiembre",false,"6 seg"]]}};
+  EST = { pend: ['Por atender', 3], seg: ['En seguimiento', 1], conf: ['Confirmado', 5], noconf: ['No confirmado', 9] };
+  estChip() { return { alignSelf: 'center', flex: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.04em', color: 'var(--ts,#5E6168)', background: 'var(--chip-reserva,#F1EFE8)', borderRadius: '6px', padding: '2px 8px' }; }
+  chipFiltro(active) { return { padding: '8px 14px', borderRadius: '999px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '12px', fontWeight: 600, background: active ? 'var(--btn-bg,#0A0A0A)' : 'var(--seg-track,#EFECE4)', color: active ? 'var(--btn-tx,#fff)' : 'var(--ts,#5E6168)', whiteSpace: 'nowrap', flex: 'none', transition: 'background .15s ease-out, color .15s ease-out' }; }
+  estDot(n) { return { flex: 'none', width: '5px', height: '5px', borderRadius: '999px', background: 'var(--chip-' + n + ')' }; }
+  COLS = [['nombre', 'Persona', { flex: '0 1 186px', width: '186px', minWidth: '116px' }], ['producto', 'Producto', { flex: 'none', width: '136px' }], ['contexto', 'Contexto', { flex: '1 1 120px', minWidth: 0 }], ['t', 'Llegó', { flex: '0 1 110px', width: '110px', minWidth: '80px' }], ['estado', 'Estado', { flex: '0 1 128px', width: '128px', minWidth: '100px' }]];
+  state = { asig: Object.fromEntries(this.LEADS.map(l => [l.id, l.v])), vista: null, tema: null, dens: 'ext', det: null, detClose: false, menuDet: false, q: '', sf: [], pf: [], sfMenu: false, pfMenu: false, menu: null, col: {}, colEst: {}, sort: { k: 't', dir: 'asc' }, fresh: [], drag: null, toast: null, sel: [], selMenu: false, admin: false, roles: {}, sups: {}, perfil: null, perfilClose: false, volvio: false, entrada: false, vendEdits: {}, eliminados: [], agregados: [], inactivos: [], qa: '', pfQ: '', auto: { on: false, modo: 'turnos' }, navCol: false, draft: null, supMenu: false, kbSL: 0, kbSW: 0, kbCW: 0 };
+  NUEVO = '__nuevo';
+  nuevoIntegrante() { const sup = this.VEND.find(x => this.rolDe(x) === 'sup'); this.setState({ admin: true, menu: null, selMenu: false, det: null, perfil: this.NUEVO, perfilClose: false, supMenu: false, confirmDel: false, draft: { nombre: '', email: '', whatsapp: '', rol: 'ejec', sup: sup ? sup.id : null } }); }
+  generoDe(n) { const p = (n || '').trim().split(' ')[0].toLowerCase(); return /a$/.test(p) ? 'f' : 'm'; }
+  crearIntegrante() { const d = this.state.draft; if (!d || !d.nombre.trim()) return;
+    const id = 'u' + Date.now().toString(36), nombre = d.nombre.trim(), rol = d.rol;
+    const supOk = rol === 'ejec' ? (d.sup && this.VEND.some(x => x.id === d.sup && this.rolDe(x) === 'sup') ? d.sup : ((this.VEND.find(x => this.rolDe(x) === 'sup') || {}).id || null)) : null;
+    const g = this.generoDe(nombre);
+    const nuevo = { id, nombre, puesto: rol === 'sup' ? (g === 'f' ? 'Supervisora de ventas' : 'Supervisor de ventas') : (g === 'f' ? 'Ejecutiva de ventas' : 'Ejecutivo de ventas'), g, sup: supOk, email: d.email.trim(), whatsapp: d.whatsapp.trim() };
+    const agregados = [...this.state.agregados, nuevo], roles = { ...this.state.roles, [id]: rol }, sups = { ...this.state.sups, [id]: supOk };
+    this.setState({ agregados, roles, sups }); this.persist({ agregados, roles, sups }); this.cerrarPerfil(); this.flash(nombre + ' se unió al equipo', []);
+    setTimeout(() => this.kbMedir(), 80); }
+  kbMedir() { const el = this._kbEl; if (!el || !el.isConnected) return; const sl = Math.round(el.scrollLeft), sw = el.scrollWidth, cw = el.clientWidth; const s = this.state; if (s.kbSL === sl && s.kbSW === sw && s.kbCW === cw) return; this.setState({ kbSL: sl, kbSW: sw, kbCW: cw }); }
+  kbAnima(target) { const el = this._kbEl; if (!el) return; const max = Math.max(0, el.scrollWidth - el.clientWidth); const to = Math.max(0, Math.min(max, Math.round(target))); const from = el.scrollLeft, t0 = performance.now(); cancelAnimationFrame(this._kbRaf);
+    const paso = (t) => { const p = Math.min(1, (t - t0) / 220); el.scrollLeft = from + (to - from) * (1 - Math.pow(1 - p, 3)); this.kbMedir(); if (p < 1) this._kbRaf = requestAnimationFrame(paso); }; this._kbRaf = requestAnimationFrame(paso); }
+  kbSnaps() { const el = this._kbEl; if (!el || !el.children.length) return [0]; const x0 = el.children[0].offsetLeft; return Array.from(el.children).map(c => c.offsetLeft - x0); }
+  componentDidUpdate() { this.kbMedir(); this.avisaBadge(); }
+
+  componentWillUnmount() { window.removeEventListener('keydown', this._kd); window.removeEventListener('resize', this._kbRs); }
+  toggleSel(id) { this.setState(s => ({ sel: s.sel.includes(id) ? s.sel.filter(x => x !== id) : [...s.sel, id], selMenu: false })); }
+  cb(on, px) { px = px || 16; return { flex: 'none', width: px + 'px', height: px + 'px', boxSizing: 'border-box', borderRadius: '5px', border: '1.5px solid ' + (on ? 'var(--btn-bg,#0A0A0A)' : 'var(--sec-bd,#D9D5CC)'), background: on ? 'var(--btn-bg,#0A0A0A)' : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'background .15s ease-out, border-color .15s ease-out' }; }
+  flash(toast, ids, prev) {
+    this._snap = prev || null; this._snapDel = prev ? this.state.eliminados : null; this._snapIn = prev ? this.state.inactivos : null; this._snapRS = null;
+    this.setState({ fresh: ids, toast });
+    clearTimeout(this._t1); clearTimeout(this._t2);
+    this._t1 = setTimeout(() => this.setState({ fresh: [] }), 1300);
+    this._t2 = setTimeout(() => this.setState({ toast: null }), 5000);
+  }
+  intercambiar(a, b) {
+    const prev = this.state.asig, asig = { ...prev }; const va = asig[a] || null, vb = asig[b] || null;
+    if (va === vb) return;
+    asig[a] = vb; asig[b] = va;
+    const n = id => this.LEADS.find(l => l.id === id).nombre;
+    this.setState({ asig, sel: [], selMenu: false, menu: null }); this.persist({ asig });
+    this.flash(n(a) + ' ⇄ ' + n(b), [a, b], prev);
+  }
+  componentDidMount() { this.avisaBadge();
+    { const vis = {}; Object.keys(this.state.col || {}).forEach(k => { if (this.state.col[k] === false) vis[k] = true; }); if (Object.keys(vis).length) this.setState(st => ({ vis: { ...(st.vis || {}), ...vis } })); } setTimeout(() => this.setState({ entrada: true }), 420); this._kd = e => { if (e.key === 'Escape' && this.state.sel.length) this.setState({ sel: [], selMenu: false }); }; window.addEventListener('keydown', this._kd); this._kbRs = () => this.kbMedir(); window.addEventListener('resize', this._kbRs); try { const s = JSON.parse(localStorage.getItem('intra.equipo') || '{}'); if (s.asig || s.vista || s.tema || s.dens || s.roles || s.sups || s.vendEdits || s.eliminados || s.agregados || s.inactivos || s.auto || s.navCol) this.setState({ inactivos: s.inactivos || [], auto: s.auto || { on: false, modo: 'turnos' }, navCol: !!s.navCol, asig: { ...this.state.asig, ...(s.asig || {}) }, vista: s.vista || null, tema: s.tema || null, dens: s.dens || 'ext', roles: s.roles || {}, sups: s.sups || {}, vendEdits: s.vendEdits || {}, eliminados: s.eliminados || [], agregados: s.agregados || [] }); } catch (e) {} }
+  persist(p) { try { localStorage.setItem('intra.equipo', JSON.stringify({ asig: p.asig || this.state.asig, vista: p.vista || this.state.vista, tema: p.tema || this.state.tema, dens: p.dens || this.state.dens, roles: p.roles || this.state.roles, sups: p.sups || this.state.sups, vendEdits: p.vendEdits || this.state.vendEdits, eliminados: p.eliminados || this.state.eliminados, agregados: p.agregados || this.state.agregados, inactivos: p.inactivos || this.state.inactivos, auto: p.auto || this.state.auto, navCol: p.navCol !== undefined ? p.navCol : this.state.navCol })); } catch (e) {} }
+  abrirDet(id) { this.setState({ det: id, detClose: false, perfil: null, menu: null, sfMenu: false, pfMenu: false }); }
+  cerrarDet() { this.setState({ detClose: true, menuDet: false }); setTimeout(() => this.setState({ det: null, detClose: false }), 340); }
+  tlDe(l) {
+    const src = (this.DET[l.id] || {}).tl || [[l.rel, '', 'Conversación atendida por el asistente', false, '7 seg']];
+    return src.map((m, i) => { const txt = m[2]; const c = txt.indexOf(':'); const pre = c > 0 && c < 40 ? txt.slice(0, c + 1) + ' ' : ''; const rest = pre ? txt.slice(c + 1).trim() : txt;
+      return { t1: m[0], t2: m[1], pre, rest, gol: !!m[3], seg: m[4] || '', hasSeg: !!m[4], rowEstilo: { display: 'flex', gap: '12px', alignItems: 'flex-start', padding: '10px 0', borderBottom: i < src.length - 1 ? '1px solid var(--divider,#F1EFE8)' : 'none' } }; });
+  }
+
+  ROLES = { sup: ['Supervisor', 'Supervisora', 'Supervisor de la propiedad. Mismos permisos que ejecutivo hoy; distinguido para facturación/soporte.'], ejec: ['Ejecutivo', 'Ejecutiva', 'Ejecutivo del cliente dentro de la propiedad.'] };
+  rolDe(v) { return this.state.roles[v.id] || (v.sup ? 'ejec' : 'sup'); }
+  supDe(v) { if (this.rolDe(v) === 'sup') return null; const pref = this.state.sups[v.id] !== undefined ? this.state.sups[v.id] : v.sup; const ok = id => !!id && id !== v.id && this.VEND.some(x => x.id === id && this.rolDe(x) === 'sup'); if (ok(pref)) return pref; const f = this.VEND.find(x => x.id !== v.id && this.rolDe(x) === 'sup'); return f ? f.id : null; }
+  rolLabel(v) { const r = this.ROLES[this.rolDe(v)]; return v.g === 'f' ? r[1] : r[0]; }
+  abrirPerfil(id) { const v = this.VEND.find(x => x.id === id); if (!v) return; this.setState({ admin: true, perfil: id, perfilClose: false, det: null, menu: null, selMenu: false, supMenu: false, draft: { nombre: v.nombre, email: v.email, whatsapp: v.whatsapp, rol: this.rolDe(v), sup: this.supDe(v) } }); }
+  cerrarAdmin() { this.setState({ admin: false, volvio: true, perfil: null, perfilClose: false, supMenu: false, confirmDel: false, reasig: null }); }
+  cerrarPerfil() { this.setState({ perfilClose: true, supMenu: false }); setTimeout(() => this.setState({ perfil: null, perfilClose: false }), 340); }
+  setDraft(p) { this.setState(s => ({ draft: { ...s.draft, ...p } })); }
+  ejecsDe(id) { return this.VEND.filter(x => x.id !== id && this.rolDe(x) === 'ejec' && this.supDe(x) === id); }
+  pedirEliminar() { const id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!v) return;
+    if (this.rolDe(v) === 'sup' && this.ejecsDe(id).length) { const otros = this.VEND.filter(x => x.id !== id && this.rolDe(x) === 'sup'); this.setState({ reasig: { modo: 'eliminar', dest: otros[0] ? otros[0].id : null, opps: true }, supMenu: false }); }
+    else this.setState({ confirmDel: true, supMenu: false }); }
+  confirmarReasig() { const r = this.state.reasig, id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!r || !r.dest || !v) return;
+    const destV = this.VEND.find(x => x.id === r.dest); if (!destV) return;
+    const prevRS = { roles: this.state.roles, sups: this.state.sups };
+    const roles = { ...this.state.roles }, sups = { ...this.state.sups };
+    if (this.rolDe(destV) === 'ejec') { roles[destV.id] = 'sup'; sups[destV.id] = null; }
+    this.ejecsDe(id).forEach(e => { sups[e.id] = destV.id; });
+    if (r.modo === 'eliminar') {
+      const prev = this.state.asig, asig = { ...prev }; Object.keys(asig).forEach(k => { if (asig[k] === id) asig[k] = r.opps ? destV.id : null; });
+      const prevDel = this.state.eliminados, eliminados = [...prevDel, id]; this.cerrarPerfil(); this.setState({ roles, sups, asig, eliminados, reasig: null }); this.persist({ roles, sups, asig, eliminados });
+      this.flash(v.nombre + ' eliminado · su equipo pasa a ' + destV.nombre, [], prev); this._snapDel = prevDel; this._snapRS = prevRS;
+    } else if (r.modo === 'desactivar') { this.desactivarUsuario({ dest: r.opps ? destV.id : null, destNombre: destV.nombre, rs: { roles, sups }, prevRS });
+    } else { this.setState({ roles, sups, reasig: null }, () => this.guardarPerfil(true)); }
+  }
+  guardarPerfil(force) { const id = this.state.perfil, d = this.state.draft; if (!id || !d) return; if (id === this.NUEVO) { this.crearIntegrante(); return; }
+    const vAct = this.VEND.find(x => x.id === id);
+    if (!force && vAct && this.rolDe(vAct) === 'sup' && d.rol === 'ejec' && this.ejecsDe(id).length) { const otros = this.VEND.filter(x => x.id !== id && this.rolDe(x) === 'sup'); this.setState({ reasig: { modo: 'rol', dest: otros[0] ? otros[0].id : null }, supMenu: false }); return; }
+    const supOk = d.rol === 'ejec' ? (d.sup && this.VEND.some(x => x.id === d.sup && x.id !== id && this.rolDe(x) === 'sup') ? d.sup : ((this.VEND.find(x => x.id !== id && this.rolDe(x) === 'sup') || {}).id || null)) : null;
+    const roles = { ...this.state.roles, [id]: d.rol }, sups = { ...this.state.sups, [id]: supOk }, vendEdits = { ...this.state.vendEdits, [id]: { nombre: d.nombre.trim() || this._VEND.find(v => v.id === id).nombre, email: d.email.trim(), whatsapp: d.whatsapp.trim() } };
+    this.setState({ roles, sups, vendEdits }); this.persist({ roles, sups, vendEdits }); this.flash('Cambios guardados · ' + vendEdits[id].nombre, []); }
+  esInactivo(id) { return (this.state.inactivos || []).includes(id); }
+  pedirDesactivar() { const id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!v) return;
+    if (this.rolDe(v) === 'sup' && this.ejecsDe(id).length) { const otros = this.ACT.filter(x => x.id !== id && this.rolDe(x) === 'sup'); this.setState({ reasig: { modo: 'desactivar', dest: otros[0] ? otros[0].id : null, opps: true }, supMenu: false }); return; }
+    this.desactivarUsuario(); }
+  desactivarUsuario(extra) { const id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!v) return;
+    const prev = this.state.asig, asig = { ...prev }; Object.keys(asig).forEach(k => { if (asig[k] === id) asig[k] = extra && extra.dest ? extra.dest : null; });
+    const prevIn = this.state.inactivos, inactivos = [...prevIn, id]; this.cerrarPerfil(); this.setState({ asig, inactivos, reasig: null, ...(extra && extra.rs ? extra.rs : {}) }); this.persist({ asig, inactivos, ...(extra && extra.rs ? extra.rs : {}) });
+    this.flash(v.nombre + ' desactivad' + (v.g === 'f' ? 'a' : 'o') + (extra && extra.dest ? ' · su equipo pasa a ' + extra.destNombre : ''), [], prev); this._snapIn = prevIn; if (extra && extra.prevRS) this._snapRS = extra.prevRS; }
+  reactivarUsuario() { const id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!v) return; const inactivos = this.state.inactivos.filter(x => x !== id); this.setState({ inactivos }); this.persist({ inactivos }); this.flash(v.nombre + ' reactivad' + (v.g === 'f' ? 'a' : 'o'), []); }
+  eliminarUsuario() { const id = this.state.perfil, v = this.VEND.find(x => x.id === id); if (!v) return;
+    const prev = this.state.asig, asig = { ...prev }; Object.keys(asig).forEach(k => { if (asig[k] === id) asig[k] = null; });
+    const prevDel = this.state.eliminados, eliminados = [...prevDel, id]; this.cerrarPerfil(); this.setState({ asig, eliminados }); this.persist({ asig, eliminados }); this.flash(v.nombre + ' eliminado del equipo', [], prev); this._snapDel = prevDel; }
+  vista() { return this.state.vista || this.props.vistaInicial || 'lista'; }
+  emb() { return !!this.props.tema; }
+  tema() { if (this.emb()) { const t = this.props.tema; if (this.THEME[t]) return t; const hr = new Date().getHours(); return hr >= 6 && hr < 17 ? 'dia' : hr < 20 ? 'tarde' : 'noche'; } return this.state.tema || this.props.temaInicial || 'dia'; }
+  avisaBadge() { if (!this.props.onBadge) return; const n = this.LEADS.filter(l => !this.state.asig[l.id]).length; if (n !== this._badge) { this._badge = n; this.props.onBadge(n); } }
+  ico(name, px, extra) {
+    const g = (window.INTRA_ICOS || {})[name]; if (!g) return null;
+    return React.createElement('svg', { key: name, width: px, height: px, viewBox: g[0], fill: 'currentColor', style: { flex: 'none', ...(extra || {}) } }, g.slice(1).map((d, i) => React.createElement('path', { key: i, d })));
+  }
+  ini(n) { return (n || '').trim().split(' ').map(x => x[0]).slice(0, 2).join(''); }
+  avatar(v, px) { return { flex: 'none', width: px + 'px', height: px + 'px', borderRadius: '999px', background: 'var(--tonal,#F1EFE8)', color: 'var(--tp,#0A0A0A)', fontSize: Math.round(px * .36) + 'px', fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', letterSpacing: '.01em' }; }
+  PRODUCTOS = ['Reserva', 'Evento', 'Day Pass', 'Paquete boda jardín + hospedaje 2 noches', 'Junta corporativa con coffee break', 'Brunch dominical familiar'];
+  slug(p) { return { 'Reserva': 'reserva', 'Evento': 'evento', 'Day Pass': 'daypass' }[p] || null; }
+  chip(p) { return { alignSelf: 'center', flex: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.04em', color: 'var(--ts,#5E6168)', background: this.slug(p) ? 'var(--chip-' + this.slug(p) + ',#F1EFE8)' : 'var(--tonal,#F1EFE8)', borderRadius: '6px', padding: '2px 8px', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }; }
+  dot(p) { const sl = this.slug(p); return { flex: 'none', width: '5px', height: '5px', borderRadius: '999px', background: sl ? 'var(--dot-' + sl + ',#ABC4DB)' : 'var(--sec-bd,#D9D5CC)' }; }
+  mpop(right, mw, top) { return { position: 'absolute', top: top || '44px', right, zIndex: 31, animation: 'eq-pop .18s ease-out both', transformOrigin: 'top right', background: 'var(--card,#FFFFFF)', borderRadius: '14px', boxShadow: '0 12px 40px -12px rgba(20,16,8,.3), 0 1px 2px rgba(20,16,8,.08)', padding: '8px', display: 'flex', flexDirection: 'column', minWidth: mw }; }
+  mi(on) { return { display: 'flex', alignItems: 'center', gap: '10px', width: '100%', textAlign: 'left', border: 'none', background: on ? 'var(--tonal,#F1EFE8)' : 'transparent', borderRadius: '9px', padding: '9px 10px', fontFamily: 'inherit', fontSize: '13px', fontWeight: on ? 700 : 500, color: 'var(--tp,#0A0A0A)', cursor: 'pointer' }; }
+  navStyle(active, col) { const ease = '0.5s cubic-bezier(0.4,0,0.2,1)'; return { display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-start', width: col ? '44px' : '100%', padding: '12px', borderRadius: col ? '14px' : '12px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, background: active ? 'var(--seg-track,#EFECE4)' : 'transparent', color: active ? 'var(--tp,#0A0A0A)' : 'var(--ts,#5E6168)', textAlign: 'left', boxSizing: 'border-box', overflow: 'hidden', transition: 'background .15s ease-out, color .15s ease-out, width ' + ease + ', border-radius ' + ease }; }
+  cargaDe(vid) { const ls = this.LEADS.filter(l => this.state.asig[l.id] === vid); const p = ls.filter(l => l.estado === 'pend').length; return { carga: String(ls.length), pend: p + ' por atender', hasPend: p > 0 }; }
+  asignar(id, v) { this.asignarVarios([id], v); }
+  asignarVarios(ids, v) {
+    ids = ids.filter(id => (this.state.asig[id] || null) !== (v || null)); if (!ids.length) { this.setState({ menu: null, selMenu: false }); return; }
+    const prev = this.state.asig, asig = { ...prev }; ids.forEach(id => { asig[id] = v; });
+    const vend = this.VEND.find(x => x.id === v); const dest = v ? vend.nombre : 'Sin asignar';
+    const sujeto = ids.length === 1 ? this.LEADS.find(l => l.id === ids[0]).nombre : ids.length + ' oportunidades';
+    this.setState({ asig, menu: null, selMenu: false, sel: ids.length > 1 ? [] : this.state.sel });
+    this.persist({ asig });
+    this.flash(v ? sujeto + ' → ' + dest : sujeto + (ids.length === 1 ? ' vuelve a' : ' vuelven a') + ' Sin asignar', ids, prev);
+  }
+  filtrados() {
+    const q = this.state.q.trim().toLowerCase(), { sf, pf, asig } = this.state;
+    const eq = this.modo() === 'supervisor' ? this.EQUIPO.map(v => v.id) : null;
+    return this.LEADS.filter(l => (!eq || !asig[l.id] || eq.includes(asig[l.id])) && (!sf.length || sf.includes(l.estado)) && (!pf.length || pf.includes(l.producto)) && (!q || l.nombre.toLowerCase().includes(q) || l.contexto.toLowerCase().includes(q) || l.producto.toLowerCase().includes(q) || ((this.VEND.find(v => v.id === asig[l.id]) || {}).nombre || 'sin asignar').toLowerCase().includes(q)));
+  }
+  ordena(items) {
+    const s = this.state.sort, ord = { pend: 0, seg: 1, conf: 2, noconf: 3 };
+    const key = r => s.k === 't' ? r.t : s.k === 'estado' ? ord[r.estado] : String(r[s.k]).toLowerCase();
+    return items.slice().sort((a, b) => { const x = key(a), y = key(b); const c = x < y ? -1 : x > y ? 1 : 0; return s.dir === 'asc' ? c : -c; });
+  }
+  row(l) {
+    const v = this.VEND.find(x => x.id === this.state.asig[l.id]) || null, e = this.EST[l.estado];
+    const sel = this.state.sel.includes(l.id), dg = this.state.drag, fresh = this.state.fresh.includes(l.id), enDrag = !!dg && dg.ids.includes(l.id), objetivo = !!dg && dg.overCard === l.id;
+    const opciones = this.EQUIPO.map(x => ({ ...this.cargaDe(x.id), nombre: x.nombre, sub: this.rolLabel(x), ini: this.ini(x.nombre), avatar: this.avatar(x, 26), actual: !!v && v.id === x.id, estilo: this.mi(false), click: (ev) => { ev.stopPropagation(); this.asignar(l.id, x.id); } }));
+    return { ...l, chip: this.chip(l.producto), dot: this.dot(l.producto), ambar: !!l.ambar && l.estado === 'pend',
+      estadoTxt: e[0], estDot: this.estDot(e[1]), estChip: this.estChip(),
+      asignado: !!v, ini: v ? this.ini(v.nombre) : '', avatar: v ? this.avatar(v, 20) : {}, asgLabel: v ? v.nombre : 'Asignar',
+      asgHover: v ? 'border-color:var(--tt,#8A8C93);' : 'opacity:.85;',
+      asgBtn: { display: 'inline-flex', alignItems: 'center', gap: '8px', height: '32px', padding: v ? '0 10px 0 5px' : '0 14px', borderRadius: '999px', border: '1px solid ' + (v ? 'var(--divider,#EFECE4)' : 'var(--btn-bg,#0A0A0A)'), background: v ? 'transparent' : 'var(--btn-bg,#0A0A0A)', color: v ? 'var(--tp,#0A0A0A)' : 'var(--btn-tx,#FFFFFF)', fontFamily: 'inherit', fontSize: '12.5px', fontWeight: 600, cursor: 'pointer', maxWidth: '168px', boxSizing: 'border-box', transition: 'border-color .15s ease-out, transform .12s ease-out, opacity .15s ease-out' },
+      menuOn: this.state.menu === l.id, opciones,
+      toggleMenu: (ev) => { ev.stopPropagation(); const abre = this.state.menu !== l.id;
+        let up = false;
+        let max = 320;
+        if (abre) { const btn = ev.currentTarget, br = btn.getBoundingClientRect(), cl = btn.closest('[data-clip]') || document.querySelector('[data-lista]');
+          const alto = Math.min(320, 56 + Math.max(1, this.EQUIPO.length) * 46 + (this.state.asig[l.id] ? 44 : 0));
+          if (cl) { const cr = cl.getBoundingClientRect(), abajo = cr.bottom - br.bottom - 14, arriba = br.top - cr.top - 14;
+            up = abajo < alto && arriba > abajo; max = Math.max(140, Math.min(320, up ? arriba : abajo)); } }
+        this.setState(s => ({ menu: s.menu === l.id ? null : l.id, menuUp: up, menuMax: max, sfMenu: false, pfMenu: false, menuDet: false })); },
+      quitar: (ev) => { ev.stopPropagation(); this.asignar(l.id, null); },
+      sel, cb: { ...this.cb(sel), marginRight: '8px' }, toggleSel: (ev) => { ev.stopPropagation(); this.toggleSel(l.id); },
+      cbK: { ...this.cb(sel), opacity: sel || this.state.sel.length ? 1 : .6 }, cbDown: (ev) => { ev.stopPropagation(); ev.preventDefault(); this.toggleSel(l.id); },
+      row: { display: 'flex', gap: '16px', alignItems: 'center', padding: '11px 14px', position: 'relative', cursor: 'pointer', borderBottom: '1px solid var(--divider,#F1EFE8)', borderRadius: '12px', background: sel ? 'var(--tonal,#F1EFE8)' : 'transparent', transition: 'background .15s ease-out', animation: fresh ? 'eq-flash 1.2s ease-out both' : 'none' },
+      card: { boxSizing: 'border-box', background: 'var(--card,#FFFFFF)', borderRadius: '12px', boxShadow: (objetivo ? 'inset 0 0 0 2px var(--tp,#0A0A0A), ' : sel ? 'inset 0 0 0 1.5px var(--tp,#0A0A0A), ' : '') + 'var(--card-sh,0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16))', padding: '14px 16px', cursor: 'grab', userSelect: 'none', touchAction: 'none', display: 'flex', flexDirection: 'column', alignItems: 'stretch', opacity: enDrag ? .35 : 1, transform: objetivo ? 'scale(1.02)' : 'none', animation: fresh ? 'eq-flash 1.2s ease-out both' : 'none', transition: 'opacity .15s ease-out, box-shadow .15s ease-out, transform .15s ease-out' },
+      kbChip: { display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '11.5px', fontWeight: 500, color: 'var(--chip-tx,#5E6168)', background: 'var(--tonal,#F1EFE8)', borderRadius: '8px', padding: '3px 9px', alignSelf: 'flex-start', marginTop: '10px', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' },
+      kbEst: { ...this.estChip(), fontSize: '11.5px', fontWeight: 500, color: 'var(--chip-tx,#5E6168)', background: 'var(--tonal,#F1EFE8)', borderRadius: '8px', padding: '3px 9px', gap: '6px' },
+      abrir: (ev) => { if ((ev && (ev.shiftKey || ev.metaKey || ev.ctrlKey)) || this.state.sel.length) this.toggleSel(l.id); else this.abrirDet(l.id); },
+      kbCtx: { overflow: 'hidden', maxHeight: this.state.dens === 'ext' ? '66px' : '0px', opacity: this.state.dens === 'ext' ? 1 : 0, marginTop: this.state.dens === 'ext' ? '10px' : '0px', transition: 'max-height .28s cubic-bezier(0.4,0,0.2,1), opacity .2s ease-out, margin-top .28s cubic-bezier(0.4,0,0.2,1)' },
+      down: (ev) => this.kbDown(ev, l) };
+  }
+  kbDown(ev, l) {
+    if (ev.button !== 0) return; ev.preventDefault();
+    const r = ev.currentTarget.getBoundingClientRect();
+    const ids = this.state.sel.includes(l.id) ? this.state.sel.slice() : [l.id];
+    const drag = { id: l.id, ids, w: r.width, h: r.height, dx: ev.clientX - r.left, dy: ev.clientY - r.top, x: ev.clientX, y: ev.clientY, over: null, overCard: null, started: false };
+    const move = (e) => { if (!drag.started && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 4) return; drag.started = true;
+      const under = document.elementFromPoint(e.clientX, e.clientY); const colEl = under && under.closest ? under.closest('[data-kbcol]') : null; const cardEl = under && under.closest ? under.closest('[data-kbcard]') : null;
+      const cid = cardEl ? cardEl.getAttribute('data-kbcard') : null;
+      const overCard = cid && ids.length === 1 && !ids.includes(cid) && (this.state.asig[cid] || null) !== (this.state.asig[l.id] || null) ? cid : null;
+      this.setState({ drag: { ...drag, x: e.clientX, y: e.clientY, over: overCard ? null : (colEl ? colEl.getAttribute('data-kbcol') : null), overCard } }); };
+    const up = (e) => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up);
+      const d = this.state.drag; this.setState({ drag: null });
+      if (!drag.started) { if (e.shiftKey || e.metaKey || e.ctrlKey || this.state.sel.length) this.toggleSel(l.id); else this.abrirDet(l.id); return; }
+      if (d && d.overCard) { this.intercambiar(l.id, d.overCard); return; }
+      if (d && d.over != null) { const to = d.over === 'none' ? null : d.over; this.asignarVarios(ids, to); } };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+  }
+  renderVals() {
+    const tema = this.tema(), T = this.THEME[tema], s = this.state, vista = this.vista(), items = this.filtrados().map(l => this.row(l));
+    const asigDe = v => this.ordena(items.filter(r => (s.asig[r.id] || null) === v));
+    const sinAsig = this.LEADS.filter(l => !s.asig[l.id]).length;
+    const grupoDef = [{ key: 'none', titulo: 'Por asignar', puesto: null, colAccion: 'Asignar', vacioTxt: 'Todo está asignado.' }, ...this.EQUIPO.map(v => ({ key: v.id, titulo: v.nombre, puesto: v.puesto, rol: this.rolLabel(v), abrirPerfil: (ev) => { ev.stopPropagation(); this.abrirPerfil(v.id); }, ini: this.ini(v.nombre), avatarL: this.avatar(v, 40), avatarK: this.avatar(v, 34), colAccion: 'Vendedor', vacioTxt: 'Sin oportunidades asignadas.' }))];
+    const cols = this.COLS.map(([k, label, box]) => { const on = s.sort.k === k; return { k, label, on, flecha: s.sort.dir === 'asc' ? '↑' : '↓', ordenar: () => this.setState(st => ({ sort: { k, dir: st.sort.k === k && st.sort.dir === 'asc' ? 'desc' : 'asc' } })),
+      th: { ...box, display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', userSelect: 'none', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase', color: on ? 'var(--tp,#0A0A0A)' : 'var(--tt,#8A8C93)', whiteSpace: 'nowrap', overflow: 'hidden', transition: 'color .15s ease-out' } }; });
+    const tgBtn = on => ({ position: 'relative', zIndex: 1, width: '44px', height: '38px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: 0, color: on ? 'var(--tp,#0A0A0A)' : 'var(--ts,#5E6168)', transition: 'color .15s ease-out' });
+    const fChip = { display: 'inline-flex', alignItems: 'center', gap: '6px', border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', borderRadius: '999px', padding: '6px 12px', fontFamily: 'inherit', fontSize: '12px', fontWeight: 600, color: 'var(--ts,#5E6168)', cursor: 'pointer' };
+    const NAV = [['inicio', 'Inicio', null], ['personas', 'Ventas', '6'], ['agenda', 'Agenda', null], ['historial', 'Historial', null], ['preguntar', 'Preguntar', null], ['productos', 'Productos', null], ...(this.modo() === 'ejecutivo' ? [] : [['equipo', 'Equipo', sinAsig ? String(sinAsig) : null]])];
+    const setVista = v => { this.setState({ vista: v }); this.persist({ vista: v }); };
+    const d = s.drag;
+    const detL = s.det ? this.LEADS.find(l => l.id === s.det) : null;
+    const detB = detL ? (() => { const r = this.row(detL); const v = this.VEND.find(x => x.id === s.asig[detL.id]);
+      return { ...r, campos: [...(((this.DET[detL.id] || {}).det || []).filter(x => x[0] === 'Cita').map(x => ({ k: x[0], v: x[1] }))), { k: 'Producto', v: detL.producto }, { k: 'Teléfono', v: (this.DET[detL.id] || {}).tel || '+52 999 318 4402' }, { k: 'Llegó', v: detL.rel }, ...(((this.DET[detL.id] || {}).det || []).filter(x => x[0] !== 'Cita').map(x => ({ k: x[0], v: x[1] })))],
+        cardEstilo: { position: 'relative', zIndex: s.menuDet ? 35 : 'auto', marginTop: '14px', borderRadius: '16px', background: 'var(--card,#FFFFFF)', padding: '8px 16px', boxShadow: '0 1px 2px rgba(20,16,8,.04)', display: 'flex', flexDirection: 'column', animation: 'eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .1s both' },
+        menuDetOn: s.menuDet, toggleMenu: (ev) => { ev.stopPropagation(); this.setState(st => ({ menuDet: !st.menuDet, menu: null })); },
+        opcionesDet: r.opciones.map(o => ({ ...o, click: (ev) => { ev.stopPropagation(); o.click(ev); this.setState({ menuDet: false }); } })),
+        quitarDet: (ev) => { ev.stopPropagation(); this.asignar(detL.id, null); this.setState({ menuDet: false }); },
+        tl: this.tlDe(detL) }; })() : {};
+    const modo = this.modo(), yo = this.yo(), sinAcceso = modo === 'ejecutivo', emb = this.emb();
+    const isla = 'color-mix(in srgb, var(--nav-bg,#F7F5EF) 84%, transparent)', navCol = !!s.navCol, navEase = '0.5s cubic-bezier(0.4,0,0.2,1)';
+    const kbSL = s.kbSL || 0, kbSW = s.kbSW || 0, kbCW = s.kbCW || 0, kbMax = Math.max(0, kbSW - kbCW), kbOver = kbSW > kbCW + 1, kbFin = kbSL >= kbMax - 1, kbDesp = kbSL > 0;
+    const flechaBase = { flex: 'none', width: '26px', height: '26px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)', background: 'var(--card,#FFFFFF)', color: 'var(--ts,#5E6168)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'inherit', fontSize: '15px', lineHeight: 1, padding: 0, transition: 'opacity .15s ease' };
+    return {
+      kbRef: (el) => { this._kbEl = el; if (el && !el._km) { el._km = 1; setTimeout(() => this.kbMedir(), 40); } },
+      kbOnScroll: () => this.kbMedir(),
+      kbBarWrap: { flex: 'none', display: 'flex', alignItems: 'center', gap: '10px', padding: '0 0 18px', opacity: kbOver ? 1 : 0, pointerEvents: kbOver ? 'auto' : 'none', transition: 'opacity .2s ease-out' },
+      kbBarTrack: { flex: 1, minWidth: 0, height: '6px', borderRadius: '999px', background: 'color-mix(in srgb, var(--tp,#0A0A0A) 9%, transparent)', position: 'relative', cursor: 'pointer' },
+      kbBarThumb: { position: 'absolute', top: 0, bottom: 0, borderRadius: '999px', background: 'color-mix(in srgb, var(--tp,#0A0A0A) 28%, transparent)', left: (kbOver ? (kbSL / kbSW) * 100 : 0) + '%', width: (kbOver ? Math.max(8, (kbCW / kbSW) * 100) : 100) + '%' },
+      kbBarDown: (e) => { const el = this._kbEl; if (!el) return; const r = e.currentTarget.getBoundingClientRect();
+        const mover = (cx) => { const p = Math.min(1, Math.max(0, (cx - r.left) / r.width)); el.scrollLeft = p * el.scrollWidth - el.clientWidth / 2; this.kbMedir(); };
+        mover(e.clientX); const mm = (ev) => mover(ev.clientX); const up = () => { window.removeEventListener('pointermove', mm); window.removeEventListener('pointerup', up); };
+        window.addEventListener('pointermove', mm); window.addEventListener('pointerup', up); },
+      kbIzq: () => { const sn = this.kbSnaps(); const prev = sn.filter(x => x < kbSL - 2); this.kbAnima(prev.length ? prev[prev.length - 1] : 0); },
+      kbDer: () => { const sn = this.kbSnaps(); const next = sn.find(x => x > kbSL + 2); this.kbAnima(next != null ? next : kbMax); },
+      kbFlechaIzq: { ...flechaBase, opacity: kbDesp ? .45 : .18, cursor: kbDesp ? 'pointer' : 'default' },
+      kbFlechaDer: { ...flechaBase, opacity: kbFin ? .18 : .45, cursor: kbFin ? 'default' : 'pointer' },
+      nuevoIntegrante: () => this.nuevoIntegrante(),
+      conNav: !emb, wrapEstilo: emb ? { display: 'flex', width: '100%', height: '100%', minHeight: 0 } : { display: 'flex', justifyContent: 'flex-start', padding: '24px', boxSizing: 'border-box', minWidth: 'max-content', minHeight: '100vh', background: 'radial-gradient(125% 80% at 50% -8%, #FEFDFB 0%, #F8F6F1 46%, #F0EDE5 100%)' },
+      root: emb ? { ...T, position: 'relative', flex: 1, minWidth: 0, minHeight: 0, width: '100%', height: '100%', overflow: 'hidden', color: 'var(--tp,#0A0A0A)', display: 'flex', boxSizing: 'border-box' } : { ...T, position: 'relative', flex: 'none', width: '1440px', height: '900px', overflow: 'hidden', borderRadius: '24px', background: '#060607', color: 'var(--tp,#0A0A0A)', boxShadow: '0 1px 2px rgba(20,16,8,.06), 0 40px 90px -40px rgba(20,16,8,.35)', display: 'flex', boxSizing: 'border-box' },
+      capas: this.CAPAS[tema].map((c, i) => ({ estilo: { position: 'absolute', inset: i === 0 ? 0 : '-6%', background: c.bg, animation: c.anim, pointerEvents: 'none', zIndex: 0 } })),
+      navCard: { position: 'relative', zIndex: 2, flex: 'none', boxSizing: 'border-box', width: navCol ? '84px' : '248px', margin: '16px 0 16px 16px', height: 'calc(100% - 32px)', background: isla, border: '1px solid var(--divider,#EFECE4)', borderRadius: navCol ? '42px' : '26px', transition: 'width ' + navEase + ', border-radius ' + navEase, boxShadow: '0 26px 60px -34px rgba(20,16,8,.45), inset 0 1px 0 rgba(255,255,255,.45)', backdropFilter: 'blur(20px) saturate(1.3)', WebkitBackdropFilter: 'blur(20px) saturate(1.3)', overflow: 'hidden' },
+      navToggle: () => { const n = !navCol; this.setState({ navCol: n }); this.persist({ navCol: n }); }, navTogTitulo: navCol ? 'Expandir menú' : 'Comprimir menú', navTogIcon: navCol ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6',
+      navTogBtn: { position: 'absolute', top: '46px', left: navCol ? '86px' : '250px', zIndex: 20, width: '28px', height: '28px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)', background: 'var(--nav-bg,#F7F5EF)', boxShadow: '0 1px 3px -1px rgba(20,16,8,.12)', cursor: 'pointer', color: 'var(--tt,#8A8C93)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, transition: 'left ' + navEase + ', background .15s ease-out, color .15s ease-out' },
+      navLbl: { display: 'flex', flexDirection: 'column', gap: '1px', minWidth: 0, overflow: 'hidden', opacity: navCol ? 0 : 1, transition: 'opacity .2s ease', pointerEvents: navCol ? 'none' : 'auto' },
+      navItemLbl: { flex: 1, display: 'flex', alignItems: 'center', whiteSpace: 'nowrap', opacity: navCol ? 0 : 1, maxWidth: navCol ? '0px' : '200px', overflow: 'hidden', transition: 'opacity .2s ease, max-width .35s ease' },
+      modoBtn: { display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', width: navCol ? '44px' : '100%', boxSizing: 'border-box', padding: '12px', border: 'none', background: 'transparent', borderRadius: navCol ? '14px' : '12px', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ts,#5E6168)', overflow: 'hidden', transition: 'width ' + navEase + ', border-radius ' + navEase },
+      modoLbl: { fontSize: '13px', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', color: 'var(--ts,#5E6168)', opacity: navCol ? 0 : 1, maxWidth: navCol ? '0px' : '200px', transition: 'opacity .2s ease, max-width .35s ease' },
+      nav: NAV.map(([ic, label, cnt]) => ({ label, cnt, hasCnt: !!cnt, estilo: this.navStyle(ic === 'equipo', navCol), icono: this.ico(ic === 'equipo' ? 'personas' : (ic === 'personas' ? 'ventas' : ic), 18) })),
+      cicla: () => { const o = ['dia', 'tarde', 'noche']; const n = o[(o.indexOf(tema) + 1) % 3]; this.setState({ tema: n }); this.persist({ tema: n }); },
+      modoIcono: this.ico(this.ICO_TEMA[tema], 18), modoNombre: this.NOMBRE_TEMA[tema],
+      contenidoEstilo: { position: 'relative', flex: 1, minWidth: 0, minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '38px 28px 0 32px', boxSizing: 'border-box', animation: s.entrada ? 'none' : 'eq-rise .32s cubic-bezier(0.22,0.61,0.36,1) both' },
+      menusOn: s.sfMenu || s.pfMenu || !!s.menu || s.menuDet || s.selMenu || !!s.supMenu, cerrarMenus: () => this.setState({ sfMenu: false, pfMenu: false, menu: null, menuDet: false, selMenu: false, supMenu: false }),
+      selOn: s.sel.length > 0, selTxt: s.sel.length === 1 ? '1 seleccionada' : s.sel.length + ' seleccionadas', selDos: s.sel.length === 2 && (s.asig[s.sel[0]] || null) !== (s.asig[s.sel[1]] || null),
+      selWrap: { position: 'absolute', left: 0, right: 0, bottom: '24px', zIndex: 50, display: 'flex', justifyContent: 'center', pointerEvents: 'none' },
+      toastWrap: { position: 'absolute', left: 0, right: 0, bottom: s.sel.length ? '84px' : '28px', zIndex: 50, display: 'flex', justifyContent: 'center', pointerEvents: 'none' },
+      selBar: { position: 'relative', pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: '10px', background: 'color-mix(in srgb, var(--card,#FFFFFF) 74%, transparent)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', border: '1px solid var(--divider,#EFECE4)', color: 'var(--tp,#0A0A0A)', borderRadius: '999px', padding: '8px 10px 8px 18px', boxShadow: '0 12px 32px -14px rgba(0,0,0,.4)', animation: 'eq-rise .3s cubic-bezier(0.34,1.2,0.64,1) both' },
+      selBtn: { display: 'inline-flex', alignItems: 'center', gap: '6px', height: '32px', padding: '0 12px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)', background: 'var(--tonal,#F1EFE8)', color: 'var(--tp,#0A0A0A)', fontFamily: 'inherit', fontSize: '12.5px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', transition: 'opacity .15s ease-out' },
+      selX: { border: 'none', background: 'transparent', color: 'var(--ts,#5E6168)', width: '32px', height: '32px', borderRadius: '999px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '14px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', opacity: .8, transition: 'opacity .15s ease-out' },
+      selToggleMenu: (ev) => { ev.stopPropagation(); this.setState(st => ({ selMenu: !st.selMenu, menu: null, sfMenu: false, pfMenu: false, menuDet: false })); },
+      selMenuOn: s.selMenu, selMenuStyle: { ...this.mpop('0px', '250px'), top: 'auto', bottom: '42px', transformOrigin: 'bottom right', zIndex: 40 },
+      selOpciones: this.EQUIPO.map(x => ({ ...this.cargaDe(x.id), nombre: x.nombre, sub: this.rolLabel(x), ini: this.ini(x.nombre), avatar: this.avatar(x, 26), estilo: this.mi(false), click: (ev) => { ev.stopPropagation(); this.asignarVarios(s.sel, x.id); } })),
+      selQuitar: (ev) => { ev.stopPropagation(); this.asignarVarios(s.sel, null); },
+      selSwap: () => this.intercambiar(s.sel[0], s.sel[1]), selClear: () => this.setState({ sel: [], selMenu: false }),
+      tgThumb: { position: 'absolute', top: '3px', bottom: '3px', left: 'calc(3px + ' + (vista === 'lista' ? 0 : 1) + ' * (100% - 6px)/2)', width: 'calc((100% - 6px)/2)', borderRadius: '999px', background: 'var(--seg-thumb,#FFFFFF)', boxShadow: '0 1px 2px rgba(20,16,8,.1)', transition: 'left .25s cubic-bezier(0.34,1.2,0.64,1)' },
+      tgLista: tgBtn(vista === 'lista'), tgTablero: tgBtn(vista === 'tablero'), setLista: () => setVista('lista'), setTablero: () => setVista('tablero'),
+      vLista: vista === 'lista', vTablero: vista === 'tablero',
+      mainAnim: { position: 'relative', display: 'flex', alignItems: 'center', gap: '6px', flex: 'none', animation: s.volvio && !s.admin ? 'eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) both' : 'none' },
+      vAdmin: s.admin && !sinAcceso, vMain: !s.admin && !sinAcceso, sinAcceso, esAdmin: modo === 'admin', yoNombre: yo.nombre, yoRol: yo.rolTxt, yoIni: yo.ini, stop: (ev) => ev.stopPropagation(),
+      perfilCard: { position: 'relative', zIndex: 31, flex: 'none', width: '380px', boxSizing: 'border-box', borderLeft: '1px solid var(--divider,#EFECE4)', background: 'var(--nav-bg,#F7F5EF)', overflow: 'hidden', display: 'flex', flexDirection: 'column', animation: s.perfilClose ? 'eq-rail-out .34s cubic-bezier(0.22,0.61,0.36,1) forwards' : 'eq-rail-in .34s cubic-bezier(0.22,0.61,0.36,1) both' },
+      perfilDown: (ev) => { ev.stopPropagation(); if (s.supMenu && !(ev.target.closest && ev.target.closest('[data-supmenu]'))) this.setState({ supMenu: false }); }, abrirAdmin: () => this.setState({ admin: true, menu: null, selMenu: false, det: null }), cerrarAdmin: () => this.cerrarAdmin(),
+      stackAv: this.EQUIPO.slice(0, 3).map((v, i) => ({ ini: this.ini(v.nombre), estilo: { ...this.avatar(v, 28), marginLeft: i ? '-7px' : 0, background: 'linear-gradient(var(--tonal,#F1EFE8), var(--tonal,#F1EFE8)) var(--card,#FFFFFF)', boxShadow: '0 0 0 2px var(--stack-ring, transparent)', fontSize: '10px', position: 'relative', zIndex: 3 - i } })),
+      stackN: '+' + Math.max(0, this.EQUIPO.length - 3), stackMas: this.EQUIPO.length > 3,
+      adminResumen: (modo === 'supervisor' ? 'Tu equipo · ' + this.ejecsDe(yo.id).length + (this.ejecsDe(yo.id).length === 1 ? ' ejecutivo' : ' ejecutivos') + ' · ' + this.LEADS.filter(l => this.EQUIPO.some(v => v.id === s.asig[l.id])).length + ' oportunidades' : this.VEND.filter(v => this.rolDe(v) === 'sup').length + ' supervisores · ' + this.VEND.filter(v => this.rolDe(v) === 'ejec').length + ' ejecutivos · ' + this.LEADS.length + ' oportunidades') + (s.inactivos.length ? ' · ' + s.inactivos.length + (s.inactivos.length === 1 ? ' inactivo' : ' inactivos') : ''),
+      qa: s.qa, qaOn: !!s.qa.trim(), onQa: e => this.setState({ qa: e.target.value }), limpiarQa: () => this.setState({ qa: '' }),
+      adminVacio: (() => { const q = s.qa.trim().toLowerCase(); return !!q && !this.VEND.some(v => (v.nombre + ' ' + v.email + ' ' + v.whatsapp).toLowerCase().includes(q)); })(),
+      adminGrupos: (() => { const q = s.qa.trim().toLowerCase(); const pasa = v => !q || (v.nombre + ' ' + v.email + ' ' + v.whatsapp).toLowerCase().includes(q);
+        const fila = (v, esSup) => { const inact = this.esInactivo(v.id); return { ...v, rol: this.rolLabel(v), abrirPerfil: () => this.abrirPerfil(v.id), irLista: (ev) => { ev.stopPropagation(); this.irLista(v.id); }, ini: this.ini(v.nombre), avatar: { ...this.avatar(v, 32), opacity: inact ? .55 : 1 }, cnt: String(this.LEADS.filter(l => s.asig[l.id] === v.id).length), inact, rolChip: { ...this.estChip(), background: esSup ? 'var(--btn-bg,#0A0A0A)' : 'var(--tonal,#F1EFE8)', color: esSup ? 'var(--btn-tx,#fff)' : 'var(--ts,#5E6168)', opacity: inact ? .6 : 1 }, inChip: { ...this.estChip(), background: 'transparent', border: '1px solid var(--sec-bd,#D9D5CC)', color: 'var(--tt,#8A8C93)', padding: '1px 7px' }, txtNom: { fontSize: '14.5px', fontWeight: 700, letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', opacity: inact ? .55 : 1 }, txtMail: { flex: '1 1 200px', minWidth: 0, fontSize: '13px', color: 'var(--ts,#5E6168)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', opacity: inact ? .55 : 1 } }; };
+        const est = i => ({ display: 'flex', flexDirection: 'column', animation: 'eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) ' + (0.1 + i * 0.06) + 's both' });
+        const yoId = this.yo().id, sups = this.VEND.filter(v => this.rolDe(v) === 'sup' && (modo !== 'supervisor' || v.id === yoId)); const g = sups.map((sup, i) => { const ex = this.VEND.filter(v => this.rolDe(v) === 'ejec' && this.supDe(v) === sup.id); return { estilo: est(i), titulo: 'Equipo de ' + sup.nombre, cnt: ex.length === 0 ? 'Sin ejecutivos' : ex.length + (ex.length === 1 ? ' ejecutivo' : ' ejecutivos'), items: [sup, ...ex].filter(pasa).map((v, j) => fila(v, j === 0 && v.id === sup.id)) }; }).filter(g => g.items.length);
+        const huerf = modo === 'supervisor' ? [] : this.VEND.filter(v => this.rolDe(v) === 'ejec' && !this.supDe(v)); if (huerf.filter(pasa).length) g.push({ estilo: est(g.length), titulo: 'Sin supervisor', cnt: huerf.length + (huerf.length === 1 ? ' ejecutivo' : ' ejecutivos'), items: huerf.filter(pasa).map(v => fila(v, false)) }); return g; })(),
+      toggleSf: () => this.setState(st => ({ sfMenu: !st.sfMenu, pfMenu: false, menu: null })), togglePf: (ev) => { ev.stopPropagation(); this.setState(st => ({ pfMenu: !st.pfMenu, pfQ: '', sfMenu: false, menu: null, selMenu: false })); },
+      sfMenu: s.sfMenu, pfMenu: s.pfMenu, sfMenuStyle: this.mpop('76px', '180px'),
+      pfMenuStyle: { position: 'absolute', top: '40px', left: 0, zIndex: 40, minWidth: '200px', maxWidth: '280px', boxSizing: 'border-box', animation: 'eq-pop .18s ease-out both', transformOrigin: 'top left', background: 'var(--card,#FFFFFF)', borderRadius: '14px', boxShadow: '0 12px 40px -12px rgba(20,16,8,.3), 0 1px 2px rgba(20,16,8,.08)', padding: '8px', display: 'flex', flexDirection: 'column' },
+      pfQ: s.pfQ, onPfQ: e => this.setState({ pfQ: e.target.value }), pfLimpiar: () => this.setState({ pf: [] }),
+      pfBtn: s.pf.length ? { flex: 'none', width: '32px', height: '32px', borderRadius: '999px', border: 'none', background: 'var(--seg-track,#EFECE4)', color: 'var(--ts,#5E6168)', cursor: 'pointer', fontFamily: 'inherit', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, transition: 'background .15s ease-out, transform .12s ease-out' } : { ...this.chipFiltro(false), display: 'inline-flex', alignItems: 'center', height: '32px', padding: '0 14px', transition: 'background .15s ease-out, transform .12s ease-out' },
+      pfSinSel: !s.pf.length, pfConSel: s.pf.length > 0, pfBuscaOn: this.PRODUCTOS.length > 7,
+      pfSel: s.pf.slice(0, 3).map(p => ({ label: p, dot: { ...this.dot(p), background: 'var(--btn-tx,#fff)', opacity: .7 }, estilo: { ...this.chipFiltro(true), display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '0 10px 0 12px', height: '32px', maxWidth: '200px' }, quitar: () => this.setState(st => ({ pf: st.pf.filter(x => x !== p) })) })),
+      pfMasOn: s.pf.length > 3, pfMas: '+' + Math.max(0, s.pf.length - 3), pfMasEstilo: { ...this.chipFiltro(false), height: '32px', display: 'inline-flex', alignItems: 'center', padding: '0 10px' },
+      pfVacio: !!s.pfQ.trim() && !this.PRODUCTOS.some(p => p.toLowerCase().includes(s.pfQ.trim().toLowerCase())),
+      sfItems: [['', 'Todos'], ...Object.keys(this.EST).map(k => [k, this.EST[k][0]])].map(([k, label]) => ({ label, estilo: this.mi(k ? s.sf.includes(k) : !s.sf.length), click: () => this.setState(st => ({ sf: k ? (st.sf.includes(k) ? st.sf.filter(x => x !== k) : [...st.sf, k]) : [] })) })),
+      pfItems: (() => { const q = s.pfQ.trim().toLowerCase(); const cnt = p => this.LEADS.filter(l => l.producto === p).length; const ps = this.PRODUCTOS.filter(p => !q || p.toLowerCase().includes(q));
+        const txt = { flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'left', color: 'var(--tp,#0A0A0A)' };
+        return [...ps.map(p => { const on = s.pf.includes(p); return { label: p, on, txt, estilo: this.mi(on), click: () => this.setState(st => ({ pf: on ? st.pf.filter(x => x !== p) : [...st.pf, p] })) }; })]; })(),
+      chipsOn: !!(s.sf.length || s.pf.length), conteoFiltro: 'mostrando ' + items.length + ' de ' + this.LEADS.length, limpiarTodo: () => this.setState({ sf: [], pf: [], q: '' }),
+      fEstado: [['', 'Todos'], ...Object.keys(this.EST).map(k => [k, this.EST[k][0]])].map(([k, label]) => ({ label, estilo: { ...this.chipFiltro(k ? s.sf.includes(k) : !s.sf.length), display: 'inline-flex', alignItems: 'center', gap: '6px' }, click: () => this.setState(st => ({ sf: k ? (st.sf.includes(k) ? st.sf.filter(x => x !== k) : [...st.sf, k]) : [] })) })),
+      resumen: (() => { const nv = this.EQUIPO.length, na = this.LEADS.filter(l => l.estado === 'pend' || l.estado === 'seg').length;
+        return nv + (nv === 1 ? ' vendedor' : ' vendedores') + ' · ' + na + (na === 1 ? ' oportunidad activa' : ' oportunidades activas'); })(),
+      q: s.q, qOn: !!s.q.trim(), onQ: e => this.setState({ q: e.target.value }), limpiarQ: () => this.setState({ q: '' }),
+      menuItem: { ...this.mi(false), color: 'var(--ts,#5E6168)' },
+      asgMenuStyle: { ...this.mpop('0px', '250px', '38px'), zIndex: 40 },
+      grupos: grupoDef.map(g => { const its = asigDe(g.key === 'none' ? null : g.key), col = s.col[g.key] === undefined ? true : !!s.col[g.key];
+        const menuAqui = !col && its.some(r => r.id === s.menu);
+        its.forEach(r => { const up = s.menuUp && r.id === s.menu; r.menuEstilo = { ...this.mpop('0px', '250px', '38px'), width: '250px', boxSizing: 'border-box', maxHeight: (s.menuMax || 320) + 'px', overflowY: 'auto', transformOrigin: up ? 'bottom right' : 'top right', zIndex: 40, ...(up ? { top: 'auto', bottom: '38px' } : {}) }; });
+        const allSel = its.length > 0 && its.every(r => s.sel.includes(r.id));
+        const nP = its.filter(r => r.estado === 'pend').length, nS = its.filter(r => r.estado === 'seg').length, nC = its.filter(r => r.estado === 'conf').length;
+        const num = (n, fuerte) => ({ fontSize: fuerte ? '24px' : '20px', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums', color: n === 0 ? 'var(--tt,#8A8C93)' : fuerte ? 'var(--tp,#0A0A0A)' : 'var(--ts,#5E6168)' });
+        return { ...g, hasPuesto: !!g.puesto, sinAsig: !g.puesto, cnt: String(its.length), cols, items: its,
+          subSin: its.length + (its.length === 1 ? ' oportunidad esperando' : ' oportunidades esperando'),
+          repartirEstilo: { flex: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: '34px', padding: '0 18px', marginRight: '6px', borderRadius: '999px', background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)', fontSize: '12.5px', fontWeight: 600, cursor: its.length ? 'pointer' : 'default', opacity: its.length ? 1 : .4, transition: 'opacity .15s ease-out' },
+          repartir: (ev) => { ev.stopPropagation(); if (!its.length) return; const eq = this.EQUIPO; if (!eq.length) return;
+            const prev = this.state.asig, asig = { ...prev }; its.forEach((r, i) => { asig[r.id] = eq[i % eq.length].id; });
+            this.setState({ asig }); this.persist({ asig }); this.avisaBadge();
+            this.flash(its.length + (its.length === 1 ? ' oportunidad repartida' : ' oportunidades repartidas'), its.map(r => r.id), prev); },
+          nPend: String(nP), nSeg: String(nS), nConf: String(nC), nPendEstilo: num(nP, true), nSegEstilo: num(nS, false), nConfEstilo: num(nC, false),
+          filaEstilo: { display: 'flex', alignItems: 'center', gap: '14px', width: '100%', boxSizing: 'border-box', flex: 'none', height: '72px', padding: '0 18px', margin: '12px 0 0', borderRadius: '16px', border: 'none', background: 'var(--card,#FFFFFF)', boxShadow: 'var(--card-sh,0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16))', cursor: 'pointer', fontFamily: 'inherit', transition: 'background .15s ease-out, transform .12s ease-out' }, vacio: its.length === 0, allSel, bodyIn: { overflow: 'hidden', minHeight: 0 }, cbAll: { ...this.cb(allSel), marginRight: '-8px', opacity: allSel || s.sel.length ? 1 : .6 },
+          selAll: (ev) => { ev.stopPropagation(); const ids = its.map(r => r.id); this.setState(st => ({ sel: allSel ? st.sel.filter(x => !ids.includes(x)) : [...new Set([...st.sel, ...ids])], selMenu: false })); },
+          toggleCol: () => this.setState(st => ({ col: { ...st.col, [g.key]: !col }, menu: null })),
+          chev: { flex: 'none', display: 'inline-block', color: 'var(--tt,#8A8C93)', transition: 'transform .5s ease-in-out', transform: col ? 'rotate(0deg)' : 'rotate(180deg)' },
+          body: { display: 'grid', gridTemplateRows: col ? '0fr' : '1fr', transition: 'grid-template-rows .5s ease-in-out' } }; }),
+      kbCols: grupoDef.map(g => { const its = asigDe(g.key === 'none' ? null : g.key), activa = d && d.over === g.key;
+        const secciones = Object.keys(this.EST).map(k => { const si = its.filter(r => r.estado === k); const ec = !!(s.colEst || {})[k];
+          return { key: k, titulo: this.EST[k][0], cnt: String(si.length), items: si, vacio: si.length === 0, dot: this.estDot(this.EST[k][1]),
+            toggle: () => this.setState(st => ({ colEst: { ...(st.colEst || {}), [k]: !(st.colEst || {})[k] } })),
+            chev: { flex: 'none', color: 'var(--tt,#8A8C93)', transition: 'transform .4s ease-in-out', transform: ec ? 'rotate(180deg)' : 'rotate(0deg)' },
+            body: { display: 'grid', gridTemplateRows: ec ? '0fr' : '1fr', transition: 'grid-template-rows .4s ease-in-out' },
+            bodyIn: { overflow: 'hidden', minHeight: 0 } }; });
+        const allSel = its.length > 0 && its.every(r => s.sel.includes(r.id));
+        return { ...g, hasPuesto: !!g.puesto, sinAsig: !g.puesto, cnt: String(its.length), items: its, secciones, ph: !!activa,
+          cbAll: { ...this.cb(allSel), opacity: allSel || s.sel.length ? 1 : .6, visibility: its.length ? 'visible' : 'hidden' },
+          selAll: (ev) => { ev.stopPropagation(); ev.preventDefault(); const ids = its.map(r => r.id); this.setState(st => ({ sel: allSel ? st.sel.filter(x => !ids.includes(x)) : [...new Set([...st.sel, ...ids])], selMenu: false })); },
+          allSel, phEstilo: { flex: 'none', height: (d ? d.h : 0) + 'px', borderRadius: '12px', border: '1px dashed var(--sec-bd,#D9D5CC)' },
+          track: { boxSizing: 'border-box', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', padding: '12px', borderRadius: '16px',
+            background: activa ? (tema === 'dia' ? 'color-mix(in srgb, var(--tonal,#F1EFE8) 34%, transparent)' : 'var(--hover,#F7F5EF)') : (tema === 'dia' ? 'color-mix(in srgb, var(--tonal,#F1EFE8) 18%, transparent)' : 'var(--tonal,#F1EFE8)'),
+            transition: 'background .18s ease-out' } }; }),
+      dragOn: !!(d && d.started), ghostNombre: d ? this.LEADS.find(l => l.id === d.id).nombre : '', ghostSub: d ? this.LEADS.find(l => l.id === d.id).contexto : '',
+      ghostMulti: !!(d && d.ids.length > 1), ghostN: d ? String(d.ids.length) : '',
+      ghost: d ? { position: 'fixed', left: (d.x - d.dx) + 'px', top: (d.y - d.dy) + 'px', width: d.w + 'px', boxSizing: 'border-box', padding: '14px', borderRadius: '12px', background: 'var(--card,#FFFFFF)', boxShadow: '0 18px 48px -14px rgba(20,16,8,.45), 0 1px 2px rgba(20,16,8,.1)', transform: 'rotate(1.5deg) scale(1.02)', pointerEvents: 'none', zIndex: 60 } : {},
+      kbDensWrap: { display: 'flex', alignItems: 'center', overflow: 'hidden', flex: 'none', width: vista === 'tablero' ? '32px' : '0px', marginLeft: vista === 'tablero' ? '0px' : '-6px', opacity: vista === 'tablero' ? 1 : 0, transform: vista === 'tablero' ? 'scale(1)' : 'scale(.7)', pointerEvents: vista === 'tablero' ? 'auto' : 'none', transition: 'width .25s cubic-bezier(0.34,1.2,0.64,1), margin-left .25s cubic-bezier(0.34,1.2,0.64,1), opacity .18s ease-out, transform .25s cubic-bezier(0.34,1.2,0.64,1)' },
+      kbToggleDens: () => { const n = s.dens === 'ext' ? 'comp' : 'ext'; this.setState({ dens: n }); this.persist({ dens: n }); },
+      kbEsExt: s.dens === 'ext', kbEsComp: s.dens === 'comp', kbDensTitulo: s.dens === 'ext' ? 'Compactar tarjetas' : 'Extender tarjetas',
+      hasPerfil: !!s.perfil, cerrarPerfil: () => this.cerrarPerfil(),
+      perfilAnim: s.perfilClose ? 'eq-rail-out .34s cubic-bezier(0.22,0.61,0.36,1) forwards' : 'eq-rail-in .34s cubic-bezier(0.22,0.61,0.36,1) both',
+      confirmDelOn: !!s.confirmDel, cancelarEliminar: () => this.setState({ confirmDel: false }),
+      reasigOn: !!s.reasig, cancelarReasig: () => this.setState({ reasig: null }), confirmarReasig: () => this.confirmarReasig(),
+      reasig: (() => { const r = s.reasig, v = s.perfil ? this.VEND.find(x => x.id === s.perfil) : null; if (!r || !v) return {}; const ej = this.ejecsDe(v.id), n = ej.length, nO = this.LEADS.filter(l => s.asig[l.id] === v.id).length;
+        const otros = this.VEND.filter(x => x.id !== v.id && this.rolDe(x) === 'sup');
+        const mk = (x, promover) => { const on = r.dest === x.id; return { nombre: promover ? 'Promover a ' + x.nombre : x.nombre, sub: promover ? (x.g === 'f' ? 'Pasa a ser supervisora' : 'Pasa a ser supervisor') : (x.g === 'f' ? 'Supervisora' : 'Supervisor'), ini: this.ini(x.nombre), avatar: this.avatar(x, 26), on, click: () => this.setState({ reasig: { ...r, dest: x.id } }), hover: on ? '' : 'border-color:var(--sec-bd,#D9D5CC);',
+          estilo: { display: 'flex', alignItems: 'center', gap: '10px', width: '100%', boxSizing: 'border-box', padding: '9px 12px', borderRadius: '12px', border: '1.5px solid ' + (on ? 'var(--tp,#0A0A0A)' : 'var(--divider,#EFECE4)'), background: on ? 'var(--tonal,#F1EFE8)' : 'transparent', cursor: 'pointer', fontFamily: 'inherit', transition: 'border-color .15s ease-out, background .15s ease-out' },
+          radio: { flex: 'none', width: '18px', height: '18px', borderRadius: '999px', boxSizing: 'border-box', border: on ? 'none' : '1.5px solid var(--sec-bd,#D9D5CC)', background: on ? 'var(--btn-bg,#0A0A0A)' : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } }; };
+        const esDes = r.modo === 'desactivar', esEl = r.modo === 'eliminar' || esDes, eqTxt = n + (n === 1 ? ' ejecutivo reporta' : ' ejecutivos reportan') + ' a ' + v.nombre + '.';
+        return { esEliminar: esEl, titulo: esDes ? '¿Desactivar a ' + v.nombre + '?' : esEl ? '¿Eliminar a ' + v.nombre + '?' : v.nombre + ' dejará de supervisar', desc: eqTxt + (otros.length ? ' Elige quién se queda con su equipo.' : ' No hay otro supervisor: promueve a uno de sus ejecutivos.'),
+          opc: [...otros.map(x => mk(x, false)), ...ej.map(x => mk(x, true))], opps: !!r.opps, toggleOpps: () => this.setState({ reasig: { ...r, opps: !r.opps } }), cbOpps: this.cb(!!r.opps),
+          oppsTxt: nO ? 'Pasar también sus ' + nO + (nO === 1 ? ' oportunidad' : ' oportunidades') : 'No tiene oportunidades asignadas',
+          btnTxt: esDes ? 'Sí, desactivar' : esEl ? 'Sí, eliminar' : 'Guardar cambios', btn: { height: '38px', padding: '0 16px', borderRadius: '999px', border: 'none', background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)', fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, cursor: r.dest ? 'pointer' : 'default', opacity: r.dest ? 1 : .35 } }; })(),
+      supMenuStyle: { ...this.mpop('0px', '250px', '38px'), zIndex: 40 },
+      perfil: (() => { const nuevo = s.perfil === this.NUEVO, d = s.draft; const v = nuevo ? (d ? { id: this.NUEVO, nombre: 'Nuevo integrante', email: '', whatsapp: '', g: this.generoDe(d.nombre), sup: null } : null) : (s.perfil ? this.VEND.find(x => x.id === s.perfil) : null); if (!v || !d) return {}; const r = d.rol; const supId = r === 'ejec' ? (d.sup || (this.VEND.find(x => x.id !== v.id && this.rolDe(x) === 'sup') || {}).id || null) : null, sup = this.VEND.find(x => x.id === supId);
+        const listo = !!d.nombre.trim();
+        const sucio = nuevo ? listo : (d.nombre !== v.nombre || d.email !== v.email || d.whatsapp !== v.whatsapp || r !== this.rolDe(v) || (r === 'ejec' && supId !== this.supDe(v)));
+        const campos = [['Nombre', 'nombre', 'Nombre y apellido'], ['Correo', 'email', 'nombre@casaaurea.mx'], ['WhatsApp', 'whatsapp', '+52 999 000 0000']].map(([k, f, ph]) => ({ k, v: d[f], ph, onInput: (e) => this.setDraft({ [f]: e.target.value }) }));
+        const roles = ['sup', 'ejec'].map(k => { const on = r === k; return { label: v.g === 'f' ? this.ROLES[k][1] : this.ROLES[k][0], descTxt: this.ROLES[k][2], on, click: () => this.setDraft({ rol: k }),
+          hover: on ? '' : 'border-color:var(--sec-bd,#D9D5CC);', estilo: { display: 'flex', alignItems: 'flex-start', gap: '14px', width: '100%', boxSizing: 'border-box', padding: '14px 16px', borderRadius: '16px', border: '1.5px solid ' + (on ? 'var(--tp,#0A0A0A)' : 'var(--divider,#EFECE4)'), background: on ? 'var(--tonal,#F1EFE8)' : 'var(--card,#FFFFFF)', cursor: 'pointer', fontFamily: 'inherit', transition: 'border-color .15s ease-out, background .15s ease-out, transform .12s ease-out' },
+          radio: { flex: 'none', width: '20px', height: '20px', marginTop: '1px', borderRadius: '999px', boxSizing: 'border-box', border: on ? 'none' : '1.5px solid var(--divider,#EFECE4)', background: on ? 'var(--btn-bg,#0A0A0A)' : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' },
+          titulo: { fontSize: '14.5px', fontWeight: 700, letterSpacing: '-0.01em', color: on ? 'var(--tp,#0A0A0A)' : 'var(--tt,#8A8C93)' }, desc: { fontSize: '12.5px', lineHeight: 1.45, color: on ? 'var(--ts,#5E6168)' : 'var(--tt,#8A8C93)', opacity: on ? 1 : .8 } }; });
+        const supOpc = this.VEND.filter(x => x.id !== v.id && this.rolDe(x) === 'sup').map(x => ({ nombre: x.nombre, ini: this.ini(x.nombre), avatar: this.avatar(x, 26), on: x.id === supId, estilo: this.mi(false), click: (ev) => { ev.stopPropagation(); this.setDraft({ sup: x.id }); this.setState({ supMenu: false }); } }));
+        const supBtn = { display: 'inline-flex', alignItems: 'center', gap: '8px', height: '32px', padding: '0 10px 0 5px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', color: 'var(--tp,#0A0A0A)', fontFamily: 'inherit', fontSize: '12.5px', fontWeight: 600, cursor: 'pointer', maxWidth: '190px', boxSizing: 'border-box', transition: 'border-color .15s ease-out, transform .12s ease-out' };
+        const n = this.LEADS.filter(l => s.asig[l.id] === v.id).length;
+        const btnBase = { height: '38px', padding: '0 18px', borderRadius: '999px', fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, cursor: 'pointer', flex: 'none', transition: 'background .18s ease-out, color .18s ease-out, border-color .18s ease-out, transform .12s ease-out' };
+        const inact = !nuevo && this.esInactivo(v.id);
+        return { existe: !nuevo, esNuevo: nuevo, inact, activo: !nuevo && !inact, pedirDesactivar: () => this.pedirDesactivar(), reactivar: () => this.reactivarUsuario(), nombre: d.nombre.trim() || v.nombre, ini: nuevo && !listo ? '+' : this.ini(d.nombre.trim() || v.nombre), avatar: this.avatar(v, 44), rolTxt: nuevo ? 'Se une como ' + (v.g === 'f' ? this.ROLES[r][1] : this.ROLES[r][0]).toLowerCase() : (inact ? 'Inactiv' + (v.g === 'f' ? 'a' : 'o') + ' · ' : '') + (v.g === 'f' ? this.ROLES[r][1] : this.ROLES[r][0]), campos, roles, esEjec: r === 'ejec', supOpc, supBtn, supAvatar: sup ? this.avatar(sup, 20) : { display: 'none' }, supIni: sup ? this.ini(sup.nombre) : '', supNombre: sup ? sup.nombre : 'Elegir supervisor', supMenuOn: !!s.supMenu, toggleSupMenu: (ev) => { ev.stopPropagation(); this.setState(st => ({ supMenu: !st.supMenu })); },
+          micro: 'El correo es su acceso; el WhatsApp es donde el asistente le avisa.',
+          rolWrap: { position: 'relative', zIndex: s.supMenu ? 35 : 'auto', marginTop: '22px', animation: 'eq-rise .34s cubic-bezier(0.22,0.61,0.36,1) .1s both' },
+          cardEstilo: { marginTop: '10px', borderRadius: '16px', background: 'var(--card,#FFFFFF)', boxShadow: '0 1px 2px rgba(20,16,8,.04)', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' },
+          impacto: n ? n + (n === 1 ? ' oportunidad quedará' : ' oportunidades quedarán') + ' sin asignar.' : 'No tiene oportunidades asignadas.',
+          guardar: () => { if (nuevo) { if (listo) this.crearIntegrante(); } else if (sucio) this.guardarPerfil(); else this.cerrarPerfil(); }, guardarTxt: nuevo ? 'Agregar integrante' : (sucio ? 'Guardar cambios' : 'Cerrar'),
+          pedirEliminar: () => this.pedirEliminar(), eliminar: () => { this.setState({ confirmDel: false }); this.eliminarUsuario(); },
+          btnGuardar: sucio ? { ...btnBase, border: '1px solid var(--btn-bg,#0A0A0A)', background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)' } : nuevo ? { ...btnBase, border: '1px solid var(--btn-bg,#0A0A0A)', background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)', opacity: .35, cursor: 'default' } : { ...btnBase, border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', color: 'var(--tp,#0A0A0A)' } }; })(),
+      hasDet: !!s.det, det: detB, cerrarDet: () => this.cerrarDet(),
+      detAnim: s.detClose ? 'eq-rail-out .34s cubic-bezier(0.22,0.61,0.36,1) forwards' : 'eq-rail-in .34s cubic-bezier(0.22,0.61,0.36,1) both',
+      asgMenuDetStyle: { ...this.mpop('auto', '250px', '38px'), width: '250px', boxSizing: 'border-box', left: 'calc(50% - 125px)', transformOrigin: 'top center', zIndex: 40 },
+      toastOn: !!s.toast, toastTxt: s.toast || '', puedeDeshacer: !!this._snap,
+      deshacer: () => { if (!this._snap) return; clearTimeout(this._t2); const asig = this._snap, eliminados = this._snapDel || this.state.eliminados, inactivos = this._snapIn || this.state.inactivos, rs = this._snapRS || {}; this._snap = null; this._snapDel = null; this._snapIn = null; this._snapRS = null; this.setState({ asig, eliminados, inactivos, toast: null, fresh: [], ...rs }); this.persist({ asig, eliminados, inactivos, ...rs }); },
+      toastEstilo: { position: 'relative', pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: '12px', background: 'color-mix(in srgb, var(--card,#FFFFFF) 74%, transparent)', backdropFilter: 'blur(20px) saturate(160%)', WebkitBackdropFilter: 'blur(20px) saturate(160%)', border: '1px solid var(--divider,#EFECE4)', borderRadius: '999px', padding: '10px 16px', boxShadow: '0 12px 32px -14px rgba(0,0,0,.4)', animation: 'eq-rise .3s cubic-bezier(0.34,1.2,0.64,1) both', whiteSpace: 'nowrap' }
+    };
+  }
+}
+</script>
+</body>
+</html>

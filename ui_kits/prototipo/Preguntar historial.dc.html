@@ -1,0 +1,428 @@
+<!-- @dsCard group="7 · Prototipo v1.6" viewport="1520x1000" name="Preguntar · historial" subtitle="original v1.6" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  html,body{margin:0;padding:0;}
+  body{font-family:'Schibsted Grotesk',system-ui,-apple-system,sans-serif;background:radial-gradient(125% 80% at 50% -8%, #FEFDFB 0%, #F8F6F1 46%, #F0EDE5 100%) fixed;color:#0A0A0A;-webkit-font-smoothing:antialiased;}
+  *{box-sizing:border-box;}
+  a{color:#2F5FC0;text-decoration:none;} a:hover{color:#2F5FC0;}
+  ::-webkit-scrollbar{width:0;height:0;}
+  button{font-family:inherit;}
+  @keyframes ph-rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes ph-fade{from{opacity:0;}to{opacity:1;}}
+  @keyframes ph-up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes ph-pulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(2.6);opacity:0;}100%{transform:scale(2.6);opacity:0;}}
+  @keyframes ih-spin{to{transform:rotate(360deg);}}
+  @keyframes ih-spin-r{to{transform:rotate(-360deg);}}
+  @keyframes ih-glow{0%,100%{opacity:.7;}50%{opacity:1;}}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;}}
+</style>
+</helmet>
+
+<section style="display:flex;flex-direction:column;gap:28px;padding:40px;">
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <p style="margin:0;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:#8A7B66;">Design system · propuesta · intra hotelero</p>
+    <p style="margin:6px 0 0;font-size:34px;font-weight:700;letter-spacing:-0.025em;color:#0A0A0A;">Preguntar · historial de conversaciones</p>
+    <p style="margin:6px 0 0;font-size:13px;line-height:1.55;color:#5E6168;max-width:820px;">Preguntar abre con la Presencia. El botón de reloj junto a enviar cambia el mismo lienzo por un hilo continuo con todo lo que ya le preguntaste: se abre hasta abajo y al subir aparecen los días anteriores, separados por su pill de fecha.</p>
+  </div>
+
+  <div id="2a" style="display:flex;flex-direction:column;gap:16px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="#2a" style="display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;border-radius:6px;background:#0A0A0A;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;">2a</a>
+      <span style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8A7B66;">Escritorio · Presencia + historial en el mismo lienzo</span>
+    </div>
+
+    <div data-screen-label="Preguntar historial" style="{{ raiz }}">
+      <nav style="{{ navCard }}">
+        <div style="position:absolute;top:0;left:0;width:248px;padding:26px 20px 0;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:0 6px 6px;height:34px;">
+            <span style="position:relative;width:28px;height:28px;display:inline-block;flex:none;"><img src="assets/isotipo-dark.png" alt="intra" style="position:absolute;inset:0;width:28px;height:28px;object-fit:contain;opacity:var(--iso-dark-op,1);"><img src="assets/isotipo-light.png" alt="" style="position:absolute;inset:0;width:28px;height:28px;object-fit:contain;opacity:var(--iso-light-op,0);"></span>
+            <div style="display:flex;flex-direction:column;gap:1px;min-width:0;overflow:hidden;">
+              <span style="font-size:15px;font-weight:700;letter-spacing:-0.01em;white-space:nowrap;color:var(--tp,#0A0A0A);">Hampton Demo</span>
+              <span style="font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;color:var(--tt,#8A8C93);">Asistente comercial</span>
+            </div>
+          </div>
+          <span style="{{ navItem }}"><svg width="18" height="18" viewBox="0 0 104 109.33" fill="currentColor" style="flex:none;"><path d="M62.67,109.33h-21.33c-18.68,0-28.06,0-34.69-6.64C0,96.06,0,86.68,0,68v-13.39c0-9.27,0-14.38,2.3-19.09,2.31-4.71,6.34-7.85,13.65-13.54l10.67-8.3C38.34,4.57,44.22,0,52,0s13.66,4.57,25.37,13.69l10.67,8.3c7.32,5.69,11.35,8.83,13.65,13.54,2.3,4.71,2.3,9.82,2.3,19.09v13.39c0,18.68,0,28.05-6.64,34.69-6.64,6.64-16.02,6.64-34.7,6.64ZM52,8c-5.03,0-10.19,4.01-20.46,12l-10.67,8.3c-6.58,5.12-9.89,7.69-11.38,10.74-1.49,3.05-1.49,7.23-1.49,15.57v13.39c0,16.47,0,24.74,4.3,29.04,4.3,4.3,12.56,4.3,29.04,4.3h21.33c16.47,0,24.74,0,29.04-4.3,4.29-4.3,4.29-12.56,4.29-29.04v-13.39c0-8.34,0-12.52-1.49-15.57-1.49-3.05-4.79-5.62-11.38-10.74l-10.67-8.3c-10.28-7.99-15.43-12-20.46-12Z M52,90.67c-6.79,0-13.34-2.19-18.46-6.18-1.74-1.36-2.06-3.87-.7-5.61,1.36-1.74,3.87-2.06,5.61-.7,3.72,2.89,8.53,4.49,13.54,4.49s9.82-1.59,13.54-4.49c1.74-1.36,4.25-1.04,5.61.7,1.36,1.74,1.04,4.26-.7,5.61-5.12,3.98-11.67,6.18-18.46,6.18Z"></path></svg><span style="white-space:nowrap;">Inicio</span></span>
+          <span style="{{ navItem }}"><svg width="18" height="18" viewBox="0 0 104 104" fill="currentColor" style="flex:none;"><path d="M73.33,104c-2.07,0-3.82-1.59-3.98-3.68-1.08-13.56-12.52-24.47-26.62-25.38l-4.13-.27c-1.44.04-2.79.09-4.07.15-13.79.65-25.45,11.85-26.54,25.5-.18,2.2-2.11,3.85-4.3,3.67-2.2-.17-3.85-2.1-3.67-4.3,1.4-17.58,16.39-32.01,34.13-32.85,1.38-.07,2.85-.12,4.42-.16.12,0,.24,0,.36,0l4.31.28c18.04,1.16,32.69,15.23,34.08,32.73.17,2.2-1.47,4.13-3.67,4.3-.11,0-.22.01-.32.01Z M38.67,61.33c-11.76,0-21.33-9.57-21.33-21.33s9.57-21.33,21.33-21.33,21.33,9.57,21.33,21.33-9.57,21.33-21.33,21.33ZM38.67,26.67c-7.35,0-13.33,5.98-13.33,13.33s5.98,13.33,13.33,13.33,13.33-5.98,13.33-13.33-5.98-13.33-13.33-13.33Z M100,85.34c-2.07,0-3.82-1.59-3.98-3.68-1.08-13.58-11.9-24.39-25.72-25.7-2.2-.21-3.81-2.16-3.61-4.36s2.16-3.81,4.36-3.61c17.7,1.67,31.55,15.56,32.94,33.02.18,2.2-1.47,4.13-3.67,4.31-.11,0-.22.01-.32.01Z M73.27,40c-1.33,0-2.62-.66-3.38-1.86-1.18-1.87-.63-4.34,1.24-5.52,3.89-2.46,6.21-6.68,6.21-11.29,0-7.35-5.96-13.33-13.28-13.33-3.48,0-6.77,1.34-9.26,3.78-1.58,1.54-4.11,1.51-5.66-.07-1.54-1.58-1.51-4.11.07-5.66,4-3.9,9.27-6.05,14.85-6.05,11.73,0,21.28,9.57,21.28,21.33,0,7.36-3.71,14.11-9.93,18.05-.66.42-1.41.62-2.14.62Z"></path></svg><span style="flex:1;display:flex;align-items:center;white-space:nowrap;">Personas<span style="flex:1;"></span><span style="{{ navCnt }}">6</span></span></span>
+          <span style="{{ navItem }}"><svg width="18" height="18" viewBox="0 0 104 114.67" fill="currentColor" style="flex:none;"><path d="M104,46.67c0-.19-.03-.37-.06-.55-.23-13.99-1.39-22.05-7.36-28.03-4.6-4.6-10.43-6.34-19.25-7.01v-7.08c0-2.21-1.79-4-4-4s-4,1.79-4,4v6.74c-3.58-.07-7.56-.07-12-.07h-10.67c-4.44,0-8.42,0-12,.07v-6.74c0-2.21-1.79-4-4-4s-4,1.79-4,4v7.08c-8.81.67-14.65,2.41-19.25,7.01C1.44,24.06.28,32.13.06,46.12c-.03.18-.06.36-.06.55,0,.14.03.27.04.41-.04,3.12-.04,6.52-.04,10.26v10.67c0,21.19,0,31.83,7.42,39.25,7.42,7.42,18.06,7.42,39.25,7.42h10.67c21.19,0,31.83,0,39.25-7.42,7.42-7.42,7.42-18.06,7.42-39.25v-10.67c0-3.73,0-7.14-.04-10.26.01-.14.04-.27.04-.41ZM26.67,19.1v6.23c0,2.21,1.79,4,4,4s4-1.79,4-4v-6.6c3.51-.07,7.48-.07,12-.07h10.67c4.52,0,8.49,0,12,.07v6.6c0,2.21,1.79,4,4,4s4-1.79,4-4v-6.23c6.51.55,10.75,1.8,13.59,4.64,3.55,3.55,4.62,9.3,4.94,18.92H8.14c.32-9.62,1.38-15.37,4.94-18.92,2.84-2.84,7.08-4.09,13.59-4.64ZM96,68c0,18.98,0,28.51-5.08,33.59-5.08,5.08-14.61,5.08-33.59,5.08h-10.67c-18.98,0-28.51,0-33.59-5.08-5.08-5.08-5.08-14.61-5.08-33.59v-10.67c0-2.37,0-4.58,0-6.67h87.98c0,2.08,0,4.3,0,6.67v10.67Z"></path></svg><span style="flex:1;display:flex;align-items:center;white-space:nowrap;">Agenda<span style="flex:1;"></span><span style="{{ navCnt }}">2</span></span></span>
+          <span style="{{ navItem }}"><svg width="18" height="18" viewBox="0 0 103.98 104" fill="currentColor" style="flex:none;"><path d="M51.98,0C33.24,0,16.81,11.51,8.11,24.31c.17-3.48.58-7.66,1.19-11.71.33-2.18-1.17-4.22-3.35-4.55-2.19-.33-4.22,1.17-4.55,3.35-2.18,14.36-1.8,23.13,1.13,26.06,1.68,1.68,5.28,2.52,10.76,2.52,4.07,0,9.18-.46,15.3-1.39,2.18-.33,3.69-2.37,3.35-4.55s-2.37-3.69-4.55-3.35c-5.25.8-10.7,1.24-14.58,1.28,6.72-12.23,22.32-23.95,39.19-23.95,24.26,0,44,19.74,44,44s-19.74,44-44,44c-18.7,0-35.4-11.86-41.56-29.5-.73-2.09-3.01-3.19-5.09-2.46-2.09.73-3.19,3.01-2.46,5.09,7.27,20.85,27.01,34.87,49.11,34.87,28.67,0,52-23.33,52-52S80.66,0,51.98,0Z M51.98,21.33c-2.21,0-4,1.79-4,4v26.67c0,1.34.67,2.59,1.78,3.33l16,10.67c.68.46,1.45.67,2.21.67,1.29,0,2.56-.62,3.33-1.78,1.23-1.84.73-4.32-1.11-5.55l-14.22-9.48v-24.53c0-2.21-1.79-4-4-4Z"></path></svg><span style="white-space:nowrap;">Historial</span></span>
+          <span style="{{ navItem }}"><svg width="18" height="18" viewBox="0 0 114.69 114.69" fill="currentColor" style="flex:none;"><path d="M86.68,40.01c-6.62,0-12-5.38-12-12s5.38-12,12-12,12,5.38,12,12-5.38,12-12,12ZM86.68,24.01c-2.21,0-4,1.79-4,4s1.79,4,4,4,4-1.79,4-4-1.79-4-4-4Z M51,114.69c-4.51,0-9.05-1.47-12.87-4.42-12.78-9.9-23.81-20.92-33.71-33.71-6.17-7.96-5.85-19.09.74-26.45h0c14.62-16.33,29.92-31.31,46.76-45.78,2.31-1.99,5.1-3.18,8.08-3.45,14.33-1.32,39.6-2.29,47.86,5.96,8.25,8.25,7.28,33.52,5.96,47.85-.27,2.98-1.47,5.77-3.45,8.08-14.48,16.84-29.45,32.14-45.78,46.76-3.83,3.43-8.68,5.16-13.58,5.16ZM11.12,55.45h0c-4.02,4.49-4.17,11.31-.37,16.21,9.48,12.24,20.04,22.8,32.28,32.28,4.91,3.8,11.73,3.64,16.21-.37,16.07-14.39,30.8-29.44,45.05-46.02.9-1.04,1.43-2.29,1.55-3.6,1.93-21.04.5-37.32-3.65-41.47-4.15-4.15-20.43-5.58-41.47-3.65-1.31.12-2.55.66-3.6,1.55-16.57,14.24-31.63,28.98-46.02,45.05Z M46.68,88.01c-1.02,0-2.05-.39-2.83-1.17l-16-16c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l16,16c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17Z"></path></svg><span style="flex:1;display:flex;align-items:center;white-space:nowrap;">Productos<span style="flex:1;"></span><span style="{{ navCnt }}">4</span></span></span>
+          <span style="{{ navItemAct }}"><svg width="18" height="18" viewBox="0 0 109.33 109.33" fill="currentColor" style="flex:none;"><path d="M46.67,109.33c-3.79,0-7.13-2.28-8.52-5.8l-4.86-12.32c-2.73-6.92-8.26-12.45-15.18-15.18l-12.32-4.86c-3.52-1.39-5.8-4.73-5.8-8.52s2.28-7.13,5.8-8.52l12.32-4.86c6.92-2.73,12.45-8.26,15.18-15.18l4.86-12.32c1.39-3.52,4.73-5.8,8.52-5.8s7.13,2.28,8.52,5.8l4.86,12.32c2.73,6.92,8.26,12.45,15.18,15.18l12.32,4.86c3.52,1.39,5.8,4.73,5.8,8.52s-2.28,7.13-5.8,8.52l-12.32,4.86c-6.92,2.73-12.45,8.26-15.18,15.18l-4.86,12.32c-1.39,3.52-4.73,5.8-8.52,5.8ZM46.67,24c-.36,0-.84.13-1.08.73l-4.86,12.32c-3.54,8.97-10.71,16.15-19.68,19.68l-12.32,4.86c-.61.24-.73.72-.73,1.08s.13.84.73,1.08l12.32,4.86c8.97,3.54,16.15,10.71,19.68,19.68l4.86,12.32c.24.61.72.73,1.08.73s.84-.13,1.08-.73l4.86-12.32c3.54-8.97,10.71-16.15,19.68-19.68l12.32-4.86c.61-.24.73-.72.73-1.08s-.13-.84-.73-1.08l-12.32-4.86c-8.97-3.54-16.14-10.71-19.68-19.68l-4.86-12.32c-.24-.61-.72-.73-1.08-.73Z M89.33,40c-2.45,0-4.62-1.47-5.52-3.76l-1.82-4.62c-.77-1.95-2.33-3.51-4.28-4.28l-4.62-1.82c-2.28-.9-3.76-3.07-3.76-5.52,0-2.45,1.47-4.62,3.76-5.52l4.62-1.82c1.95-.77,3.51-2.33,4.28-4.28l1.82-4.62c.9-2.28,3.07-3.76,5.52-3.76s4.62,1.47,5.52,3.76l1.82,4.62c.77,1.95,2.33,3.51,4.28,4.28l4.62,1.82c2.28.9,3.76,3.07,3.76,5.52,0,2.45-1.47,4.62-3.75,5.52l-4.62,1.82c-1.95.77-3.51,2.33-4.28,4.28l-1.82,4.62c-.9,2.28-3.07,3.76-5.52,3.76ZM80.89,20c3.81,1.58,6.86,4.63,8.44,8.44,1.58-3.81,4.63-6.86,8.44-8.44-3.81-1.58-6.86-4.63-8.44-8.44-1.58,3.81-4.64,6.86-8.44,8.44ZM91.26,6.69h0,0Z"></path></svg><span style="white-space:nowrap;">Preguntar</span></span>
+        </div>
+        <div style="position:absolute;left:0;bottom:74px;width:248px;padding:0 20px;display:flex;align-items:center;">
+          <button sc-camel-on-click="{{ ciclaTema }}" title="Cambiar modo" style-hover="background:var(--tonal,#F1EFE8);" style="display:flex;align-items:center;gap:10px;width:100%;padding:12px;border-radius:12px;border:none;background:transparent;cursor:pointer;color:var(--ts,#5E6168);"><svg width="{{ icoTema.px }}" height="{{ icoTema.px }}" sc-camel-view-box="{{ icoTema.vb }}" fill="currentColor" style="flex:none;"><path d="{{ icoTema.d }}"></path></svg><span style="font-size:13px;font-weight:500;white-space:nowrap;color:var(--ts,#5E6168);">{{ labelTema }}</span></button>
+        </div>
+        <div style="position:absolute;left:0;bottom:20px;width:248px;padding:0 26px;display:flex;align-items:center;gap:10px;">
+          <span style="flex:none;width:30px;height:30px;border-radius:999px;background:var(--tonal,#F1EFE8);color:var(--ts,#5E6168);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">MR</span>
+          <span style="display:flex;flex-direction:column;gap:1px;min-width:0;overflow:hidden;">
+            <span style="font-size:12.5px;font-weight:600;white-space:nowrap;color:var(--tp,#0A0A0A);">Marcela Ríos</span>
+            <span style="font-size:10.5px;color:var(--tt,#8A8C93);">Administradora</span>
+          </span>
+        </div>
+      </nav>
+
+      <main style="{{ colMain }}">
+        <sc-if value="{{ vistaNueva }}" hint-placeholder-val="{{ true }}">
+          <div style="{{ emptyWrap }}">
+            <div style="margin-bottom:24px;">
+              <svg width="190" height="190" viewBox="0 0 220 220" style="overflow:visible;filter:drop-shadow(0 0 40px var(--siri-glow,rgba(90,110,180,.45)));"><defs><radialGradient id="bdpeph" cx="42%" cy="36%" r="66%"><stop offset="0%" style="stop-color:var(--siri-bodyIn)"></stop><stop offset="70%" style="stop-color:var(--siri-bodyOut)"></stop><stop offset="100%" style="stop-color:var(--siri-bodyOut)"></stop></radialGradient><linearGradient id="lApeph" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" style="stop-color:var(--siri-lA1)"></stop><stop offset="100%" style="stop-color:var(--siri-lA2)"></stop></linearGradient><linearGradient id="lBpeph" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color:var(--siri-lB2)"></stop><stop offset="100%" style="stop-color:var(--siri-lB1)"></stop></linearGradient><radialGradient id="cepeph" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:var(--siri-core)"></stop><stop offset="55%" style="stop-color:var(--siri-core);stop-opacity:.5"></stop><stop offset="100%" style="stop-color:var(--siri-core);stop-opacity:0"></stop></radialGradient><linearGradient id="rmpeph" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" style="stop-color:var(--siri-rim)"></stop><stop offset="45%" style="stop-color:var(--siri-rimSoft)"></stop><stop offset="100%" style="stop-color:var(--siri-rim);stop-opacity:.25"></stop></linearGradient><clipPath id="clpeph"><circle cx="110" cy="110" r="83"></circle></clipPath><filter id="blpeph" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter><filter id="bspeph" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"></feGaussianBlur></filter></defs><circle cx="110" cy="110" r="85" fill="url(#bdpeph)"></circle><g clip-path="url(#clpeph)"><path d="M112 34 C158 40 176 82 156 116 C144 136 110 130 100 102 C90 78 88 50 112 34 Z" fill="url(#lApeph)" filter="url(#blpeph)" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin 17.8s linear infinite;"></path><path d="M108 186 C62 180 44 138 64 104 C76 84 110 90 120 118 C130 142 132 170 108 186 Z" fill="url(#lBpeph)" filter="url(#blpeph)" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin-r 22.2s linear infinite;"></path><path d="M52 96 C95 78 130 120 172 108" stroke="var(--siri-accent)" stroke-width="16" fill="none" filter="url(#blpeph)" opacity=".6" stroke-linecap="round" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin 25.2s linear infinite;"></path><ellipse cx="108" cy="106" rx="48" ry="42" fill="url(#cepeph)" filter="url(#bspeph)" style="transform-box:view-box;transform-origin:108px 106px;animation:ih-glow 3.3s ease-in-out infinite;"></ellipse></g><circle cx="110" cy="110" r="83" fill="none" stroke="url(#rmpeph)" stroke-width="3.2"></circle><ellipse cx="84" cy="70" rx="34" ry="18" fill="#ffffff" opacity=".3" filter="url(#blpeph)" transform="rotate(-30 84 70)"></ellipse></svg>
+            </div>
+            <span style="position:relative;width:116px;height:29px;display:inline-block;"><img src="assets/wordmark-dark.png" alt="intra" style="position:absolute;inset:0;width:116px;height:29px;object-fit:contain;opacity:var(--iso-dark-op,1);"><img src="assets/wordmark-light.png" alt="" style="position:absolute;inset:0;width:116px;height:29px;object-fit:contain;opacity:var(--iso-light-op,0);"></span>
+            <span style="margin-top:8px;font-size:11px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--wm-sub,#8A7B66);">intelligence</span>
+            <span style="margin-top:14px;font-size:13px;color:var(--ts,#5E6168);">Pregunta lo que quieras sobre Hampton Demo.</span>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px;width:100%;max-width:660px;">
+              <sc-for list="{{ sugs }}" as="sg" hint-placeholder-count="4"><button sc-camel-on-click="{{ sg.tap }}" style-hover="background:var(--tonal,#F1EFE8);" style="{{ sugEstilo }}">{{ sg.q }}</button></sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ vistaHist }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ histWrap }}">
+            <div style="{{ histBar }}">
+              <span style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Tus conversaciones</span>
+              <span style="flex:1;"></span>
+              <button sc-camel-on-click="{{ volver }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ btnSec }}">Nueva conversación</button>
+            </div>
+            <div ref="{{ scrollRef }}" style="{{ histScroll }}">
+              <div style="{{ tope }}">Aquí empieza tu historial con el asistente</div>
+              <sc-for list="{{ hilo }}" as="h" hint-placeholder-count="8">
+                <sc-if value="{{ h.esFecha }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estilo }}"><span style="{{ pillFecha }}">{{ h.txt }}</span></div>
+                </sc-if>
+                <sc-if value="{{ h.esUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estilo }}">{{ h.txt }}<span style="{{ horaUser }}">{{ h.hora }}</span></div>
+                </sc-if>
+                <sc-if value="{{ h.esAsis }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estilo }}">
+                    <span style="{{ dotVivo }}"><span style="{{ dotVivoA }}"></span><span style="{{ dotVivoB }}"></span></span>
+                    <p style="{{ textoAsis }}">{{ h.txt }}</p>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <div style="{{ inputRow }}">
+          <input value="{{ borrador }}" sc-camel-on-change="{{ setBorrador }}" placeholder="Pregunta lo que quieras…" style="{{ inputEstilo }}">
+          <button sc-camel-on-click="{{ enviar }}" title="Enviar" style="{{ btnSend }}">↑</button>
+          <button sc-camel-on-click="{{ toggleHist }}" title="{{ histTitulo }}" style="{{ btnHist }}">
+            <svg width="19" height="19" viewBox="0 0 103.98 104" fill="currentColor" style="flex:none;"><path d="M51.98,0C33.24,0,16.81,11.51,8.11,24.31c.17-3.48.58-7.66,1.19-11.71.33-2.18-1.17-4.22-3.35-4.55-2.19-.33-4.22,1.17-4.55,3.35-2.18,14.36-1.8,23.13,1.13,26.06,1.68,1.68,5.28,2.52,10.76,2.52,4.07,0,9.18-.46,15.3-1.39,2.18-.33,3.69-2.37,3.35-4.55s-2.37-3.69-4.55-3.35c-5.25.8-10.7,1.24-14.58,1.28,6.72-12.23,22.32-23.95,39.19-23.95,24.26,0,44,19.74,44,44s-19.74,44-44,44c-18.7,0-35.4-11.86-41.56-29.5-.73-2.09-3.01-3.19-5.09-2.46-2.09.73-3.19,3.01-2.46,5.09,7.27,20.85,27.01,34.87,49.11,34.87,28.67,0,52-23.33,52-52S80.66,0,51.98,0Z M51.98,21.33c-2.21,0-4,1.79-4,4v26.67c0,1.34.67,2.59,1.78,3.33l16,10.67c.68.46,1.45.67,2.21.67,1.29,0,2.56-.62,3.33-1.78,1.23-1.84.73-4.32-1.11-5.55l-14.22-9.48v-24.53c0-2.21-1.79-4-4-4Z"></path></svg>
+          </button>
+        </div>
+        <p style="{{ legal }}">intra intelligence es una IA y puede cometer errores. Por favor, compruebe sus respuestas</p>
+      </main>
+    </div>
+  </div>
+
+  <div id="2c" style="display:flex;flex-direction:column;gap:16px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="#2c" style="display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;border-radius:6px;background:#0A0A0A;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;">2c</a>
+      <span style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8A7B66;">Móvil · mismo lienzo, mismo botón</span>
+    </div>
+    <div style="display:flex;gap:28px;align-items:flex-start;">
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ frameDark }}" hint-size="430px,900px">
+        <div data-screen-label="Preguntar historial móvil" style="{{ raizM }}">
+          <div style="{{ headM }}">
+            <span style="font-size:20px;font-weight:700;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);">Preguntar</span>
+            <span style="flex:1;"></span>
+            <button sc-camel-on-click="{{ ciclaTema }}" title="Cambiar modo" style="{{ selM }}"><svg width="{{ icoTema.px }}" height="{{ icoTema.px }}" sc-camel-view-box="{{ icoTema.vb }}" fill="currentColor" style="flex:none;"><path d="{{ icoTema.d }}"></path></svg></button>
+          </div>
+
+          <sc-if value="{{ vistaNuevaM }}" hint-placeholder-val="{{ true }}">
+            <div style="{{ emptyM }}">
+              <svg width="150" height="150" viewBox="0 0 220 220" style="overflow:visible;filter:drop-shadow(0 0 40px var(--siri-glow,rgba(90,110,180,.45)));"><defs><radialGradient id="bdpephm" cx="42%" cy="36%" r="66%"><stop offset="0%" style="stop-color:var(--siri-bodyIn)"></stop><stop offset="70%" style="stop-color:var(--siri-bodyOut)"></stop><stop offset="100%" style="stop-color:var(--siri-bodyOut)"></stop></radialGradient><linearGradient id="lApephm" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" style="stop-color:var(--siri-lA1)"></stop><stop offset="100%" style="stop-color:var(--siri-lA2)"></stop></linearGradient><linearGradient id="lBpephm" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color:var(--siri-lB2)"></stop><stop offset="100%" style="stop-color:var(--siri-lB1)"></stop></linearGradient><radialGradient id="cepephm" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:var(--siri-core)"></stop><stop offset="55%" style="stop-color:var(--siri-core);stop-opacity:.5"></stop><stop offset="100%" style="stop-color:var(--siri-core);stop-opacity:0"></stop></radialGradient><linearGradient id="rmpephm" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" style="stop-color:var(--siri-rim)"></stop><stop offset="45%" style="stop-color:var(--siri-rimSoft)"></stop><stop offset="100%" style="stop-color:var(--siri-rim);stop-opacity:.25"></stop></linearGradient><clipPath id="clpephm"><circle cx="110" cy="110" r="83"></circle></clipPath><filter id="blpephm" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter><filter id="bspephm" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"></feGaussianBlur></filter></defs><circle cx="110" cy="110" r="85" fill="url(#bdpephm)"></circle><g clip-path="url(#clpephm)"><path d="M112 34 C158 40 176 82 156 116 C144 136 110 130 100 102 C90 78 88 50 112 34 Z" fill="url(#lApephm)" filter="url(#blpephm)" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin 17.8s linear infinite;"></path><path d="M108 186 C62 180 44 138 64 104 C76 84 110 90 120 118 C130 142 132 170 108 186 Z" fill="url(#lBpephm)" filter="url(#blpephm)" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin-r 22.2s linear infinite;"></path><path d="M52 96 C95 78 130 120 172 108" stroke="var(--siri-accent)" stroke-width="16" fill="none" filter="url(#blpephm)" opacity=".6" stroke-linecap="round" style="transform-box:view-box;transform-origin:110px 110px;animation:ih-spin 25.2s linear infinite;"></path><ellipse cx="108" cy="106" rx="48" ry="42" fill="url(#cepephm)" filter="url(#bspephm)" style="transform-box:view-box;transform-origin:108px 106px;animation:ih-glow 3.3s ease-in-out infinite;"></ellipse></g><circle cx="110" cy="110" r="83" fill="none" stroke="url(#rmpephm)" stroke-width="3.2"></circle><ellipse cx="84" cy="70" rx="34" ry="18" fill="#ffffff" opacity=".3" filter="url(#blpephm)" transform="rotate(-30 84 70)"></ellipse></svg>
+              <span style="position:relative;width:106px;height:26px;display:inline-block;margin-top:20px;"><img src="assets/wordmark-dark.png" alt="intra" style="position:absolute;inset:0;width:106px;height:26px;object-fit:contain;opacity:var(--iso-dark-op,1);"><img src="assets/wordmark-light.png" alt="" style="position:absolute;inset:0;width:106px;height:26px;object-fit:contain;opacity:var(--iso-light-op,0);"></span>
+              <span style="margin-top:8px;font-size:10.5px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--wm-sub,#8A7B66);">intelligence</span>
+              <span style="margin-top:12px;font-size:13px;text-align:center;color:var(--ts,#5E6168);">Pregunta lo que quieras sobre Hampton Demo.</span>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:22px;width:100%;">
+                <sc-for list="{{ sugsM }}" as="sg" hint-placeholder-count="3"><button sc-camel-on-click="{{ sg.tap }}" style="{{ sugEstiloM }}">{{ sg.q }}</button></sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ vistaHistM }}" hint-placeholder-val="{{ false }}">
+            <div ref="{{ scrollRefM }}" style="{{ histScrollM }}">
+              <div style="{{ topeM }}">Aquí empieza tu historial con el asistente</div>
+              <sc-for list="{{ hilo }}" as="h" hint-placeholder-count="8">
+                <sc-if value="{{ h.esFecha }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estiloM }}"><span style="{{ pillFecha }}">{{ h.txt }}</span></div>
+                </sc-if>
+                <sc-if value="{{ h.esUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estiloM }}">{{ h.txt }}<span style="{{ horaUser }}">{{ h.hora }}</span></div>
+                </sc-if>
+                <sc-if value="{{ h.esAsis }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ h.estiloM }}">
+                    <span style="{{ dotVivo }}"><span style="{{ dotVivoA }}"></span><span style="{{ dotVivoB }}"></span></span>
+                    <p style="{{ textoAsisM }}">{{ h.txt }}</p>
+                  </div>
+                </sc-if>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="{{ inputRowM }}">
+            <input value="{{ borrador }}" sc-camel-on-change="{{ setBorrador }}" placeholder="Pregunta lo que quieras…" style="{{ inputEstiloM }}">
+            <button sc-camel-on-click="{{ enviar }}" title="Enviar" style="{{ btnSendM }}">↑</button>
+            <button sc-camel-on-click="{{ toggleHistM }}" title="{{ histTituloM }}" style="{{ btnHistM }}"><svg width="18" height="18" viewBox="0 0 103.98 104" fill="currentColor" style="flex:none;"><path d="M51.98,0C33.24,0,16.81,11.51,8.11,24.31c.17-3.48.58-7.66,1.19-11.71.33-2.18-1.17-4.22-3.35-4.55-2.19-.33-4.22,1.17-4.55,3.35-2.18,14.36-1.8,23.13,1.13,26.06,1.68,1.68,5.28,2.52,10.76,2.52,4.07,0,9.18-.46,15.3-1.39,2.18-.33,3.69-2.37,3.35-4.55s-2.37-3.69-4.55-3.35c-5.25.8-10.7,1.24-14.58,1.28,6.72-12.23,22.32-23.95,39.19-23.95,24.26,0,44,19.74,44,44s-19.74,44-44,44c-18.7,0-35.4-11.86-41.56-29.5-.73-2.09-3.01-3.19-5.09-2.46-2.09.73-3.19,3.01-2.46,5.09,7.27,20.85,27.01,34.87,49.11,34.87,28.67,0,52-23.33,52-52S80.66,0,51.98,0Z M51.98,21.33c-2.21,0-4,1.79-4,4v26.67c0,1.34.67,2.59,1.78,3.33l16,10.67c.68.46,1.45.67,2.21.67,1.29,0,2.56-.62,3.33-1.78,1.23-1.84.73-4.32-1.11-5.55l-14.22-9.48v-24.53c0-2.21-1.79-4-4-4Z"></path></svg></button>
+          </div>
+          <p style="{{ legalM }}">intra intelligence es una IA y puede cometer errores. Por favor, compruebe sus respuestas</p>
+        </div>
+      </x-import>
+
+      <div style="flex:none;width:420px;display:flex;flex-direction:column;gap:12px;padding-top:8px;">
+        <p style="margin:0;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8A8C93;">Qué cambia en móvil</p>
+        <p style="margin:0;font-size:12.5px;line-height:1.6;color:#0A0A0A;">Mismo par de botones a la derecha del input (44px en vez de 48): enviar primero y el reloj después, los dos con el color del botón de enviar. El historial ocupa el alto completo del teléfono — sin panel lateral, porque no cabe — y abre igual hasta abajo; las burbujas suben a 82% de ancho y las pills de fecha quedan idénticas. Las sugerencias pasan a una columna y se recortan a tres.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="2b" style="display:flex;flex-direction:column;gap:16px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="#2b" style="display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;border-radius:6px;background:#0A0A0A;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;">2b</a>
+      <span style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8A7B66;">Reglas de la pieza</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:1440px;">
+      <sc-for list="{{ reglas }}" as="r" hint-placeholder-count="4">
+        <div style="border-radius:22px;background:#FFFFFF;box-shadow:0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16);padding:24px;">
+          <p style="margin:0 0 6px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8A8C93;">{{ r.t }}</p>
+          <p style="margin:0;font-size:12.5px;line-height:1.6;color:#0A0A0A;">{{ r.d }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1520},&quot;temaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dia&quot;,&quot;options&quot;:[&quot;dia&quot;,&quot;tarde&quot;,&quot;noche&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Comportamiento&quot;},&quot;vistaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;nueva&quot;,&quot;options&quot;:[&quot;nueva&quot;,&quot;hist&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Comportamiento&quot;}}">
+class Component extends DCLogic {
+  SPRING = 'cubic-bezier(0.34,1.2,0.64,1)';
+  EASE = 'cubic-bezier(0.22,0.61,0.36,1)';
+
+  THEME = {
+    dia: { '--card':'#FFFFFF','--nav-bg':'#F7F5EF','--scrim':'#FAF9F5','--tp':'#0A0A0A','--ts':'#5E6168','--tt':'#8A8C93','--divider':'#EFECE4','--tonal':'#F1EFE8','--hover':'#F7F5EF','--sec-bd':'#D9D5CC','--btn-bg':'#0A0A0A','--btn-tx':'#FFFFFF','--link':'#2F5FC0','--input-bg':'rgba(255,255,255,.85)','--seg-track':'#EFECE4','--seg-thumb':'#FFFFFF','--card-sh':'0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16)','--verde':'#5BD6A0','--wm-sub':'#8A7B66','--iso-dark-op':'1','--iso-light-op':'0','--siri-bodyIn':'rgba(255,250,240,.30)','--siri-bodyOut':'rgba(212,168,94,.20)','--siri-rim':'#FFF0C8','--siri-rimSoft':'rgba(232,201,122,.55)','--siri-lA1':'#FBA356','--siri-lA2':'#FED767','--siri-lB1':'#FEF1C8','--siri-lB2':'#FDFAF3','--siri-core':'#FFFDF4','--siri-glow':'rgba(232,201,122,.5)','--bg-grad':'radial-gradient(120% 90% at 50% -10%, #FEFDFB 0%, #FAF9F5 42%, #F4F1E9 78%, #EFE7D8 100%)' },
+    tarde: { '--card':'#322A38','--nav-bg':'rgba(0,0,0,.20)','--scrim':'#1C2236','--tp':'#F4EAE0','--ts':'rgba(244,232,222,.8)','--tt':'rgba(244,232,222,.52)','--divider':'rgba(244,230,220,.12)','--tonal':'rgba(246,224,200,.17)','--hover':'rgba(246,232,222,.06)','--sec-bd':'rgba(246,232,222,.4)','--btn-bg':'#F4EFE4','--btn-tx':'#14161C','--link':'#B7C8F2','--input-bg':'rgba(246,232,222,.09)','--seg-track':'rgba(246,224,200,.1)','--seg-thumb':'#4A4152','--card-sh':'0 1px 2px rgba(0,0,0,.2), 0 14px 34px -22px rgba(0,0,0,.55)','--verde':'#5FD3A4','--wm-sub':'rgba(244,232,222,.62)','--iso-dark-op':'0','--iso-light-op':'1','--siri-bodyIn':'rgba(120,90,110,.28)','--siri-bodyOut':'rgba(45,53,89,.34)','--siri-rim':'#F0B48C','--siri-rimSoft':'rgba(198,120,84,.5)','--siri-lA1':'#E8A08B','--siri-lA2':'#C67854','--siri-lB1':'#6B4F6D','--siri-lB2':'#2D3559','--siri-core':'#F7DCC8','--siri-glow':'rgba(198,120,84,.45)','--bg-grad':'linear-gradient(180deg,#1C2236 0%,#232A44 34%,#2E3049 54%,#4A3A50 70%,#8A5340 86%,#C46C45 100%)' },
+    noche: { '--card':'#14171F','--nav-bg':'rgba(0,0,0,.24)','--scrim':'#07080C','--tp':'#F1EDE4','--ts':'rgba(241,237,228,.68)','--tt':'rgba(241,237,228,.46)','--divider':'rgba(241,237,228,.08)','--tonal':'rgba(241,237,228,.12)','--hover':'rgba(241,237,228,.05)','--sec-bd':'rgba(241,237,228,.4)','--btn-bg':'#F5F2EA','--btn-tx':'#0A0A0A','--link':'#8FADEE','--input-bg':'rgba(241,237,228,.08)','--seg-track':'rgba(241,237,228,.07)','--seg-thumb':'#2A2F3A','--card-sh':'0 1px 2px rgba(0,0,0,.25), 0 14px 34px -22px rgba(0,0,0,.6)','--verde':'#4FC392','--wm-sub':'rgba(241,237,228,.55)','--iso-dark-op':'0','--iso-light-op':'1','--siri-bodyIn':'rgba(90,104,150,.26)','--siri-bodyOut':'rgba(30,34,60,.4)','--siri-rim':'#D6E0F0','--siri-rimSoft':'rgba(143,160,200,.5)','--siri-lA1':'#6E5FA0','--siri-lA2':'#4A3B6B','--siri-lB1':'#3A4E80','--siri-lB2':'#B8C4D6','--siri-core':'#E4ECF8','--siri-glow':'rgba(90,110,180,.45)','--bg-grad':'linear-gradient(180deg,#07080C 0%,#0A0C14 46%,#111826 70%,#1B2436 86%,#2A3550 100%)' }
+  };
+  ICOS = {"inicio":["0 0 104 109.33","M62.67,109.33h-21.33c-18.68,0-28.06,0-34.69-6.64C0,96.06,0,86.68,0,68v-13.39c0-9.27,0-14.38,2.3-19.09,2.31-4.71,6.34-7.85,13.65-13.54l10.67-8.3C38.34,4.57,44.22,0,52,0s13.66,4.57,25.37,13.69l10.67,8.3c7.32,5.69,11.35,8.83,13.65,13.54,2.3,4.71,2.3,9.82,2.3,19.09v13.39c0,18.68,0,28.05-6.64,34.69-6.64,6.64-16.02,6.64-34.7,6.64ZM52,8c-5.03,0-10.19,4.01-20.46,12l-10.67,8.3c-6.58,5.12-9.89,7.69-11.38,10.74-1.49,3.05-1.49,7.23-1.49,15.57v13.39c0,16.47,0,24.74,4.3,29.04,4.3,4.3,12.56,4.3,29.04,4.3h21.33c16.47,0,24.74,0,29.04-4.3,4.29-4.3,4.29-12.56,4.29-29.04v-13.39c0-8.34,0-12.52-1.49-15.57-1.49-3.05-4.79-5.62-11.38-10.74l-10.67-8.3c-10.28-7.99-15.43-12-20.46-12Z M52,90.67c-6.79,0-13.34-2.19-18.46-6.18-1.74-1.36-2.06-3.87-.7-5.61,1.36-1.74,3.87-2.06,5.61-.7,3.72,2.89,8.53,4.49,13.54,4.49s9.82-1.59,13.54-4.49c1.74-1.36,4.25-1.04,5.61.7,1.36,1.74,1.04,4.26-.7,5.61-5.12,3.98-11.67,6.18-18.46,6.18Z"],"personas":["0 0 104 104","M73.33,104c-2.07,0-3.82-1.59-3.98-3.68-1.08-13.56-12.52-24.47-26.62-25.38l-4.13-.27c-1.44.04-2.79.09-4.07.15-13.79.65-25.45,11.85-26.54,25.5-.18,2.2-2.11,3.85-4.3,3.67-2.2-.17-3.85-2.1-3.67-4.3,1.4-17.58,16.39-32.01,34.13-32.85,1.38-.07,2.85-.12,4.42-.16.12,0,.24,0,.36,0l4.31.28c18.04,1.16,32.69,15.23,34.08,32.73.17,2.2-1.47,4.13-3.67,4.3-.11,0-.22.01-.32.01Z M38.67,61.33c-11.76,0-21.33-9.57-21.33-21.33s9.57-21.33,21.33-21.33,21.33,9.57,21.33,21.33-9.57,21.33-21.33,21.33ZM38.67,26.67c-7.35,0-13.33,5.98-13.33,13.33s5.98,13.33,13.33,13.33,13.33-5.98,13.33-13.33-5.98-13.33-13.33-13.33Z M100,85.34c-2.07,0-3.82-1.59-3.98-3.68-1.08-13.58-11.9-24.39-25.72-25.7-2.2-.21-3.81-2.16-3.61-4.36s2.16-3.81,4.36-3.61c17.7,1.67,31.55,15.56,32.94,33.02.18,2.2-1.47,4.13-3.67,4.31-.11,0-.22.01-.32.01Z M73.27,40c-1.33,0-2.62-.66-3.38-1.86-1.18-1.87-.63-4.34,1.24-5.52,3.89-2.46,6.21-6.68,6.21-11.29,0-7.35-5.96-13.33-13.28-13.33-3.48,0-6.77,1.34-9.26,3.78-1.58,1.54-4.11,1.51-5.66-.07-1.54-1.58-1.51-4.11.07-5.66,4-3.9,9.27-6.05,14.85-6.05,11.73,0,21.28,9.57,21.28,21.33,0,7.36-3.71,14.11-9.93,18.05-.66.42-1.41.62-2.14.62Z"],"agenda":["0 0 104 114.67","M104,46.67c0-.19-.03-.37-.06-.55-.23-13.99-1.39-22.05-7.36-28.03-4.6-4.6-10.43-6.34-19.25-7.01v-7.08c0-2.21-1.79-4-4-4s-4,1.79-4,4v6.74c-3.58-.07-7.56-.07-12-.07h-10.67c-4.44,0-8.42,0-12,.07v-6.74c0-2.21-1.79-4-4-4s-4,1.79-4,4v7.08c-8.81.67-14.65,2.41-19.25,7.01C1.44,24.06.28,32.13.06,46.12c-.03.18-.06.36-.06.55,0,.14.03.27.04.41-.04,3.12-.04,6.52-.04,10.26v10.67c0,21.19,0,31.83,7.42,39.25,7.42,7.42,18.06,7.42,39.25,7.42h10.67c21.19,0,31.83,0,39.25-7.42,7.42-7.42,7.42-18.06,7.42-39.25v-10.67c0-3.73,0-7.14-.04-10.26.01-.14.04-.27.04-.41ZM26.67,19.1v6.23c0,2.21,1.79,4,4,4s4-1.79,4-4v-6.6c3.51-.07,7.48-.07,12-.07h10.67c4.52,0,8.49,0,12,.07v6.6c0,2.21,1.79,4,4,4s4-1.79,4-4v-6.23c6.51.55,10.75,1.8,13.59,4.64,3.55,3.55,4.62,9.3,4.94,18.92H8.14c.32-9.62,1.38-15.37,4.94-18.92,2.84-2.84,7.08-4.09,13.59-4.64ZM96,68c0,18.98,0,28.51-5.08,33.59-5.08,5.08-14.61,5.08-33.59,5.08h-10.67c-18.98,0-28.51,0-33.59-5.08-5.08-5.08-5.08-14.61-5.08-33.59v-10.67c0-2.37,0-4.58,0-6.67h87.98c0,2.08,0,4.3,0,6.67v10.67Z"],"historial":["0 0 103.98 104","M51.98,0C33.24,0,16.81,11.51,8.11,24.31c.17-3.48.58-7.66,1.19-11.71.33-2.18-1.17-4.22-3.35-4.55-2.19-.33-4.22,1.17-4.55,3.35-2.18,14.36-1.8,23.13,1.13,26.06,1.68,1.68,5.28,2.52,10.76,2.52,4.07,0,9.18-.46,15.3-1.39,2.18-.33,3.69-2.37,3.35-4.55s-2.37-3.69-4.55-3.35c-5.25.8-10.7,1.24-14.58,1.28,6.72-12.23,22.32-23.95,39.19-23.95,24.26,0,44,19.74,44,44s-19.74,44-44,44c-18.7,0-35.4-11.86-41.56-29.5-.73-2.09-3.01-3.19-5.09-2.46-2.09.73-3.19,3.01-2.46,5.09,7.27,20.85,27.01,34.87,49.11,34.87,28.67,0,52-23.33,52-52S80.66,0,51.98,0Z M51.98,21.33c-2.21,0-4,1.79-4,4v26.67c0,1.34.67,2.59,1.78,3.33l16,10.67c.68.46,1.45.67,2.21.67,1.29,0,2.56-.62,3.33-1.78,1.23-1.84.73-4.32-1.11-5.55l-14.22-9.48v-24.53c0-2.21-1.79-4-4-4Z"],"productos":["0 0 114.69 114.69","M86.68,40.01c-6.62,0-12-5.38-12-12s5.38-12,12-12,12,5.38,12,12-5.38,12-12,12ZM86.68,24.01c-2.21,0-4,1.79-4,4s1.79,4,4,4,4-1.79,4-4-1.79-4-4-4Z M51,114.69c-4.51,0-9.05-1.47-12.87-4.42-12.78-9.9-23.81-20.92-33.71-33.71-6.17-7.96-5.85-19.09.74-26.45h0c14.62-16.33,29.92-31.31,46.76-45.78,2.31-1.99,5.1-3.18,8.08-3.45,14.33-1.32,39.6-2.29,47.86,5.96,8.25,8.25,7.28,33.52,5.96,47.85-.27,2.98-1.47,5.77-3.45,8.08-14.48,16.84-29.45,32.14-45.78,46.76-3.83,3.43-8.68,5.16-13.58,5.16ZM11.12,55.45h0c-4.02,4.49-4.17,11.31-.37,16.21,9.48,12.24,20.04,22.8,32.28,32.28,4.91,3.8,11.73,3.64,16.21-.37,16.07-14.39,30.8-29.44,45.05-46.02.9-1.04,1.43-2.29,1.55-3.6,1.93-21.04.5-37.32-3.65-41.47-4.15-4.15-20.43-5.58-41.47-3.65-1.31.12-2.55.66-3.6,1.55-16.57,14.24-31.63,28.98-46.02,45.05Z M46.68,88.01c-1.02,0-2.05-.39-2.83-1.17l-16-16c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l16,16c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17Z"],"preguntar":["0 0 109.33 109.33","M46.67,109.33c-3.79,0-7.13-2.28-8.52-5.8l-4.86-12.32c-2.73-6.92-8.26-12.45-15.18-15.18l-12.32-4.86c-3.52-1.39-5.8-4.73-5.8-8.52s2.28-7.13,5.8-8.52l12.32-4.86c6.92-2.73,12.45-8.26,15.18-15.18l4.86-12.32c1.39-3.52,4.73-5.8,8.52-5.8s7.13,2.28,8.52,5.8l4.86,12.32c2.73,6.92,8.26,12.45,15.18,15.18l12.32,4.86c3.52,1.39,5.8,4.73,5.8,8.52s-2.28,7.13-5.8,8.52l-12.32,4.86c-6.92,2.73-12.45,8.26-15.18,15.18l-4.86,12.32c-1.39,3.52-4.73,5.8-8.52,5.8ZM46.67,24c-.36,0-.84.13-1.08.73l-4.86,12.32c-3.54,8.97-10.71,16.15-19.68,19.68l-12.32,4.86c-.61.24-.73.72-.73,1.08s.13.84.73,1.08l12.32,4.86c8.97,3.54,16.15,10.71,19.68,19.68l4.86,12.32c.24.61.72.73,1.08.73s.84-.13,1.08-.73l4.86-12.32c3.54-8.97,10.71-16.15,19.68-19.68l12.32-4.86c.61-.24.73-.72.73-1.08s-.13-.84-.73-1.08l-12.32-4.86c-8.97-3.54-16.14-10.71-19.68-19.68l-4.86-12.32c-.24-.61-.72-.73-1.08-.73Z M89.33,40c-2.45,0-4.62-1.47-5.52-3.76l-1.82-4.62c-.77-1.95-2.33-3.51-4.28-4.28l-4.62-1.82c-2.28-.9-3.76-3.07-3.76-5.52,0-2.45,1.47-4.62,3.76-5.52l4.62-1.82c1.95-.77,3.51-2.33,4.28-4.28l1.82-4.62c.9-2.28,3.07-3.76,5.52-3.76s4.62,1.47,5.52,3.76l1.82,4.62c.77,1.95,2.33,3.51,4.28,4.28l4.62,1.82c2.28.9,3.76,3.07,3.76,5.52,0,2.45-1.47,4.62-3.75,5.52l-4.62,1.82c-1.95.77-3.51,2.33-4.28,4.28l-1.82,4.62c-.9,2.28-3.07,3.76-5.52,3.76ZM80.89,20c3.81,1.58,6.86,4.63,8.44,8.44,1.58-3.81,4.63-6.86,8.44-8.44-3.81-1.58-6.86-4.63-8.44-8.44-1.58,3.81-4.64,6.86-8.44,8.44ZM91.26,6.69h0,0Z"],"amanecer":["0 0 114.67 114.67","M57.33,88c-16.91,0-30.67-13.76-30.67-30.67s13.76-30.67,30.67-30.67,30.67,13.76,30.67,30.67-13.76,30.67-30.67,30.67ZM57.33,34.67c-12.5,0-22.67,10.17-22.67,22.67s10.17,22.67,22.67,22.67,22.67-10.17,22.67-22.67-10.17-22.67-22.67-22.67Z M57.33,114.67c-2.21,0-4-1.79-4-4v-8c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4ZM95.04,99.05c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.1-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM19.62,99.05c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.09-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM110.67,61.33h-8c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM12,61.33H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM89.39,29.28c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.1-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM25.28,29.28c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM57.33,16c-2.21,0-4-1.79-4-4V4c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4Z"],"atardecer":["0 0 104 76.96","M52,23.63c-2.21,0-4-1.79-4-4V4c0-2.21,1.79-4,4-4s4,1.79,4,4v15.63c0,2.21-1.79,4-4,4Z M78.4,34.56c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l7.54-7.54c1.56-1.56,4.1-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-7.54,7.54c-.78.78-1.8,1.17-2.83,1.17Z M14.67,60.96H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h10.67c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M25.6,34.56c-1.02,0-2.05-.39-2.83-1.17l-7.54-7.54c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l7.54,7.54c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17Z M100,60.96h-10.67c-2.21,0-4-1.79-4-4s1.79-4,4-4h10.67c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M100,76.96H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h96c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M73.33,60.96c-2.21,0-4-1.79-4-4,0-9.56-7.77-17.33-17.33-17.33s-17.33,7.77-17.33,17.33c0,2.21-1.79,4-4,4s-4-1.79-4-4c0-13.97,11.36-25.33,25.33-25.33s25.33,11.36,25.33,25.33c0,2.21-1.79,4-4,4Z"],"noche":["0 0 109.33 109.33","M55.34,109.33C24.83,109.33,0,84.51,0,53.99,0,28.15,17.55,5.99,42.67.11c1.53-.36,3.13.21,4.08,1.46.96,1.25,1.1,2.94.36,4.32-3.19,5.98-4.88,12.75-4.88,19.58,0,22.96,18.68,41.64,41.64,41.64,6.83,0,13.6-1.69,19.58-4.88,1.39-.74,3.08-.6,4.32.36,1.25.96,1.82,2.56,1.46,4.08-5.89,25.12-28.05,42.67-53.88,42.67ZM36.53,10.51c-17.14,7.36-28.53,24.22-28.53,43.48,0,26.11,21.24,47.34,47.34,47.34,19.26,0,36.12-11.39,43.48-28.53-4.82,1.52-9.88,2.3-14.96,2.3-27.37,0-49.64-22.27-49.64-49.64,0-5.08.79-10.14,2.3-14.96Z"],"prod-cama":["0 0 114.67 104","M110.37,52.3c-.33-.33-.68-.63-1.04-.92v-24.12c0-3.99,0-6.62-1.58-9.3-1.53-2.59-3.6-3.88-6.75-5.82C88.15,4.19,73.05,0,57.33,0S26.52,4.19,13.66,12.13c-3.14,1.94-5.22,3.22-6.75,5.82-1.58,2.68-1.58,5.32-1.58,9.3v24.12c-.36.28-.7.58-1.04.92C0,56.59,0,62.54,0,73.33v26.67c0,2.21,1.79,4,4,4s4-1.79,4-4v-14.67h98.67v14.67c0,2.21,1.79,4,4,4s4-1.79,4-4v-26.67c0-10.79,0-16.74-4.3-21.04ZM13.33,27.26c0-3.16.02-4.47.47-5.25.5-.84,1.43-1.45,4.06-3.07,11.59-7.16,25.24-10.94,39.47-10.94s27.88,3.78,39.47,10.94c2.63,1.62,3.56,2.23,4.06,3.07.45.77.47,2.09.47,5.25v21.15c-2.28-.29-4.91-.37-8-.4v-5.54c0-2.6-.49-5.25-4.04-7.07-8.82-4.51-17.76-4.51-26.58,0-3.55,1.82-4.04,4.47-4.04,7.07v5.53h-2.67v-5.53c0-2.6-.49-5.25-4.04-7.07-8.82-4.51-17.76-4.51-26.58,0-3.55,1.82-4.04,4.47-4.04,7.07v5.54c-3.09.02-5.72.11-8,.4v-21.15ZM66.67,48v-5.63c3.17-1.57,6.3-2.37,9.33-2.37s6.17.8,9.33,2.37v5.63h-18.67ZM29.33,48v-5.53s0-.07,0-.1c3.16-1.57,6.3-2.37,9.33-2.37s6.17.8,9.33,2.37c0,.03,0,.07,0,.11v5.53h-18.67ZM8,77.33v-4c0-9.31.08-13.51,1.95-15.38,1.87-1.87,6.07-1.95,15.38-1.95h64c9.31,0,13.51.08,15.38,1.95s1.95,6.07,1.95,15.38v4H8Z"],"prod-copa":["0 0 82.76 104","M68.04,33.36c11.32-12.74,17-19.13,13.88-26.22-3.14-7.13-11.65-7.13-28.61-7.13h-23.84C12.5,0,3.98,0,.85,7.14c-3.12,7.09,2.56,13.49,13.88,26.22l22.65,25.49v37.15h-14.67c-2.21,0-4,1.79-4,4s1.79,4,4,4h37.33c2.21,0,4-1.79,4-4s-1.79-4-4-4h-14.67v-37.15l22.66-25.5ZM20.71,28.05c-7.59-8.55-13.59-15.29-12.54-17.69,1.04-2.35,9.97-2.35,21.29-2.35h23.84c11.32,0,20.25,0,21.29,2.36,1.05,2.4-4.94,9.14-12.54,17.69l-20.67,23.26-20.67-23.26Z"],"prod-sol":["0 0 114.67 114.67","M57.33,88c-16.91,0-30.67-13.76-30.67-30.67s13.76-30.67,30.67-30.67,30.67,13.76,30.67,30.67-13.76,30.67-30.67,30.67ZM57.33,34.67c-12.5,0-22.67,10.17-22.67,22.67s10.17,22.67,22.67,22.67,22.67-10.17,22.67-22.67-10.17-22.67-22.67-22.67Z M57.33,114.67c-2.21,0-4-1.79-4-4v-8c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4ZM95.04,99.05c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.1-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM19.62,99.05c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.09-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM110.67,61.33h-8c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM12,61.33H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM89.39,29.28c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.1-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM25.28,29.28c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM57.33,16c-2.21,0-4-1.79-4-4V4c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4Z"],"prod-pastel":["0 0 98.67 114.67","M98.67,54.67c0-9.56-8.57-17.33-19.11-17.33h-26.22v-8.7c4.65-1.65,8-6.09,8-11.3,0-5.52-6.91-13.65-9.02-16-.76-.85-1.84-1.33-2.98-1.33s-2.22.48-2.98,1.33c-2.12,2.36-9.02,10.48-9.02,16,0,5.21,3.35,9.65,8,11.3v8.7h-26.22c-10.54,0-19.11,7.78-19.11,17.33,0,5.83,3.2,10.99,8.08,14.13l2.78,13.75c2.97,14.73,4.47,22.12,10.25,27.09,5.86,5.03,13.5,5.03,27.37,5.03h1.72c13.87,0,21.5,0,27.37-5.03,5.78-4.96,7.28-12.36,10.25-27.09l2.78-13.75c4.88-3.14,8.08-8.3,8.08-14.13ZM49.33,10.31c2.26,3.02,3.96,5.91,4,7.03,0,2.2-1.8,4-4,4s-4-1.79-4-3.99c.04-1.12,1.73-4.01,4-7.03ZM19.11,45.33h60.44c6.13,0,11.11,4.19,11.11,9.33s-4.98,9.33-11.11,9.33c-5.4,0-10.22-3.25-11.21-7.56-.42-1.82-2.04-3.1-3.9-3.1s-3.48,1.29-3.9,3.1c-.99,4.31-5.81,7.56-11.21,7.56s-10.22-3.25-11.21-7.56c-.42-1.82-2.03-3.1-3.9-3.1s-3.48,1.29-3.9,3.1c-.99,4.31-5.81,7.56-11.21,7.56-6.13,0-11.11-4.19-11.11-9.33s4.98-9.33,11.11-9.33ZM79.97,80.97c-2.61,12.94-3.92,19.43-7.62,22.6-3.48,2.98-8.97,3.1-22.16,3.1h-1.72c-13.19,0-18.68-.12-22.16-3.1-3.69-3.17-5.01-9.66-7.62-22.6l-1.84-9.1c.74.08,1.49.13,2.25.13,6.01,0,11.51-2.48,15.11-6.44,3.6,3.95,9.1,6.44,15.11,6.44s11.51-2.48,15.11-6.44c3.6,3.95,9.1,6.44,15.11,6.44.76,0,1.51-.05,2.25-.13l-1.84,9.1Z"],"prod-boda":["0 0 104 114.68","M70.67,48.02c-6.91,0-13.33,2.11-18.66,5.73-5.33-3.62-11.76-5.74-18.68-5.74C14.95,48.01,0,62.96,0,81.34s14.95,33.34,33.33,33.34h0c6.91-.01,13.33-2.12,18.66-5.74,5.33,3.62,11.76,5.74,18.68,5.74,18.38,0,33.33-14.95,33.33-33.33s-14.95-33.33-33.33-33.33ZM52,98.44c-4.13-4.51-6.66-10.51-6.66-17.1s2.53-12.59,6.66-17.1c4.13,4.51,6.66,10.51,6.66,17.1s-2.53,12.59-6.66,17.1ZM8,81.34c0-13.97,11.36-25.33,25.33-25.33,4.51,0,8.74,1.19,12.4,3.26-5.22,5.88-8.39,13.62-8.39,22.08s3.17,16.19,8.38,22.07c-3.67,2.07-7.89,3.25-12.39,3.25-13.97,0-25.33-11.36-25.33-25.33ZM70.67,106.67c-4.5,0-8.73-1.19-12.4-3.25,5.21-5.88,8.39-13.61,8.39-22.08s-3.17-16.19-8.39-22.08c3.67-2.07,7.9-3.25,12.4-3.25,13.97,0,25.33,11.36,25.33,25.33s-11.36,25.33-25.33,25.33Z M50.32,44.97c.53.25,1.11.37,1.68.37h.02c.57,0,1.15-.12,1.68-.37.96-.45,23.65-11.17,23.65-29.56,0-8.64-6.45-15.41-14.67-15.41-4.32,0-7.89,1.31-10.67,3.92-2.78-2.61-6.35-3.92-10.67-3.92-8.23,0-14.67,6.77-14.67,15.41,0,18.39,22.68,29.11,23.65,29.56ZM41.33,8.01c3.44,0,5.5,1.28,7.09,4.41.68,1.34,2.06,2.18,3.56,2.18s2.88-.84,3.56-2.18c1.61-3.13,3.66-4.41,7.11-4.41,3.8,0,6.67,3.19,6.67,7.41,0,10.89-12.67,18.86-17.33,21.42-4.65-2.56-17.33-10.53-17.33-21.42,0-4.23,2.87-7.41,6.67-7.41Z"],"prod-fiesta":["0 0 114.67 114.67","M78.67,40c1.02,0,2.05-.39,2.83-1.17l16-16c1.56-1.56,1.56-4.09,0-5.66-1.56-1.56-4.1-1.56-5.66,0l-16,16c-1.56,1.56-1.56,4.09,0,5.66.78.78,1.8,1.17,2.83,1.17Z M62.67,29.33c.9,0,1.81-.31,2.56-.93,12.18-10.17,10.07-21.75,7.25-26.46-1.13-1.9-3.59-2.51-5.49-1.38-1.9,1.13-2.51,3.59-1.38,5.49.05.08,4.51,7.83-5.52,16.21-1.7,1.42-1.92,3.94-.51,5.63.79.95,1.93,1.44,3.07,1.44Z M112.73,42.18c-4.7-2.82-16.29-4.92-26.46,7.25-1.42,1.7-1.19,4.22.51,5.63.75.62,1.66.93,2.56.93,1.14,0,2.28-.49,3.07-1.44,8.38-10.03,16.13-5.56,16.21-5.52,1.89,1.13,4.35.52,5.49-1.38,1.13-1.9.52-4.35-1.38-5.49Z M62.38,42.49c-11.01-11.01-17.07-17.07-24.9-15.62-7.82,1.45-11.31,9.29-17.63,23.51l-7.84,17.64C1.39,91.94-3.95,103.93,3.4,111.28c2.34,2.34,5.16,3.4,8.69,3.4,7.52,0,18.28-4.78,34.55-12.01l17.65-7.84c14.23-6.32,22.06-9.8,23.51-17.63,1.45-7.82-4.61-13.89-15.62-24.9l-9.8-9.8ZM38.94,34.74c3.69-.68,8.99,4.62,17.78,13.41l9.8,9.8c1.13,1.13,2.2,2.2,3.22,3.23-1.47.1-2.94.16-4.41.16-13.18,0-25.78-3.87-36.6-11.21,4.14-9.25,6.93-14.78,10.21-15.39ZM9.05,105.62c-2.41-2.41-.47-9.14,3.73-19.31,9.5,4.96,19.85,8.06,30.41,9.13-18.48,8.21-30.69,13.62-34.14,10.18ZM79.93,75.73c-.68,3.68-7.54,6.73-18.9,11.78l-.85.38c-.2,0-.4-.02-.6,0-1.57.17-3.25.11-5.04.04-1-.04-2-.07-3.01-.07-12.34,0-24.6-3.09-35.6-8.94,1.06-2.42,2.19-4.96,3.38-7.65l6.11-13.75c11.88,7.73,25.58,11.81,39.9,11.81,3.76,0,7.54-.29,11.22-.85,2.49,3.02,3.74,5.35,3.38,7.25Z"],"prod-maleta":["0 0 114.68 104","M114.65,33c-.18-7.93-6.68-14.33-14.65-14.33h-20.01c-.07-5.59-.43-9.12-2.46-12.15-1.08-1.61-2.44-2.97-4.05-4.05-3.7-2.47-8.12-2.47-16.15-2.47s-12.45,0-16.15,2.47c-1.61,1.08-2.97,2.44-4.05,4.05-2.03,3.03-2.39,6.56-2.46,12.15H14.67c-8.09,0-14.67,6.58-14.67,14.67,0,.18,0,.35.01.53v28.79c-.02,18.68-.02,28.06,6.62,34.7,6.64,6.64,16.02,6.64,34.7,6.64h32.02c18.67,0,28.04,0,34.68-6.64,6.64-6.64,6.64-16.01,6.64-34.69v-29.34c0-.11-.02-.22-.03-.33ZM43.79,10.96c.49-.73,1.11-1.35,1.84-1.84,1.68-1.12,5.24-1.12,11.7-1.12s10.02,0,11.7,1.12c.73.49,1.35,1.11,1.84,1.84.87,1.29,1.06,3.71,1.11,7.7h-29.3c.05-3.99.24-6.41,1.11-7.71ZM14.67,26.67h85.33c3.68,0,6.67,2.99,6.67,6.67,0,9.56-7.78,17.33-17.33,17.34h-21.3s-.02,0-.03,0-.02,0-.03,0h-21.28s-.02,0-.03,0-.02,0-.03,0h-21.3c-9.47,0-17.18-7.63-17.32-17.07v-.27s0-.06,0-.09c.05-3.63,3.02-6.58,6.66-6.58ZM50.67,58.67h13.33v1.33c0,1.92,0,3.19-.14,3.7-.37,1.38-1.45,2.46-2.83,2.83-.51.14-1.78.14-3.7.14s-3.19,0-3.7-.14c-1.38-.37-2.46-1.45-2.83-2.83-.14-.51-.14-1.78-.14-3.7v-1.33ZM102.37,91.71c-4.29,4.29-12.56,4.29-29.03,4.29h-32.01c-16.48,0-24.75,0-29.05-4.3-4.3-4.3-4.29-12.57-4.29-29.05v-10.86c4.54,4.26,10.63,6.88,17.33,6.88h17.33v1.33c0,2.74,0,4.25.41,5.77,1.11,4.13,4.36,7.38,8.49,8.49,1.53.41,3.03.41,5.77.41s4.25,0,5.77-.41c4.13-1.11,7.38-4.36,8.49-8.49.41-1.53.41-3.03.41-5.77v-1.33h17.33c6.71,0,12.81-2.63,17.35-6.9v10.9c0,16.47,0,24.74-4.3,29.03Z"],"prod-charola":["0 0 114.67 114.67","M110.67,64H14.67c-2.21,0-4,1.79-4,4s1.79,4,4,4h6.38c-1,.97-2.12,2.08-3.47,3.42L1.17,91.84c-1.56,1.56-1.56,4.09,0,5.66,1.56,1.56,4.09,1.56,5.66,0l16.42-16.42c3.69-3.69,5.55-5.55,7.44-6.66,1.41-.83,2.92-1.46,4.5-1.86,2.12-.55,4.75-.55,9.98-.55h4.17c2.07,0,3.32,0,3.97.13,2.64.53,4.7,2.57,5.23,5.21h-14.53c-2.21,0-4,1.79-4,4s1.79,4,4,4h18.67c.97,0,1.51,0,2.11-.05,3.08-.25,5.95-1.44,8.31-3.44.45-.38.83-.76,1.52-1.45l8.39-8.39h7.97l-8.95,9.85c-5.39,5.92-8.09,8.9-11.14,10.36-3.05,1.46-7.06,1.71-15.06,2.21l-17.35,1.08c-4.32.27-6.7.42-9.14,1.52-2.44,1.1-4.13,2.79-7.19,5.85l-4.96,4.96c-1.56,1.56-1.56,4.09,0,5.66.78.78,1.8,1.17,2.83,1.17s2.05-.39,2.83-1.17l4.97-4.96c2.64-2.64,3.75-3.73,4.82-4.21,1.07-.48,2.62-.6,6.35-.83l17.35-1.08c8.75-.55,13.57-.85,18.02-2.99,4.45-2.14,7.7-5.71,13.6-12.2l13.84-15.22h8.9c2.21,0,4-1.79,4-4s-1.79-4-4-4ZM68.94,74.73c-.56.56-.84.84-1.05,1.01-.42.36-.89.66-1.38.9-.04-.29-.08-.57-.14-.85-.27-1.35-.72-2.62-1.32-3.8h6.62l-2.73,2.73Z M20,58.67c2.21,0,4-1.79,4-4,0-21.32,17.35-38.67,38.67-38.67s38.67,17.35,38.67,38.67c0,2.21,1.79,4,4,4s4-1.79,4-4c0-24.38-18.8-44.46-42.67-46.5v-4.17c0-2.21-1.79-4-4-4s-4,1.79-4,4v4.17c-23.87,2.04-42.67,22.11-42.67,46.5,0,2.21,1.79,4,4,4Z"],"prod-cubiertos":["0 0 93.34 104.01","M36.01,0c-2.21,0-4,1.79-4,4v26.67c0,4.29,0,6.65-.51,7.88-.68,1.65-1.97,2.93-3.61,3.61-1.22.51-3.59.51-7.88.51s-6.65,0-7.88-.51c-1.65-.68-2.93-1.96-3.61-3.61-.51-1.22-.51-3.59-.51-7.88V4C8.01,1.79,6.22,0,4.01,0S.01,1.79,0,4v26.66c0,5.32,0,8.25,1.12,10.95,1.5,3.62,4.32,6.44,7.94,7.94,1.94.8,3.99,1.03,6.95,1.09v49.36c0,2.21,1.79,4,4,4h-.01c2.21.01,4-1.78,4-3.99v-49.36c2.97-.06,5.02-.29,6.95-1.09,3.62-1.5,6.44-4.32,7.94-7.94,1.12-2.7,1.12-5.63,1.12-10.95V4c0-2.21-1.79-4-4-4Z M20.01,34.67c2.21,0,4-1.79,4-4V4c0-2.21-1.79-4-4-4s-4,1.79-4,4v26.67c0,2.21,1.79,4,4,4Z M68.01,0c-2.21,0-4,1.79-4,4v96c0,2.21,1.79,4,3.99,4,2.21,0,3.99-1.79,3.99-4v-33.33c7.57-.02,11.99-.26,15.6-3.03,1.02-.78,1.93-1.69,2.71-2.71,3.03-3.95,3.03-8.88,3.03-17.82v-17.78c0-13.97-11.36-25.33-25.33-25.33ZM85.34,43.11c0,7.19,0,11.16-1.38,12.95-.35.46-.77.87-1.23,1.23-1.6,1.23-4.92,1.37-10.72,1.38V8.47h0c7.63,1.8,13.33,8.68,13.33,16.86v17.78Z"],"prod-presentacion":["0 0 109.33 114.67","M103.48,5.86c-5.86-5.86-14.48-5.86-30.14-5.86h-37.33C20.34,0,11.72,0,5.86,5.86,0,11.72,0,20.34,0,36v16c0,15.66,0,24.28,5.86,30.14s14.48,5.86,30.14,5.86h14.67v4.4l-24.72,14.83c-1.89,1.14-2.51,3.59-1.37,5.49,1.14,1.89,3.59,2.51,5.49,1.37l20.61-12.36v8.93c0,2.21,1.79,4,4,4s4-1.79,4-4v-8.94l20.61,12.37c.64.39,1.35.57,2.05.57,1.36,0,2.68-.69,3.43-1.94,1.14-1.89.52-4.35-1.37-5.49l-24.72-14.84v-4.4h14.67c15.66,0,24.28,0,30.14-5.86,5.86-5.86,5.86-14.48,5.86-30.14v-16c0-15.66,0-24.28-5.86-30.14ZM101.33,52c0,13.96,0,20.97-3.51,24.49-3.52,3.51-10.52,3.51-24.49,3.51h-37.33c-13.96,0-20.97,0-24.49-3.51s-3.51-10.52-3.51-24.49v-16c0-13.96,0-20.97,3.51-24.48,3.51-3.52,10.52-3.52,24.49-3.52h37.33c13.96,0,20.97,0,24.49,3.52,3.51,3.51,3.51,10.52,3.51,24.48v16Z"],"prod-podio":["0 0 93.34 114.67","M92.95,32.16c-1-3.85-3.5-7.15-6.87-9.05-1.27-.72-2.6-1.14-4.2-1.4l-2.08-8.33c-1.97-7.88-9.02-13.38-17.13-13.38-2.21,0-4,1.79-4,4s1.79,4,4,4c4.44,0,8.3,3.01,9.37,7.32l1.5,6.02c-.34,0-.69,0-1.05,0H20.85c-.36,0-.71,0-1.05,0l1.5-6.02c1.08-4.31,4.93-7.32,9.37-7.32,2.21,0,4-1.79,4-4s-1.79-4-4-4c-8.12,0-15.17,5.5-17.13,13.38l-2.08,8.33c-1.59.25-2.93.68-4.2,1.4-3.36,1.9-5.86,5.2-6.86,9.05-.91,3.49-.15,7.04,1.35,14.13,1.71,8.04,2.56,12.07,4.78,15.57,2.47,3.91,5.98,6.87,10.14,8.58,3.45,1.41,7.03,1.54,13.53,1.56l2.17,15.61c.02.17.05.34.07.51-.13,0-.25-.01-.37-.02-1.37-.06-3.07-.15-4.72.53-1.27.52-2.42,1.35-3.33,2.41-1.05,1.22-1.56,2.53-2.4,4.71-.2.53-.45,1.09-.71,1.67-1.61,3.69-4.31,9.86.43,14.66,2.56,2.58,5.96,2.58,11.59,2.58h27.48c5.63,0,9.03,0,11.59-2.58,4.74-4.79,2.04-10.97.43-14.66-.25-.58-.5-1.14-.71-1.67-.84-2.18-1.35-3.49-2.4-4.71-.91-1.06-2.07-1.9-3.33-2.41-1.65-.68-3.36-.6-4.73-.53-.11,0-.24.01-.37.02.02-.17.05-.34.07-.51l2.17-15.61c6.51-.01,10.08-.14,13.53-1.56,4.16-1.71,7.67-4.67,10.14-8.58,2.21-3.5,3.07-7.54,4.78-15.57,1.5-7.09,2.26-10.64,1.35-14.13ZM83.77,44.63c-1.51,7.1-2.26,10.67-3.71,12.96-1.58,2.49-3.79,4.38-6.41,5.45-1.94.8-4.63.93-9.38.95l.85-6.11c.3-2.19-1.22-4.21-3.41-4.51-2.2-.3-4.21,1.22-4.51,3.41l-4.14,29.73c-.3,2.13-.49,3.54.07,5.13,1.69,4.78,6.49,4.55,8.53,4.45.44-.02,1.1-.05,1.39-.02.08.04.15.11.22.18.18.25.61,1.34,1.01,2.4.24.62.53,1.29.83,1.98,1.13,2.6,2.01,4.83,1.28,5.74-.77.29-3.42.29-5.98.29h-27.48c-2.56,0-5.2,0-5.98-.29-.73-.92.15-3.15,1.28-5.74.3-.69.59-1.36.83-1.98.41-1.06.83-2.15,1.01-2.38.07-.08.15-.15.23-.19.29-.03.95,0,1.39.02,2.05.09,6.84.32,8.53-4.45.56-1.59.37-3,.07-5.14l-4.14-29.72c-.3-2.19-2.33-3.72-4.51-3.41-2.19.3-3.71,2.33-3.41,4.51l.85,6.11c-4.75-.02-7.44-.16-9.38-.95-2.62-1.07-4.83-2.96-6.41-5.45-1.45-2.29-2.2-5.85-3.71-12.96-1.16-5.48-1.87-8.79-1.44-10.45.46-1.77,1.58-3.26,3.06-4.1,1.3-.74,4.45-.74,9.65-.74h51.65c5.21,0,8.35,0,9.65.74,1.49.84,2.6,2.34,3.06,4.1.43,1.66-.27,4.97-1.44,10.46Z"],"prod-premio":["0 0 93.36 114.67","M64.33,28.75l-8.39-1.4-3.89-7.98c-1.02-2.08-3.07-3.38-5.36-3.38s-4.35,1.29-5.36,3.38c0,0,0,0,0,0l-3.89,7.98-8.39,1.4c-2.19.36-3.99,1.91-4.7,4.04-.72,2.17-.2,4.53,1.37,6.17l6.11,6.4-1.35,8.97c-.35,2.31.61,4.57,2.49,5.9,1.84,1.3,4.22,1.45,6.2.4l7.53-4.01,7.53,4.01c.88.47,1.83.7,2.78.7,1.2,0,2.39-.37,3.42-1.09,1.89-1.33,2.84-3.59,2.49-5.9l-1.35-8.97,6.11-6.4c1.57-1.64,2.09-4.01,1.37-6.17-.71-2.13-2.51-3.68-4.7-4.04ZM55.12,40.52c-1.29,1.36-1.89,3.28-1.61,5.14l.91,6.02-4.95-2.63c-1.74-.93-3.82-.93-5.56,0l-4.95,2.63.91-6.02c.28-1.87-.32-3.79-1.62-5.14l-4.27-4.48,5.81-.97c1.9-.31,3.54-1.55,4.4-3.3l2.51-5.15,2.51,5.15c.85,1.75,2.5,2.98,4.39,3.3l5.81.97-4.28,4.48Z M90.86,89.78l-11.38-23.33c5.35-6.97,8.54-15.67,8.54-25.12C88.02,18.54,69.47,0,46.68,0S5.35,18.54,5.35,41.33c0,9.44,3.19,18.15,8.54,25.12l-11.38,23.33c-2.06,4.22-3.42,7.01-1.77,9.94.29.51.69.95,1.17,1.29,2.31,1.64,6.28,1.87,10.9.62,1.95-.53,4.15-1.12,4.66-1,.13.04.24.1.28.12.43.42,1.24,2.46,1.96,4.27,2.24,5.64,3.59,9.05,7.39,9.61.19.03.39.04.58.04.21,0,.43-.02.64-.05,3.26-.53,5.76-3.53,8.1-9.73l8.4-22.26c.62.03,1.24.05,1.86.05s1.24-.02,1.86-.05l8.41,22.27c2.14,5.68,3.44,9.11,7.24,9.73.21.03.43.05.64.05.2,0,.39-.01.58-.04,3.22-.47,5.87-3.61,8.35-9.86.71-1.79,1.44-3.63,1.79-3.97.11-.07.23-.13.35-.17.51-.12,2.71.48,4.67,1,4.69,1.27,8.56,1.06,10.89-.6,1.16-.82,1.71-1.92,1.8-3,.47-2.37-.74-4.84-2.41-8.26ZM28.93,102.06c-.33.88-.64,1.6-.92,2.2-.28-.7-.58-1.45-.88-2.19-1.52-3.83-2.52-6.36-4.92-7.95-.72-.48-1.51-.85-2.33-1.11-2.67-.85-5.12-.19-9.18.91-.54.15-1.03.25-1.47.33.15-.32.31-.64.46-.96l10.06-20.63c4.82,4.15,10.59,7.2,16.95,8.79l-7.78,20.61ZM13.35,41.33c0-18.38,14.95-33.33,33.33-33.33s33.33,14.95,33.33,33.33-14.95,33.33-33.33,33.33S13.35,59.71,13.35,41.33ZM82.66,93.91c-4.05-1.1-6.5-1.76-9.18-.91-.83.26-1.61.64-2.33,1.11-2.39,1.58-3.31,3.88-4.82,7.7-.39.97-.74,1.77-1.06,2.42-.27-.69-.55-1.44-.83-2.18l-7.78-20.62c6.36-1.58,12.14-4.64,16.95-8.79l10.06,20.63c.15.31.31.64.46.96-.44-.08-.94-.19-1.47-.33Z"]};
+  ico(file, px) {
+    const g = this.ICOS[file] || this.ICOS['prod-premio'];
+    return { vb: g[0], d: g[1], px: px + 'px' };
+  }
+  ICO_TEMA = { dia: 'amanecer', tarde: 'atardecer', noche: 'noche' };
+
+  ICON_SOL = 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0-6v3m0 14v3M2 12h3m14 0h3M4.9 4.9l2.1 2.1m10 10 2.1 2.1m0-14.2-2.1 2.1m-10 10-2.1 2.1';
+  ICON_TARDE = 'M4 17h16M8 17a4 4 0 0 1 8 0M12 6v3M6.3 8.9l1.5 1.5M17.7 8.9l-1.5 1.5';
+  ICON_LUNA = 'M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z';
+  ORDEN = ['dia', 'tarde', 'noche'];
+
+  SUGS = ['¿Cuántas bodas trajimos este mes?', '¿Qué día de la semana atendemos más rápido?', '¿Cuánto vale una oportunidad de Eventos vs Reservas?', '¿Quién no ha atendido sus oportunidades?'];
+
+  // orden cronológico: lo más viejo arriba, lo de hoy al final (el hilo abre abajo)
+  CONVS = [
+    { dia: '2 jul', pares: [
+      ['9:40 AM', '¿Cómo va julio contra junio?', '22 oportunidades reales en lo que va del mes, 22% arriba de junio. Reservas es lo que más creció.']
+    ] },
+    { dia: '14 jul', pares: [
+      ['1:15 PM', '¿Los eventos corporativos dejan más que las bodas?', 'Por evento sí: el ticket promedio corporativo es 22% mayor. Pero las bodas traen el doble de volumen, así que aportan más en total.']
+    ] },
+    { dia: 'Jueves 23 jul', pares: [
+      ['10:20 AM', '¿Quién lleva más tiempo sin respuesta de mi equipo?', 'Héctor Balam: 28 horas en seguimiento por una reserva de 3 noches en agosto. Le sigue Daniela Uc con 19 horas.'],
+      ['4:35 PM', '¿Cuánto cobró el asistente en 90 días?', '$1,847,300 MXN cobrados directo por el sistema, 31% arriba de los 90 días anteriores. Dinero verificado, no estimado.']
+    ] },
+    { dia: 'Ayer', pares: [
+      ['11:05 AM', '¿De dónde vienen las oportunidades de Day Pass?', 'De 16 oportunidades: 10 de tu campaña de Meta, 3 de búsqueda y 3 de WhatsApp directo. Meta trae el volumen; búsqueda trae el ticket más alto.'],
+      ['6:48 PM', '¿Qué día de la semana atendemos más rápido?', 'Los martes: mediana de 8 segundos para la primera respuesta. El día más lento es el domingo (26 segundos), cuando tu equipo entra al relevo más tarde.']
+    ] },
+    { dia: 'Hoy', pares: [
+      ['8:12 AM', '¿Qué pasó mientras dormía?', 'Tu asistente atendió 7 conversaciones entre las 11 PM y las 6 AM. Dos goles: presupuesto validado de $180,000 para un evento corporativo y una liga de pago enviada para Day Pass. Nadie quedó sin respuesta.'],
+      ['9:41 AM', '¿Cuántas bodas trajimos este mes?', 'Cuatro bodas este mes, todas con anticipo cobrado: $612,000 MXN en total. Tres llegaron de tu campaña de Meta y una por WhatsApp directo. La más grande es la de Renata Villaseñor (180 personas, 12 de septiembre).'],
+      ['9:43 AM', '¿Cuál falta por confirmar?', 'Solo la de Diego Argáez: presupuesto validado el martes, sin anticipo todavía. Tu equipo la tiene en seguimiento desde hace 2 días.']
+    ] }
+  ];
+
+  state = { tema: null, vista: null, vistaM: null, borrador: '' };
+
+  componentDidMount() {
+    this._reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.alFondo();
+    this.alFondoM();
+  }
+  componentDidUpdate() { this.alFondo(); this.alFondoM(); }
+  alFondo() {
+    const el = this._scroll;
+    if (!el || this.vistaActual() !== 'hist') { this._abajo = false; return; }
+    if (this._abajo) return;
+    this._abajo = true;
+    el.scrollTop = el.scrollHeight;
+  }
+
+  alFondoM() {
+    const el = this._scrollM;
+    if (!el || this.vistaMovil() !== 'hist') { this._abajoM = false; return; }
+    if (this._abajoM) return;
+    this._abajoM = true;
+    el.scrollTop = el.scrollHeight;
+  }
+  temaActivo() { return this.state.tema || this.props.temaInicial || 'dia'; }
+  vistaActual() { return this.state.vista || this.props.vistaInicial || 'nueva'; }
+  vistaMovil() { return this.state.vistaM || 'nueva'; }
+
+  renderVals() {
+    const S = this.state, tema = this.temaActivo(), TH = this.THEME[tema];
+    const vista = this.vistaActual();
+    const vistaM = this.vistaMovil();
+
+    const hiloBase = [];
+    this.CONVS.forEach(c => {
+      hiloBase.push({ esFecha: true, txt: c.dia });
+      c.pares.forEach(([hora, q, a]) => {
+        hiloBase.push({ esUser: true, txt: q, hora });
+        hiloBase.push({ esAsis: true, txt: a });
+      });
+    });
+    const nH = hiloBase.length;
+    const entrada = (i) => this._reduced ? 'none' : 'ph-up .52s ' + this.EASE + ' ' + (.04 + Math.min(i, 16) * .055).toFixed(3) + 's backwards';
+
+    const EST = {
+      pillFechaWrap: { display: 'flex', justifyContent: 'center', padding: '10px 0 4px' },
+      burbujaUser: { alignSelf: 'flex-end', maxWidth: '70%', display: 'flex', alignItems: 'baseline', gap: '10px', background: 'var(--card,#FFFFFF)',
+        borderRadius: '18px 18px 4px 18px', padding: '11px 15px', fontSize: '14px', lineHeight: 1.45, color: 'var(--tp,#0A0A0A)', boxShadow: '0 1px 2px rgba(20,16,8,.05)' },
+      burbujaAsis: { alignSelf: 'flex-start', maxWidth: '88%', display: 'flex', gap: '10px' },
+      burbujaUserM: { alignSelf: 'flex-end', maxWidth: '82%', display: 'flex', alignItems: 'baseline', gap: '9px', background: 'var(--card,#FFFFFF)',
+        borderRadius: '18px 18px 4px 18px', padding: '10px 14px', fontSize: '13.5px', lineHeight: 1.45, color: 'var(--tp,#0A0A0A)', boxShadow: '0 1px 2px rgba(20,16,8,.05)' },
+      burbujaAsisM: { alignSelf: 'flex-start', maxWidth: '92%', display: 'flex', gap: '9px' }
+    };
+    return {
+      raiz: { position: 'relative', width: '1440px', height: '900px', display: 'flex', ...TH, background: TH['--bg-grad'], color: 'var(--tp,#0A0A0A)',
+        borderRadius: '24px', border: '1px solid ' + (tema === 'dia' ? '#EFECE4' : 'rgba(255,255,255,.08)'),
+        boxShadow: '0 1px 2px rgba(20,16,8,.05), 0 24px 60px -34px rgba(20,16,8,.3)', overflow: 'hidden' },
+      navCard: { position: 'relative', flex: 'none', width: '248px', margin: '16px 0 16px 16px', height: 'calc(100% - 32px)',
+        background: 'color-mix(in srgb, var(--nav-bg,#F7F5EF) 84%, transparent)', border: '1px solid var(--divider,#EFECE4)', borderRadius: '26px',
+        boxShadow: '0 26px 60px -34px rgba(20,16,8,.45), inset 0 1px 0 rgba(255,255,255,.45)',
+        backdropFilter: 'blur(20px) saturate(1.3)', WebkitBackdropFilter: 'blur(20px) saturate(1.3)', overflow: 'hidden' },
+      navItem: { display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '12px', borderRadius: '12px', fontSize: '13px', fontWeight: 600,
+        overflow: 'hidden', background: 'transparent', color: 'var(--ts,#5E6168)' },
+      navItemAct: { display: 'flex', alignItems: 'center', gap: '10px', width: '100%', padding: '12px', borderRadius: '12px', fontSize: '13px', fontWeight: 600,
+        overflow: 'hidden', background: 'var(--seg-track,#EFECE4)', color: 'var(--tp,#0A0A0A)' },
+      navCnt: { marginLeft: 'auto', fontSize: '11px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--ts,#5E6168)', background: 'var(--tonal,#F1EFE8)', borderRadius: '6px', padding: '2px 7px' },
+      ciclaTema: () => { const o = this.ORDEN; this.setState({ tema: o[(o.indexOf(tema) + 1) % o.length] }); },
+      iconTema: tema === 'noche' ? this.ICON_LUNA : tema === 'tarde' ? this.ICON_TARDE : this.ICON_SOL,
+      icoTema: this.ico(this.ICO_TEMA[tema], 18),
+      labelTema: { dia: 'Amanecer', tarde: 'Atardecer', noche: 'Noche' }[tema],
+
+      colMain: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', minHeight: 0, padding: '0 0 12px' },
+
+      vistaNueva: vista === 'nueva', vistaHist: vista === 'hist',
+      emptyWrap: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 28px 24px',
+        animation: this._reduced ? 'none' : 'ph-fade .3s ease-out both' },
+      sugs: this.SUGS.map(q => ({ q, tap: () => this.setState({ borrador: q }) })),
+      sugEstilo: { padding: '9px 18px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', fontSize: '12.5px',
+        color: 'var(--ts,#5E6168)', cursor: 'pointer', transition: 'background .15s ease-out', whiteSpace: 'nowrap' },
+
+      histWrap: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column',
+        animation: this._reduced ? 'none' : 'ph-fade .26s ease-out both' },
+      histBar: { flex: 'none', display: 'flex', alignItems: 'center', gap: '12px', padding: '26px 34px 14px', borderBottom: '1px solid var(--divider,#EFECE4)' },
+      volver: () => this.setState({ vista: 'nueva' }),
+      scrollRef: (el) => { this._scroll = el; },
+      histScroll: { flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '14px',
+        width: '100%', maxWidth: '780px', margin: '0 auto', padding: '22px 24px 20px', boxSizing: 'border-box' },
+      tope: { alignSelf: 'center', fontSize: '11px', color: 'var(--tt,#8A8C93)', padding: '2px 0 6px' },
+      hilo: hiloBase.map((h, i) => {
+        const a = entrada(i);
+        const base = h.esFecha ? EST.pillFechaWrap : h.esUser ? EST.burbujaUser : EST.burbujaAsis;
+        const baseM = h.esFecha ? EST.pillFechaWrap : h.esUser ? EST.burbujaUserM : EST.burbujaAsisM;
+        return { ...h, estilo: { ...base, animation: a }, estiloM: { ...baseM, animation: a } };
+      }),
+      pillFechaWrap: { display: 'flex', justifyContent: 'center', padding: '10px 0 4px' },
+      pillFecha: { display: 'inline-flex', alignItems: 'center', height: '24px', padding: '0 12px', borderRadius: '999px',
+        background: 'var(--tonal,#F1EFE8)', color: 'var(--tt,#8A8C93)', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', whiteSpace: 'nowrap' },
+      burbujaUser: { alignSelf: 'flex-end', maxWidth: '70%', display: 'flex', alignItems: 'baseline', gap: '10px', background: 'var(--card,#FFFFFF)',
+        borderRadius: '18px 18px 4px 18px', padding: '11px 15px', fontSize: '14px', lineHeight: 1.45, color: 'var(--tp,#0A0A0A)', boxShadow: '0 1px 2px rgba(20,16,8,.05)' },
+      horaUser: { flex: 'none', fontSize: '10px', fontVariantNumeric: 'tabular-nums', color: 'var(--tt,#8A8C93)', whiteSpace: 'nowrap' },
+      burbujaAsis: { alignSelf: 'flex-start', maxWidth: '88%', display: 'flex', gap: '10px' },
+      dotVivo: { position: 'relative', flex: 'none', width: '6px', height: '6px', marginTop: '8px' },
+      dotVivoA: { position: 'absolute', inset: 0, borderRadius: '999px', background: 'var(--verde,#5BD6A0)' },
+      dotVivoB: { position: 'absolute', inset: 0, borderRadius: '999px', background: 'var(--verde,#5BD6A0)', animation: this._reduced ? 'none' : 'ph-pulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite' },
+      textoAsis: { margin: 0, fontSize: '14px', lineHeight: 1.6, color: 'var(--tp,#0A0A0A)', fontVariantNumeric: 'tabular-nums', textWrap: 'pretty' },
+
+      inputRow: { flex: 'none', display: 'flex', gap: '10px', alignItems: 'center', width: '100%', maxWidth: '780px', margin: '0 auto', padding: '14px 24px 8px', boxSizing: 'border-box' },
+      inputEstilo: { flex: 1, minWidth: 0, height: '48px', padding: '0 20px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)',
+        background: 'var(--input-bg,rgba(255,255,255,.85))', color: 'var(--tp,#0A0A0A)', fontFamily: 'inherit', fontSize: '14px', outline: 'none', boxSizing: 'border-box' },
+      borrador: S.borrador,
+      setBorrador: (e) => this.setState({ borrador: e.target.value }),
+      histTitulo: vista === 'hist' ? 'Volver a preguntar' : 'Conversaciones anteriores',
+      btnHist: { flex: 'none', width: '48px', height: '48px', borderRadius: '999px', border: 'none', cursor: 'pointer', padding: 0,
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        background: vista === 'hist' ? 'var(--btn-bg,#0A0A0A)' : 'var(--tonal,#F1EFE8)',
+        color: vista === 'hist' ? 'var(--btn-tx,#FFFFFF)' : 'var(--tt,#8A8C93)',
+        transition: 'background .2s ease-out, color .2s ease-out' },
+      toggleHist: () => { this._abajo = false; this.setState({ vista: vista === 'hist' ? 'nueva' : 'hist' }); },
+      btnSend: { flex: 'none', width: '48px', height: '48px', borderRadius: '999px', border: 'none', cursor: 'pointer', fontSize: '18px', fontWeight: 600,
+        background: (S.borrador || '').trim() ? 'var(--btn-bg,#0A0A0A)' : 'var(--tonal,#F1EFE8)',
+        color: (S.borrador || '').trim() ? 'var(--btn-tx,#FFFFFF)' : 'var(--tt,#8A8C93)', transition: 'background .2s ease-out, color .2s ease-out' },
+      enviar: () => this.setState({ borrador: '' }),
+      legal: { margin: '0 auto', padding: '0 24px', width: '100%', maxWidth: '780px', boxSizing: 'border-box', fontSize: '11px', lineHeight: 1.4,
+        textAlign: 'center', color: 'var(--tt,#8A8C93)' },
+
+      frameDark: tema !== 'dia',
+      vistaNuevaM: vistaM === 'nueva', vistaHistM: vistaM === 'hist',
+      raizM: { position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: 'var(--scrim,#FAF9F5)', color: 'var(--tp,#0A0A0A)', overflow: 'hidden' },
+      headM: { flex: 'none', display: 'flex', alignItems: 'center', gap: '8px', padding: '62px 20px 10px' },
+      selM: { flex: 'none', width: '34px', height: '34px', borderRadius: '999px', border: 'none', background: 'transparent', color: 'var(--ts,#5E6168)',
+        cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', opacity: .55 },
+      emptyM: { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', padding: '34px 24px 0',
+        animation: this._reduced ? 'none' : 'ph-fade .3s ease-out both' },
+      sugsM: this.SUGS.slice(0, 3).map(q => ({ q, tap: () => this.setState({ borrador: q }) })),
+      sugEstiloM: { width: '100%', padding: '11px 16px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent',
+        fontSize: '12.5px', color: 'var(--ts,#5E6168)', cursor: 'pointer', textAlign: 'center' },
+      scrollRefM: (el) => { this._scrollM = el; },
+      histScrollM: { flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px', padding: '8px 18px 14px',
+        animation: this._reduced ? 'none' : 'ph-fade .26s ease-out both' },
+      topeM: { alignSelf: 'center', fontSize: '10.5px', color: 'var(--tt,#8A8C93)', padding: '2px 0 4px', textAlign: 'center' },
+      burbujaUserM: { alignSelf: 'flex-end', maxWidth: '82%', display: 'flex', alignItems: 'baseline', gap: '9px', background: 'var(--card,#FFFFFF)',
+        borderRadius: '18px 18px 4px 18px', padding: '10px 14px', fontSize: '13.5px', lineHeight: 1.45, color: 'var(--tp,#0A0A0A)', boxShadow: '0 1px 2px rgba(20,16,8,.05)' },
+      burbujaAsisM: { alignSelf: 'flex-start', maxWidth: '92%', display: 'flex', gap: '9px' },
+      textoAsisM: { margin: 0, fontSize: '13.5px', lineHeight: 1.6, color: 'var(--tp,#0A0A0A)', fontVariantNumeric: 'tabular-nums', textWrap: 'pretty' },
+      inputRowM: { flex: 'none', display: 'flex', gap: '8px', alignItems: 'center', padding: '10px 18px 4px' },
+      inputEstiloM: { flex: 1, minWidth: 0, height: '44px', padding: '0 17px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)',
+        background: 'var(--input-bg,rgba(255,255,255,.85))', color: 'var(--tp,#0A0A0A)', fontFamily: 'inherit', fontSize: '13.5px', outline: 'none', boxSizing: 'border-box' },
+      btnSendM: { flex: 'none', width: '44px', height: '44px', borderRadius: '999px', border: 'none', cursor: 'pointer', fontSize: '17px', fontWeight: 600,
+        background: (S.borrador || '').trim() ? 'var(--btn-bg,#0A0A0A)' : 'var(--tonal,#F1EFE8)',
+        color: (S.borrador || '').trim() ? 'var(--btn-tx,#FFFFFF)' : 'var(--tt,#8A8C93)', transition: 'background .2s ease-out, color .2s ease-out' },
+      btnHistM: { flex: 'none', width: '44px', height: '44px', borderRadius: '999px', border: 'none', cursor: 'pointer', padding: 0,
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        background: vistaM === 'hist' ? 'var(--btn-bg,#0A0A0A)' : 'var(--tonal,#F1EFE8)',
+        color: vistaM === 'hist' ? 'var(--btn-tx,#FFFFFF)' : 'var(--tt,#8A8C93)', transition: 'background .2s ease-out, color .2s ease-out' },
+      histTituloM: vistaM === 'hist' ? 'Volver a preguntar' : 'Conversaciones anteriores',
+      toggleHistM: () => { this._abajoM = false; this.setState({ vistaM: vistaM === 'hist' ? 'nueva' : 'hist' }); },
+      legalM: { margin: 0, padding: '0 26px 30px', fontSize: '10px', lineHeight: 1.4, textAlign: 'center', color: 'var(--tt,#8A8C93)' },
+
+      btnSec: { flex: 'none', height: '34px', padding: '0 14px', borderRadius: '999px', border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent',
+        color: 'var(--tp,#0A0A0A)', fontSize: '12.5px', fontWeight: 600, cursor: 'pointer' },
+
+      reglas: [
+        { t: 'Estado de entrada', d: 'Preguntar siempre abre con la Presencia, el wordmark y las cuatro sugerencias. El historial no es otra pantalla ni un panel: es el mismo lienzo con otro contenido.' },
+        { t: 'El botón', d: 'Círculo de 48px a la izquierda de enviar: reloj con flecha. En reposo es outline con dot verde cuando hay conversaciones nuevas; con el historial abierto se marca con borde --btn-bg y fondo tonal, y el mismo tap regresa a la Presencia.' },
+        { t: 'Hilo continuo', d: 'Todo lo que le preguntaste vive en un solo scroll, lo más reciente abajo: al abrir, el hilo ya está hasta el final y subiendo aparecen los días anteriores hasta “Aquí empieza tu historial”.' },
+        { t: 'Pill de fecha', d: 'Hoy · Ayer · día de la semana (últimos 7 días) · fecha corta. 24px de alto, fondo --tonal, texto 10.5/600 uppercase tracking .1em en --tt, centrada. La hora exacta vive en la burbuja de la pregunta.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

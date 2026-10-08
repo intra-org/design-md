@@ -1,0 +1,1194 @@
+<!-- @dsCard group="7 · Prototipo v1.6" viewport="1520x1000" name="Soporte · escritorio" subtitle="Hero de reportes, tabla, nuevo reporte · original v1.6" -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  html,body{margin:0;padding:0;}
+  body{font-family:'Schibsted Grotesk',system-ui,-apple-system,sans-serif;background:#F6F4EF;color:#0A0A0A;-webkit-font-smoothing:antialiased;}
+  *{box-sizing:border-box;}
+  a{color:#2F5FC0;text-decoration:none;} a:hover{color:#2F5FC0;}
+  ::-webkit-scrollbar{width:0;height:0;}
+  button{font-family:inherit;position:relative;}
+  button::after{content:"";position:absolute;inset:-7px;border-radius:inherit;}
+  button:focus-visible{outline:2px solid #2F5FC0;outline-offset:2px;}
+  [data-screen-label] button svg,[data-screen-label] button svg *{transition:none!important;}
+  input{font-family:inherit;}
+  @keyframes ih-rise{from{opacity:0;transform:translateY(9px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes ih-up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes ih-fade{from{opacity:0;}to{opacity:1;}}
+  @keyframes ih-breathe{0%,100%{opacity:.9;}50%{opacity:1;}}
+  @keyframes ih-notch{to{transform:rotate(360deg);}}
+  @keyframes ih-pulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(2.6);opacity:0;}100%{transform:scale(2.6);opacity:0;}}
+  @keyframes ih-spin{to{transform:rotate(360deg);}}
+  @keyframes ih-spin-r{to{transform:rotate(-360deg);}}
+  @keyframes ih-pop{from{opacity:0;transform:scale(.96) translateY(-4px);}to{opacity:1;transform:scale(1) translateY(0);}}
+  @keyframes ih-glow{0%,100%{opacity:.7;}50%{opacity:1;}}
+  @keyframes ih-amb3{0%,100%{transform:translateX(-14px) scale(1);}50%{transform:translateX(14px) scale(1.04);}}
+  @keyframes ih-amb4{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  @keyframes ih-drift{0%,100%{transform:translateX(-22px);}50%{transform:translateX(22px);}}
+  [data-screen-label] *{transition:background-color .45s ease,border-color .45s ease,box-shadow .45s ease,fill .45s ease,color .45s ease .12s;}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;}}
+</style>
+</helmet>
+      <main ref="{{ raizRef }}" style="position:relative;z-index:1;flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;height:100%;">
+
+        <!-- ══ PANTALLA 1 · BANDEJA ══ -->
+        <sc-if value="{{ vBandeja }}" hint-placeholder-val="{{ true }}">
+        <div key="{{ kBandeja }}" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:38px 32px 17px;animation:ih-rise .32s cubic-bezier(0.22,0.61,0.36,1) both;">
+          <div style="flex:none;display:flex;align-items:center;gap:12px;">
+            <span style="flex:1;min-width:0;font-size:20px;font-weight:700;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);">Soporte</span>
+            <sc-if value="{{ hayTks }}" hint-placeholder-val="{{ true }}">
+            <div data-pop="noti" style="position:relative;flex:none;">
+              <button onClick="{{ toggleNoti }}" title="Novedades" style-hover="background:var(--tonal,#F1EFE8);" style-active="transform:scale(0.94);" style="{{ btnNoti }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M18,16H6a1,1,0,0,1-.78-1.63A5.6,5.6,0,0,0,6.5,10.5V9.5a5.5,5.5,0,0,1,11,0v1a5.6,5.6,0,0,0,1.28,3.87A1,1,0,0,1,18,16Z"></path><path d="M9.5,16v.5a2.5,2.5,0,0,0,5,0V16"></path></svg>
+                <sc-if value="{{ hayNoti }}" hint-placeholder-val="{{ true }}"><span style="{{ dotNoti }}"></span></sc-if>
+              </button>
+              <sc-if value="{{ notiAb }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;top:calc(100% + 8px);right:0;z-index:50;width:320px;border-radius:14px;background:var(--card,#FFFFFF);box-shadow:0 12px 40px -12px rgba(0,0,0,.35);padding:8px;box-sizing:border-box;transform-origin:top right;animation:ih-pop .18s ease-out both;">
+                  <p style="margin:4px 8px 8px;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--tt,#8A8C93);">Novedades</p>
+                  <sc-for list="{{ notis }}" as="n" hint-placeholder-count="2">
+                    <button onClick="{{ n.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ n.estilo }}">
+                      <span style="{{ n.dot }}"></span>
+                      <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;">
+                        <span style="font-size:13px;font-weight:500;line-height:1.3;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ n.titulo }}</span>
+                        <span style="font-size:12.5px;line-height:1.35;color:var(--ts,#5E6168);">{{ n.txt }}</span>
+                        <span style="font-size:11px;color:var(--tt,#8A8C93);">{{ n.fecha }}</span>
+                      </span>
+                    </button>
+                  </sc-for>
+                  <sc-if value="{{ sinNoti }}" hint-placeholder-val="{{ false }}">
+                    <p style="margin:0;padding:9px 12px 12px;font-size:13px;color:var(--ts,#5E6168);">No tienes novedades por ahora.</p>
+                  </sc-if>
+                  <sc-if value="{{ hayNoti }}" hint-placeholder-val="{{ true }}">
+                    <div style="height:1px;background:var(--divider,#EFECE4);margin:6px 8px;"></div>
+                    <button onClick="{{ marcarLeidas }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ menuItem }}">Marcar todo como leído</button>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+            </sc-if>
+            <button onClick="{{ irNuevo }}" style-hover="opacity:.9;" style-active="transform:scale(0.98);" style="{{ btnPrimario }}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><path d="M12,5V19M5,12H19"></path></svg>
+              Nuevo reporte
+            </button>
+          </div>
+          <p style="margin:14px 0 0;font-size:13px;line-height:1.5;color:var(--ts,#5E6168);">Reporta cualquier tema y damos seguimiento a tu caso.</p>
+
+          <div style="flex:none;position:relative;overflow:hidden;margin-top:22px;border-radius:22px;background:linear-gradient(170deg,#151518 0%,#0A0A0C 45%,#060607 100%);padding:44px 30px 44px;color:#fff;">
+            <div style="position:absolute;inset:0;background:radial-gradient(120% 634px at 50% calc(100% + 173px), var(--pl-amb,rgba(96,120,190,.20)) 0%, var(--pl-amb2,rgba(96,120,190,.07)) 40%, transparent 62%);pointer-events:none;"></div>
+            <div style="position:absolute;inset:0;background:radial-gradient(85% 465px at 50% calc(100% + 155px), var(--pl-glow,rgba(255,178,110,.2)) 0%, var(--pl-glow2,rgba(255,164,96,.12)) 38%, transparent 58%);pointer-events:none;animation:ih-breathe 9s ease-in-out infinite;"></div>
+            <div style="position:absolute;inset:0;background:radial-gradient(42% 220px at 50% calc(100% + 86px), var(--pl-core,rgba(255,206,158,.46)) 0%, var(--pl-core2,rgba(255,184,132,.18)) 45%, transparent 68%);pointer-events:none;animation:ih-breathe 9s ease-in-out 1.2s infinite;"></div>
+            <div style="position:absolute;inset:0;background:radial-gradient(78% 507px at 50% calc(100% + 291px), transparent 59.35%, var(--pl-rim,rgba(255,212,168,.5)) 59.85%, var(--pl-rim2,rgba(160,180,235,.16)) 60.5%, transparent 61.6%);pointer-events:none;"></div>
+            <div style="position:absolute;inset:0;background:radial-gradient(78% 507px at 50% calc(100% + 291px), #050506 59.9%, transparent 60.5%);pointer-events:none;"></div>
+            <div style="position:relative;display:flex;flex-direction:column;font-variant-numeric:proportional-nums;font-feature-settings:'pnum' 1;">
+              <span style="align-self:center;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);">Estado de tus reportes</span>
+              <div style="display:flex;align-items:stretch;justify-content:center;gap:0;margin-top:14px;">
+                <sc-for list="{{ barra }}" as="s" hint-placeholder-count="3">
+                  <button onClick="{{ s.click }}" onMouseEnter="{{ s.enter }}" onMouseLeave="{{ s.leave }}" aria-label="{{ s.aria }}" style="{{ s.estilo }}">
+                    <span style="{{ s.nEstilo }}">{{ s.n }}</span>
+                    <span style="{{ s.lEstilo }}">{{ s.lbl }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <sc-if value="{{ hayTks }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:none;margin-top:18px;display:flex;align-items:center;gap:10px;">
+          <div style="flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:44px;padding:0 18px;border-radius:999px;background:var(--input-bg,rgba(255,255,255,.85));border:1px solid var(--divider,#EFECE4);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--tt,#8A8C93)" stroke-width="1.5" stroke-linecap="round" style="flex:none;"><circle cx="11" cy="11" r="7"></circle><path d="M16.2,16.2,21,21"></path></svg>
+            <input placeholder="Buscar en mis reportes" value="{{ q }}" onInput="{{ onQ }}" style="flex:1;min-width:0;border:none;background:transparent;outline:none;font-size:14px;color:var(--tp,#0A0A0A);">
+          </div>
+            <div data-pop="fechas" style="position:relative;flex:none;">
+              <button onClick="{{ tgFechas }}" style-hover="opacity:.85;" style-active="transform:scale(0.97);" style="{{ fechaBtn }}">{{ fechaBtnTxt }}</button>
+              <sc-if value="{{ menuFechas }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ popFechas }}">
+                  <sc-if value="{{ calOff }}" hint-placeholder-val="{{ true }}">
+                    <sc-for list="{{ fechaItems }}" as="fi" hint-placeholder-count="7"><button onClick="{{ fi.tap }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ fi.estilo }}">{{ fi.t }}</button></sc-for>
+                    <div style="height:1px;background:var(--divider,#EFECE4);margin:6px 8px;"></div>
+                    <button onClick="{{ calAbrir }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ calAbrirEstilo }}">Personalizar…</button>
+                  </sc-if>
+                  <sc-if value="{{ calOn }}" hint-placeholder-val="{{ false }}">
+                    <div style="padding:2px 6px 4px;">
+                      <button onClick="{{ calCerrar }}" style-hover="color:var(--tp,#0A0A0A);" style="display:inline-flex;align-items:center;gap:6px;border:none;background:transparent;padding:2px 2px 10px;color:var(--tt,#8A8C93);font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;">‹ Volver a los rangos</button>
+                      <div style="display:flex;align-items:center;gap:6px;">
+                        <p style="margin:0 6px;flex:1;font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--tt,#8A8C93);">{{ calTitulo }}</p>
+                        <button onClick="{{ calPrev }}" title="Mes anterior" style-hover="color:var(--tp,#0A0A0A);" style="width:22px;height:22px;border:none;background:transparent;color:var(--tt,#8A8C93);font-family:inherit;font-size:13px;line-height:1;cursor:pointer;padding:0;flex:none;">‹</button>
+                        <button onClick="{{ calNext }}" title="Mes siguiente" style-hover="color:var(--tp,#0A0A0A);" style="width:22px;height:22px;border:none;background:transparent;color:var(--tt,#8A8C93);font-family:inherit;font-size:13px;line-height:1;cursor:pointer;padding:0;flex:none;">›</button>
+                      </div>
+                      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:12px;">
+                        <sc-for list="{{ calDows }}" as="dw" hint-placeholder-count="7"><span style="text-align:center;font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--tt,#8A8C93);padding-bottom:6px;">{{ dw.t }}</span></sc-for>
+                        <sc-for list="{{ calCeldas }}" as="cl" hint-placeholder-count="35">
+                          <button onClick="{{ cl.tap }}" style-active="opacity:.6;" style="{{ cl.estilo }}">
+                            <span style="{{ cl.numEstilo }}">{{ cl.n }}</span>
+                            <span style="{{ cl.dotEstilo }}"></span>
+                          </button>
+                        </sc-for>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:12px;padding:0 4px;">
+                        <span style="flex:1;font-size:11.5px;color:var(--ts,#5E6168);font-variant-numeric:tabular-nums;">{{ calRangoTxt }}</span>
+                        <button onClick="{{ calLimpiar }}" style="border:none;background:transparent;padding:0;color:var(--tt,#8A8C93);font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;">Limpiar</button>
+                        <button onClick="{{ calAplicar }}" style-hover="opacity:.85;" style-active="transform:scale(0.97);" style="height:30px;padding:0 14px;border-radius:999px;border:none;background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#FFFFFF);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex:none;">Aplicar</button>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+            <div data-pop="estados" style="position:relative;flex:none;">
+              <button onClick="{{ tgEstados }}" style-hover="opacity:.85;" style-active="transform:scale(0.97);" style="{{ estadoBtn }}">{{ estadoBtnTxt }}</button>
+              <sc-if value="{{ menuEstados }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ popEstados }}">
+                  <sc-for list="{{ estadoItems }}" as="ei" hint-placeholder-count="4">
+                    <button onClick="{{ ei.tap }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ ei.estilo }}"><span style="{{ ei.dot }}"></span>{{ ei.t }}<span style="{{ ei.cnt }}">{{ ei.n }}</span></button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ chipsOn }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;display:flex;align-items:center;gap:8px;padding:12px 2px 0;flex-wrap:wrap;">
+              <sc-for list="{{ chips }}" as="rc" hint-placeholder-count="1">
+                <button onClick="{{ rc.quitar }}" style-active="transform:scale(0.97);" style="display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;border-radius:999px;border:none;background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#FFFFFF);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;">{{ rc.t }}<span style="opacity:.6;">×</span></button>
+              </sc-for>
+              <span style="font-size:12px;color:var(--ts,#5E6168);">{{ conteoFiltro }}</span>
+              <button onClick="{{ limpiar }}" style="border:none;background:transparent;padding:0;color:var(--link,#2F5FC0);font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;">Limpiar todo</button>
+            </div>
+          </sc-if>
+          <div style="position:relative;flex:1;min-height:0;margin-top:16px;padding-bottom:26px;box-sizing:border-box;">
+            <div style="height:100%;overflow:auto;scrollbar-width:none;box-sizing:border-box;border-radius:20px;background:var(--card,#FFFFFF);box-shadow:var(--card-sh,0 1px 2px rgba(20,16,8,.04));padding:4px 6px;display:flex;flex-direction:column;">
+            <sc-if value="{{ hayFilas }}" hint-placeholder-val="{{ true }}">
+              <div role="row" style="{{ headEstilo }}">
+                <sc-for list="{{ colsOrden }}" as="co" hint-placeholder-count="3">
+                  <div role="columnheader" aria-sort="{{ co.ariaSort }}" onClick="{{ co.ordenar }}" title="{{ co.titulo }}" style="{{ co.thEstilo }}"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ co.label }}</span><sc-if value="{{ co.on }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;letter-spacing:0;">{{ co.flecha }}</span></sc-if></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-for list="{{ filas }}" as="f" hint-placeholder-count="7">
+              <button onClick="{{ f.click }}" style-hover="background:var(--hover,#F7F5EF);" style="{{ f.estilo }}">
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
+                  <span style="display:flex;align-items:center;gap:8px;min-width:0;"><sc-if value="{{ f.nuevo }}" hint-placeholder-val="{{ false }}"><span title="Con novedades" style="position:relative;flex:none;width:7px;height:7px;"><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#D99A2B);"></span><span style="position:absolute;inset:0;border-radius:999px;background:var(--ambar,#D99A2B);animation:ih-pulse 2.4s cubic-bezier(0.22,1,0.36,1) infinite;"></span></span></sc-if><span style="flex:1;min-width:0;font-size:15px;font-weight:500;line-height:1.3;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ f.titulo }}</span></span>
+                  <span style="{{ mono }}">{{ f.id }}</span>
+                </span>
+                <span style="flex:none;width:150px;font-size:13px;color:var(--tt,#8A8C93);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ f.creada }}</span>
+                <span style="flex:none;width:110px;display:flex;align-items:center;"><span style="{{ f.pill }}"><span style="{{ f.pdot }}"></span>{{ f.pTxt }}</span></span>
+              </button>
+            </sc-for>
+            <sc-if value="{{ vacio }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:56px 24px;text-align:center;">
+                <span style="width:52px;height:52px;border-radius:999px;background:var(--tonal,#F1EFE8);color:var(--ts,#5E6168);display:inline-flex;align-items:center;justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="flex:none;"><path d="M17 13.8045C17 13.4588 17 13.286 17.052 13.132C17.2032 12.6844 17.6018 12.5108 18.0011 12.3289C18.45 12.1244 18.6744 12.0222 18.8968 12.0042C19.1493 11.9838 19.4022 12.0382 19.618 12.1593C19.9041 12.3198 20.1036 12.6249 20.3079 12.873C21.2512 14.0188 21.7229 14.5918 21.8955 15.2236C22.0348 15.7334 22.0348 16.2666 21.8955 16.7764C21.6438 17.6979 20.8485 18.4704 20.2598 19.1854C19.9587 19.5511 19.8081 19.734 19.618 19.8407C19.4022 19.9618 19.1493 20.0162 18.8968 19.9958C18.6744 19.9778 18.45 19.8756 18.0011 19.6711C17.6018 19.4892 17.2032 19.3156 17.052 18.868C17 18.714 17 18.5412 17 18.1955V13.8045Z"></path><path d="M9.5 21C10.8807 22.3333 13.1193 22.3333 14.5 21" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 13.8045C7 13.3693 6.98778 12.9782 6.63591 12.6722C6.50793 12.5609 6.33825 12.4836 5.99891 12.329C5.55001 12.1246 5.32556 12.0224 5.10316 12.0044C4.43591 11.9504 4.07692 12.4058 3.69213 12.8731C2.74875 14.0189 2.27706 14.5918 2.10446 15.2236C1.96518 15.7334 1.96518 16.2666 2.10446 16.7764C2.3562 17.6979 3.15152 18.4702 3.74021 19.1852C4.11129 19.6359 4.46577 20.0472 5.10316 19.9956C5.32556 19.9776 5.55001 19.8754 5.99891 19.6709C6.33825 19.5164 6.50793 19.4391 6.63591 19.3278C6.98778 19.0218 7 18.6307 7 18.1954V13.8045Z"></path><path d="M2 16V12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12L22.0001 16" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <p style="margin:0;font-size:17px;font-weight:600;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);">Todo en orden</p>
+                <p style="margin:0;max-width:340px;font-size:14px;line-height:1.55;color:var(--ts,#5E6168);text-wrap:pretty;">No tienes reportes abiertos. Si tu agente falla en algo, repórtalo aquí y le damos seguimiento.</p>
+                <button onClick="{{ irNuevo }}" style-hover="opacity:.9;" style-active="transform:scale(0.98);" style="{{ btnPrimario }}">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none;"><path d="M12,5V19M5,12H19"></path></svg>
+                  Nuevo reporte
+                </button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ sinResultados }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:26px 2px;display:flex;flex-direction:column;gap:8px;">
+                <p style="margin:0;font-size:14px;color:var(--ts,#5E6168);">No tienes reportes en este estado.</p>
+                <button onClick="{{ limpiar }}" style-hover="opacity:.75;" style="align-self:flex-start;border:none;background:transparent;padding:0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--ts,#5E6168);text-decoration:underline;text-underline-offset:2px;">Quitar el filtro</button>
+              </div>
+            </sc-if>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ══ PANTALLA 2 · HILO DEL REPORTE (crear y detalle son la misma) ══ -->
+        <sc-if value="{{ vHilo }}" hint-placeholder-val="{{ false }}">
+        <div key="{{ kHilo }}" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:22px 32px 0;animation:ih-rise .32s cubic-bezier(0.22,0.61,0.36,1) both;">
+          <button onClick="{{ irBandeja }}" style-hover="color:var(--tp,#0A0A0A);" style="{{ btnVolver }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14.5,5,8,12l6.5,7"></path></svg>
+            Todos los reportes
+          </button>
+          <sc-if value="{{ vCreando }}" hint-placeholder-val="{{ true }}">
+            <div style="animation:ih-fade .42s ease-out both;">
+              <p style="margin:6px 0 0;font-size:13px;font-weight:500;color:var(--ts,#5E6168);">Paso {{ paso }} de 3</p>
+              <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--tt,#8A8C93);max-width:620px;">Te haremos unas preguntas y después un especialista del equipo revisa tu caso.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ vReporte }}" hint-placeholder-val="{{ false }}">
+            <div style="animation:ih-fade .42s ease-out both;">
+              <div style="display:flex;align-items:center;gap:9px;margin-top:8px;">
+                <span style="font-size:20px;font-weight:600;letter-spacing:-0.015em;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ tk.titulo }}</span>
+                <span style="flex:1;"></span>
+                <span style="{{ tk.pill }}"><span style="{{ tk.pdot }}"></span>{{ tk.pTxt }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:9px;">
+                <span style="{{ mono }}">{{ tk.id }}</span>
+                <span style="font-size:13px;color:var(--tt,#8A8C93);">·</span>
+                <span style="font-size:13px;color:var(--ts,#5E6168);">{{ tk.sub }}</span>
+              </div>
+              <div style="height:1px;background:var(--divider,#EFECE4);margin:18px 0 0;"></div>
+            </div>
+          </sc-if>
+
+          <div style="flex:1;min-height:0;width:100%;max-width:720px;margin:0 auto;display:flex;flex-direction:column;">
+            <div ref="{{ hiloRef }}" style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:flex-start;gap:18px;padding:26px 0 16px;">
+              <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="3">
+                <sc-if value="{{ m.esFecha }}" hint-placeholder-val="{{ false }}"><div style="{{ fechaWrap }}"><span style="{{ fechaPill }}">{{ m.txt }}</span></div></sc-if>
+                <sc-if value="{{ m.esIntra }}" hint-placeholder-val="{{ true }}">
+                  <div style="align-self:flex-start;max-width:86%;display:flex;gap:9px;animation:ih-up .28s cubic-bezier(0.34,1.2,0.64,1) both;">
+                    <span style="flex:none;width:6px;height:6px;border-radius:999px;background:var(--verde,#5BD6A0);margin-top:7px;"></span>
+                    <span style="display:flex;flex-direction:column;gap:4px;min-width:0;"><span style="font-size:14px;line-height:1.6;color:var(--tp,#232427);font-variant-numeric:tabular-nums;text-wrap:pretty;">{{ m.txt }}</span><span style="align-self:flex-end;font-size:10.5px;font-variant-numeric:tabular-nums;color:var(--tt,#8A8C93);">{{ m.hora }}</span></span>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.esUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:flex-end;max-width:70%;display:flex;flex-direction:column;gap:2px;background:var(--card,#FFFFFF);border-radius:18px 18px 4px 18px;padding:10px 14px;animation:ih-up .28s cubic-bezier(0.34,1.2,0.64,1) both;"><span style="font-size:14px;line-height:1.45;color:var(--tp,#0A0A0A);">{{ m.txt }}</span><span style="align-self:flex-end;font-size:10.5px;font-variant-numeric:tabular-nums;color:var(--tt,#8A8C93);">{{ m.hora }}</span></div>
+                </sc-if>
+                <sc-if value="{{ m.esCard }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:stretch;border-radius:16px;background:var(--night-bg,#F7F4EC);border:1px solid var(--night-bd,transparent);padding:12px 16px;animation:ih-up .3s cubic-bezier(0.34,1.2,0.64,1) both;">
+                    <div style="display:flex;gap:8px;align-items:flex-start;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex:none;margin-top:4px;color:var(--ambar,#C8881F);"><path d="M12,2c.8,6,3.7,8.9,9.8,10C15.7,13.2,12.8,16.1,12,22c-.8-5.9-3.7-8.8-9.8-10C8.3,10.9,11.2,8,12,2Z"></path></svg>
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <span style="flex:1;min-width:0;font-size:13px;font-weight:700;line-height:1.45;letter-spacing:-0.01em;color:var(--tp,#0A0A0A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ficha.titulo }}</span>
+                        </div>
+                        <span style="display:flex;align-items:center;gap:10px;font-size:12px;line-height:1.45;color:var(--ts,#5E6168);"><span style="{{ mono }}">{{ ficha.id }}</span><span style="{{ ficha.pill }}"><span style="{{ ficha.pdot }}"></span>{{ ficha.pTxt }}</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.esSys }}" hint-placeholder-val="{{ false }}">
+                  <div style="align-self:stretch;display:flex;align-items:center;gap:12px;animation:ih-fade .3s ease-out both;">
+                    <span style="flex:1;height:0.5px;background:var(--divider,#EFECE4);"></span>
+                    <span style="flex:none;font-size:12px;color:var(--tt,#8A8C93);font-variant-numeric:tabular-nums;">{{ m.txt }}</span>
+                    <span style="flex:1;height:0.5px;background:var(--divider,#EFECE4);"></span>
+                  </div>
+                </sc-if>
+              </sc-for>
+
+              <sc-if value="{{ pasoAdj }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self:flex-start;margin-left:15px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;animation:ih-up .34s cubic-bezier(0.34,1.2,0.64,1) both;">
+                  <button onClick="{{ adjuntar }}" style-hover="background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#fff);" style-active="transform:scale(0.97);" style="{{ btnAdjArch }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>Adjuntar archivos</button>
+                  <button onClick="{{ sinArchivos }}" style-hover="background:var(--btn-bg,#0A0A0A);color:var(--btn-tx,#fff);border-color:var(--btn-bg,#0A0A0A);" style-active="transform:scale(0.97);" style="{{ btnSaltarPlano }}">Continuar sin archivos</button>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="position:relative;display:flex;gap:10px;align-items:center;width:100%;max-width:720px;margin:0 auto 24px;box-sizing:border-box;padding:0 16px 10px;">
+              <input placeholder="" value="{{ draft }}" onInput="{{ onDraft }}" onKeyDown="{{ onKey }}" style-focus="border-color:rgba(20,16,8,.28);" style="flex:1;box-sizing:border-box;height:48px;padding:0 18px;border-radius:999px;border:1px solid rgba(20,16,8,.12);background:var(--input-bg,rgba(255,255,255,.85));color:var(--tp,#0A0A0A);font-family:inherit;font-size:14px;outline:none;transition:border-color .2s ease-out;">
+              <span style="{{ phEstilo }}">{{ phTexto }}</span><button onClick="{{ enviar }}" style-active="transform:scale(0.94);" style="{{ sendEstilo }}">↑</button>
+              <sc-if value="{{ verClip }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ adjuntarMsg }}" title="Adjuntar" style-active="transform:scale(0.94);" style="{{ clipEstilo }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+      </main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1520},&quot;temaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;dia&quot;,&quot;options&quot;:[&quot;dia&quot;,&quot;tarde&quot;,&quot;noche&quot;,&quot;auto&quot;],&quot;tsType&quot;:&quot;'dia'|'tarde'|'noche'|'auto'&quot;,&quot;section&quot;:&quot;Tema&quot;},&quot;sinReportes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Estados&quot;}}">
+class Component extends DCLogic {
+  THEME = {
+    dia: { '--pl-glow':'rgba(255,178,110,.2)','--pl-amb':'rgba(96,120,190,.20)','--pl-amb2':'rgba(96,120,190,.07)','--pl-glow2':'rgba(255,164,96,.12)','--pl-core':'rgba(255,206,158,.46)','--pl-core2':'rgba(255,184,132,.18)','--pl-rim':'rgba(255,212,168,.5)','--pl-rim2':'rgba(160,180,235,.16)','--card':'#FFFFFF','--nav-bg':'#F7F5EF','--scrim':'#FAF9F5','--tp':'#0A0A0A','--ts':'#5E6168','--tt':'#8A8C93','--divider':'#EFECE4','--tonal':'#F1EFE8','--hover':'#F7F5EF','--sec-bd':'#D9D5CC','--btn-bg':'#0A0A0A','--btn-tx':'#FFFFFF','--link':'#2F5FC0','--input-bg':'rgba(255,255,255,.85)','--seg-track':'#EFECE4','--seg-thumb':'#FFFFFF','--card-sh':'0 1px 2px rgba(20,16,8,.04), 0 12px 32px -22px rgba(20,16,8,.16)','--verde':'#5BD6A0','--verde-tx':'#1F8A5C','--ambar':'#C8881F','--gol':'#3E7FE6','--chip-tx':'#5E6168','--hero-glow':'rgba(255,178,110,.2)','--siri-bodyIn':'rgba(255,250,240,.30)','--siri-bodyOut':'rgba(212,168,94,.20)','--siri-rim':'#FFF0C8','--siri-rimSoft':'rgba(232,201,122,.55)','--siri-lA1':'#FBA356','--siri-lA2':'#FED767','--siri-lB1':'#FEF1C8','--siri-lB2':'#FDFAF3','--siri-accent':'#FFF3D6','--siri-core':'#FFFDF4','--siri-glow':'rgba(232,201,122,.5)','--night-bg':'#F7F4EC','--night-bd':'rgba(200,136,31,.28)','--iso-dark-op':'1','--iso-light-op':'0' },
+    tarde: { '--pl-glow':'rgba(248,142,92,.14)','--pl-amb':'rgba(158,110,192,.12)','--pl-amb2':'rgba(150,104,196,.045)','--pl-glow2':'rgba(246,138,92,.075)','--pl-core':'rgba(255,176,120,.28)','--pl-core2':'rgba(234,146,158,.1)','--pl-rim':'rgba(255,186,140,.32)','--pl-rim2':'rgba(186,146,232,.1)','--card':'#322A38','--nav-bg':'rgba(0,0,0,.20)','--scrim':'#1C2236','--tp':'#F4EAE0','--ts':'rgba(244,232,222,.8)','--tt':'rgba(244,232,222,.52)','--divider':'rgba(244,230,220,.12)','--tonal':'rgba(246,224,200,.17)','--hover':'rgba(246,232,222,.06)','--sec-bd':'rgba(246,232,222,.4)','--btn-bg':'#F4EFE4','--btn-tx':'#14161C','--link':'#B7C8F2','--input-bg':'rgba(246,232,222,.09)','--seg-track':'rgba(246,224,200,.1)','--seg-thumb':'#4A4152','--card-sh':'0 1px 2px rgba(0,0,0,.2), 0 14px 34px -22px rgba(0,0,0,.55)','--verde':'#5FD3A4','--verde-tx':'#7FE0BC','--ambar':'#E2AC55','--gol':'#8AAAEA','--chip-tx':'#E4D8D1','--hero-glow':'rgba(244,152,104,.26)','--siri-bodyIn':'rgba(120,90,110,.28)','--siri-bodyOut':'rgba(45,53,89,.34)','--siri-rim':'#F0B48C','--siri-rimSoft':'rgba(198,120,84,.5)','--siri-lA1':'#E8A08B','--siri-lA2':'#C67854','--siri-lB1':'#6B4F6D','--siri-lB2':'#2D3559','--siri-accent':'#A85D3A','--siri-core':'#F7DCC8','--siri-glow':'rgba(198,120,84,.45)','--night-bg':'rgba(228,150,108,.14)','--night-bd':'rgba(240,160,116,.24)','--iso-dark-op':'0','--iso-light-op':'1' },
+    noche: { '--pl-glow':'rgba(112,152,232,.12)','--pl-amb':'rgba(70,108,204,.13)','--pl-amb2':'rgba(70,108,204,.045)','--pl-glow2':'rgba(104,146,224,.065)','--pl-core':'rgba(152,192,255,.24)','--pl-core2':'rgba(104,146,224,.09)','--pl-rim':'rgba(178,210,255,.32)','--pl-rim2':'rgba(150,172,236,.1)','--card':'#14171F','--nav-bg':'rgba(0,0,0,.24)','--scrim':'#07080C','--tp':'#F1EDE4','--ts':'rgba(241,237,228,.68)','--tt':'rgba(241,237,228,.46)','--divider':'rgba(241,237,228,.08)','--tonal':'rgba(241,237,228,.12)','--hover':'rgba(241,237,228,.05)','--sec-bd':'rgba(241,237,228,.4)','--btn-bg':'#F5F2EA','--btn-tx':'#0A0A0A','--link':'#8FADEE','--input-bg':'rgba(241,237,228,.08)','--seg-track':'rgba(241,237,228,.07)','--seg-thumb':'#2A2F3A','--card-sh':'0 1px 2px rgba(0,0,0,.25), 0 14px 34px -22px rgba(0,0,0,.6)','--verde':'#4FC392','--verde-tx':'#63D3A6','--ambar':'#DDB061','--gol':'#6E97DE','--chip-tx':'rgba(241,237,228,.68)','--hero-glow':'rgba(255,178,110,.24)','--siri-bodyIn':'rgba(90,104,150,.26)','--siri-bodyOut':'rgba(30,34,60,.4)','--siri-rim':'#D6E0F0','--siri-rimSoft':'rgba(143,160,200,.5)','--siri-lA1':'#6E5FA0','--siri-lA2':'#4A3B6B','--siri-lB1':'#3A4E80','--siri-lB2':'#B8C4D6','--siri-accent':'#5C4A3D','--siri-core':'#E4ECF8','--siri-glow':'rgba(90,110,180,.45)','--night-bg':'#171A26','--night-bd':'rgba(224,160,100,.3)','--iso-dark-op':'0','--iso-light-op':'1' }
+  };
+
+  CAPAS = {
+    dia: [
+      { bg: 'linear-gradient(180deg,#F8F6F0 0%,#F9F7EE 60%,#F9F1E0 84%,#F8EBD2 94%,#F6E5C3 100%)', anim: 'none' },
+      { bg: 'radial-gradient(160% 120% at 12% -20%, rgba(168,186,214,.14) 0%, rgba(168,186,214,.07) 40%, transparent 68%)', anim: 'ih-amb3 36s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 90%, rgba(255,204,98,.08) 96%, rgba(255,200,90,.12) 100%)', anim: 'ih-amb4 14s ease-in-out infinite' },
+      { bg: 'radial-gradient(110% 17% at 50% 103%, rgba(255,208,125,.16) 0%, rgba(254,205,120,.08) 44%, rgba(253,202,115,.04) 64%, transparent 78%)', anim: 'ih-amb4 18s ease-in-out 6s infinite' },
+      { bg: 'radial-gradient(46% 7% at 36% 91%, rgba(255,208,125,.09) 0%, transparent 72%)', anim: 'ih-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 66% 95%, rgba(254,205,120,.07) 0%, transparent 72%)', anim: 'ih-drift 34s ease-in-out 8s infinite reverse' }
+    ],
+    tarde: [
+      { bg: 'linear-gradient(180deg,#1C2236 0%,#212840 42%,#2A2F49 62%,#383550 76%,#4E3D52 86%,#68484E 93%,#855147 100%)', anim: 'none' },
+      { bg: 'linear-gradient(180deg, rgba(12,16,30,.5) 0%, rgba(12,16,30,.22) 26%, transparent 48%)', anim: 'ih-amb3 38s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 76%, rgba(228,132,100,.07) 86%, rgba(238,144,100,.14) 94%, rgba(244,152,104,.2) 100%)', anim: 'ih-amb4 15s ease-in-out infinite' },
+      { bg: 'radial-gradient(120% 21% at 50% 104%, rgba(242,152,104,.2) 0%, rgba(238,140,100,.1) 42%, rgba(234,132,96,.04) 62%, transparent 80%)', anim: 'ih-amb4 19s ease-in-out 4s infinite' },
+      { bg: 'radial-gradient(46% 7% at 38% 90%, rgba(242,152,104,.12) 0%, transparent 72%)', anim: 'ih-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 64% 95%, rgba(238,144,100,.09) 0%, transparent 72%)', anim: 'ih-drift 34s ease-in-out 8s infinite reverse' }
+    ],
+    noche: [
+      { bg: 'linear-gradient(180deg,#07080C 0%,#090B12 58%,#0B0E17 80%,#0D1322 92%,#111B33 100%)', anim: 'none' },
+      { bg: 'linear-gradient(180deg, rgba(96,126,190,.06) 0%, rgba(96,126,190,.02) 24%, transparent 45%)', anim: 'ih-amb3 38s ease-in-out infinite' },
+      { bg: 'linear-gradient(180deg, transparent 82%, rgba(92,134,220,.16) 93%, rgba(114,152,228,.26) 100%)', anim: 'ih-amb4 16s ease-in-out infinite' },
+      { bg: 'radial-gradient(130% 24% at 50% 105%, rgba(108,150,232,.19) 0%, rgba(108,150,232,.08) 44%, transparent 70%)', anim: 'ih-amb4 20s ease-in-out 5s infinite' },
+      { bg: 'radial-gradient(46% 7% at 38% 91%, rgba(108,150,232,.1) 0%, transparent 72%)', anim: 'ih-drift 26s ease-in-out infinite' },
+      { bg: 'radial-gradient(38% 6% at 64% 95%, rgba(114,152,228,.08) 0%, transparent 72%)', anim: 'ih-drift 34s ease-in-out 8s infinite reverse' }
+    ]
+  };
+
+  MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+  ICO_SOL = { vb: '0 0 114.67 114.67', d: 'M57.33,88c-16.91,0-30.67-13.76-30.67-30.67s13.76-30.67,30.67-30.67,30.67,13.76,30.67,30.67-13.76,30.67-30.67,30.67ZM57.33,34.67c-12.5,0-22.67,10.17-22.67,22.67s10.17,22.67,22.67,22.67,22.67-10.17,22.67-22.67-10.17-22.67-22.67-22.67Z M57.33,114.67c-2.21,0-4-1.79-4-4v-8c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4ZM95.04,99.05c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.1-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM19.62,99.05c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.09-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM110.67,61.33h-8c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM12,61.33H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h8c2.21,0,4,1.79,4,4s-1.79,4-4,4ZM89.39,29.28c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l5.66-5.66c1.56-1.56,4.1-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-5.66,5.66c-.78.78-1.8,1.17-2.83,1.17ZM25.28,29.28c-1.02,0-2.05-.39-2.83-1.17l-5.66-5.66c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l5.66,5.66c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17ZM57.33,16c-2.21,0-4-1.79-4-4V4c0-2.21,1.79-4,4-4s4,1.79,4,4v8c0,2.21-1.79,4-4,4Z' };
+  ICO_TARDE = { vb: '0 0 104 76.96', d: 'M52,23.63c-2.21,0-4-1.79-4-4V4c0-2.21,1.79-4,4-4s4,1.79,4,4v15.63c0,2.21-1.79,4-4,4Z M78.4,34.56c-1.02,0-2.05-.39-2.83-1.17-1.56-1.56-1.56-4.09,0-5.66l7.54-7.54c1.56-1.56,4.1-1.56,5.66,0,1.56,1.56,1.56,4.09,0,5.66l-7.54,7.54c-.78.78-1.8,1.17-2.83,1.17Z M14.67,60.96H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h10.67c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M25.6,34.56c-1.02,0-2.05-.39-2.83-1.17l-7.54-7.54c-1.56-1.56-1.56-4.09,0-5.66,1.56-1.56,4.09-1.56,5.66,0l7.54,7.54c1.56,1.56,1.56,4.09,0,5.66-.78.78-1.8,1.17-2.83,1.17Z M100,60.96h-10.67c-2.21,0-4-1.79-4-4s1.79-4,4-4h10.67c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M100,76.96H4c-2.21,0-4-1.79-4-4s1.79-4,4-4h96c2.21,0,4,1.79,4,4s-1.79,4-4,4Z M73.33,60.96c-2.21,0-4-1.79-4-4,0-9.56-7.77-17.33-17.33-17.33s-17.33,7.77-17.33,17.33c0,2.21-1.79,4-4,4s-4-1.79-4-4c0-13.97,11.36-25.33,25.33-25.33s25.33,11.36,25.33,25.33c0,2.21-1.79,4-4,4Z' };
+  ICO_LUNA = { vb: '0 0 109.33 109.33', d: 'M55.34,109.33C24.83,109.33,0,84.51,0,53.99,0,28.15,17.55,5.99,42.67.11c1.53-.36,3.13.21,4.08,1.46.96,1.25,1.1,2.94.36,4.32-3.19,5.98-4.88,12.75-4.88,19.58,0,22.96,18.68,41.64,41.64,41.64,6.83,0,13.6-1.69,19.58-4.88,1.39-.74,3.08-.6,4.32.36,1.25.96,1.82,2.56,1.46,4.08-5.89,25.12-28.05,42.67-53.88,42.67ZM36.53,10.51c-17.14,7.36-28.53,24.22-28.53,43.48,0,26.11,21.24,47.34,47.34,47.34,19.26,0,36.12-11.39,43.48-28.53-4.82,1.52-9.88,2.3-14.96,2.3-27.37,0-49.64-22.27-49.64-49.64,0-5.08.79-10.14,2.3-14.96Z' };
+  ORDEN = ['auto', 'dia', 'tarde', 'noche'];
+
+  SUB = { pend: 'Recibimos tu reporte.', prog: 'Nuestro equipo está trabajando en esto.', res: 'Este caso quedó cerrado.' };
+  ETIQ = { pend: 'Pendiente', prog: 'En proceso', res: 'Resuelto' };
+
+  Q_INICIO = 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.';
+  Q_REPREGUNTA = 'Gracias. Para darle contexto al equipo, ¿nos compartes en qué momento ocurrió y dónde lo viste?';
+  Q_ADJUNTOS = 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.';
+
+  DIAS = {"SOP-1046":["HOY"],"SOP-1045":["HOY"],"SOP-1030":["23 JUL"],"SOP-1028":["21 JUL"],"SOP-1026":["17 JUL","18 JUL"],"SOP-1024":["14 JUL"],"SOP-1021":["9 JUL"],"SOP-1019":["4 JUL"],"SOP-1043":["HOY"],"SOP-1042":["HOY"],"SOP-1041":["AYER"],"SOP-1039":["AYER"],"SOP-1036":["7 AGO","8 AGO"],"SOP-1034":["31 JUL"],"SOP-1031":["24 JUL","25 JUL"]};
+
+  TICKETS = [
+    { id: 'SOP-1046', dt: '2026-08-11', creada: '11 ago, 7:40 AM', titulo: 'El chatbot de la web pide dos veces los mismos datos', estado: 'prog', fecha: 'hace 40 min', nuevo: true, msgs: [
+      { a: 'i', hora: '7:40 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '7:40 AM', txt: 'En la página, después de dar la fecha y el número de personas, vuelve a preguntar lo mismo antes de mandar el presupuesto. Dos personas ya lo dejaron a medias.' },
+      { a: 'i', hora: '7:40 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '7:40 AM', txt: 'Reporte creado · SOP-1046 · 7:40 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '7:41 AM', txt: 'Tu reporte quedó registrado como SOP-1046. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '9:05 AM', txt: 'En proceso · 9:05 AM' },
+      { a: 'i', hora: '9:08 AM', txt: 'Ya lo reprodujimos: pasa cuando el evento es de más de 80 personas y se pide el salón. Estamos corrigiendo el paso duplicado.' }
+    ] },
+    { id: 'SOP-1045', dt: '2026-08-11', creada: '11 ago, 6:15 AM', titulo: 'No llegó el reporte diario de ocupación', estado: 'pend', fecha: 'hace 2 h', msgs: [
+      { a: 'i', hora: '6:15 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '6:15 AM', txt: 'El correo con el resumen de ocupación llega todos los días a las 6 y hoy no llegó. Revisé spam y tampoco está.' },
+      { a: 'i', hora: '6:15 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '6:15 AM', txt: 'Reporte creado · SOP-1045 · 6:15 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '6:16 AM', txt: 'Tu reporte quedó registrado como SOP-1045. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' }
+    ] },
+    { id: 'SOP-1043', dt: '2026-08-11', creada: '11 ago, 9:12 AM', titulo: 'El agente cotizó una tarifa vieja para diciembre', estado: 'prog', fecha: 'hace 2 h', nuevo: true, msgs: [
+      { a: 'i', hora: '9:12 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '9:12 AM', txt: 'El agente le cotizó $1,850 la noche a una persona que preguntó por diciembre. En diciembre la tarifa es $2,400. Ya le expliqué a la persona, pero necesito que no vuelva a pasar.' },
+      { a: 'i', hora: '9:12 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '9:12 AM', txt: 'Reporte creado · SOP-1043 · 9:12 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '9:13 AM', txt: 'Tu reporte quedó registrado como SOP-1043. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '11:38 AM', txt: 'En proceso · 11:38 AM' },
+      { a: 'i', hora: '11:40 AM', txt: 'Ya encontramos de dónde salió: el agente estaba leyendo la lista de precios que subiste en mayo. Estamos cargando las tarifas de temporada alta y lo dejamos probado hoy mismo.' }
+    ] },
+    { id: 'SOP-1042', dt: '2026-08-11', creada: '11 ago, 10:58 PM', titulo: 'El agente no responde los mensajes de la noche', estado: 'pend', fecha: 'ahora', nuevo: true, msgs: [
+      { a: 'i', hora: '10:58 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '10:58 PM', txt: 'Desde el martes, las personas que escriben después de las 11 de la noche no reciben respuesta hasta la mañana siguiente. Antes el agente contestaba a cualquier hora.' },
+      { a: 'i', hora: '10:58 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '10:58 PM', txt: 'Reporte creado · SOP-1042 · 10:58 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '10:59 PM', txt: 'Tu reporte quedó registrado como SOP-1042. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' }
+    ] },
+    { id: 'SOP-1041', dt: '2026-08-10', creada: '10 ago, 8:47 AM', titulo: 'El agente agendó una visita en domingo por la noche', estado: 'prog', fecha: 'ayer', msgs: [
+      { a: 'i', hora: '8:47 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '8:47 AM', txt: 'El agente agendó una visita al salón el domingo a las 8 de la noche. Los domingos cerramos a las 6 y no había nadie del equipo.' },
+      { a: 'i', hora: '8:47 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '8:47 AM', txt: 'Reporte creado · SOP-1041 · 8:47 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '8:48 AM', txt: 'Tu reporte quedó registrado como SOP-1041. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '1:12 PM', txt: 'En proceso · 1:12 PM' },
+      { a: 'i', hora: '1:15 PM', txt: 'Ya cargamos tu horario real de visitas (lunes a sábado, 9 AM a 6 PM). Estamos probando que el agente no ofrezca horarios fuera de eso antes de cerrar el caso.' }
+    ] },
+    { id: 'SOP-1039', dt: '2026-08-10', creada: '10 ago, 5:20 PM', titulo: 'El agente contestó en inglés a una persona que escribió en español', estado: 'pend', fecha: 'ayer', msgs: [
+      { a: 'i', hora: '5:20 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '5:20 PM', txt: 'Una persona escribió en español y el agente le respondió en inglés las primeras dos veces. Después ya siguió en español.' },
+      { a: 'i', hora: '5:20 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '5:20 PM', txt: 'Reporte creado · SOP-1039 · 5:20 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '5:22 PM', txt: 'Tu reporte quedó registrado como SOP-1039. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' }
+    ] },
+    { id: 'SOP-1036', dt: '2026-08-07', creada: '7 ago, 4:05 PM', titulo: 'Quiero cambiar el saludo del agente', estado: 'res', fecha: 'hace 4 d', msgs: [
+      { a: 'i', hora: '4:05 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '4:05 PM', txt: 'Quiero cambiar el mensaje con el que el agente saluda. Preferimos: «Hola, gracias por escribir a Hampton. ¿Buscas fecha para una reserva o para un evento?»' },
+      { a: 'i', hora: '4:05 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '4:05 PM', txt: 'Reporte creado · SOP-1036 · 4:05 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '4:06 PM', txt: 'Tu reporte quedó registrado como SOP-1036. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '9:05 AM', txt: 'En proceso · 9:05 AM' },
+      { a: 'i', hora: '9:20 AM', txt: 'Ya quedó. El agente saluda con tu mensaje desde esta mañana y lo probamos en los tres canales donde atiende.' },
+      { a: 'sys', hora: '9:26 AM', txt: 'Resuelto · 9:26 AM' },
+      { a: 'u', hora: '9:34 AM', txt: 'Perfecto, gracias.' }
+    ] },
+    { id: 'SOP-1034', dt: '2026-07-31', creada: '31 jul, 11:02 AM', titulo: 'El agente no mandó la liga de pago del anticipo', estado: 'res', fecha: '31 jul', msgs: [
+      { a: 'i', hora: '11:02 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '11:02 AM', txt: 'Una persona aceptó el presupuesto de una boda y el agente nunca le mandó la liga de pago. Tuvimos que enviarla a mano.' },
+      { a: 'i', hora: '11:02 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '11:02 AM', txt: 'Reporte creado · SOP-1034 · 11:02 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '11:04 AM', txt: 'Tu reporte quedó registrado como SOP-1034. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '2:10 PM', txt: 'En proceso · 2:10 PM' },
+      { a: 'i', hora: '6:40 PM', txt: 'Resuelto. La liga se generaba pero no se enviaba cuando el monto pasaba de $100,000. Ya quedó corregido y probado con dos presupuestos de prueba.' },
+      { a: 'sys', hora: '6:42 PM', txt: 'Resuelto · 6:42 PM' }
+    ] },
+    { id: 'SOP-1031', dt: '2026-07-24', creada: '24 jul, 3:31 PM', titulo: 'El agente ofreció el salón para 200 personas', estado: 'res', fecha: '24 jul', msgs: [
+      { a: 'i', hora: '3:31 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '3:31 PM', txt: 'El salón es para 150 personas máximo y el agente ofreció un evento de 200. Nos tocó ajustar con la persona.' },
+      { a: 'i', hora: '3:31 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '3:31 PM', txt: 'Reporte creado · SOP-1031 · 3:31 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '3:33 PM', txt: 'Tu reporte quedó registrado como SOP-1031. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '4:02 PM', txt: 'En proceso · 4:02 PM' },
+      { a: 'i', hora: '10:15 AM', txt: 'Resuelto. El agente ya tiene el cupo máximo de cada espacio y ahora propone dividir en dos áreas cuando el grupo lo pasa.' },
+      { a: 'sys', hora: '10:18 AM', txt: 'Resuelto · 10:18 AM' }
+    ] },
+    { id: 'SOP-1030', dt: '2026-07-23', creada: '23 jul, 10:12 AM', titulo: 'La disponibilidad del calendario no coincide con recepción', estado: 'res', fecha: '23 jul', msgs: [
+      { a: 'i', hora: '10:12 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '10:12 AM', txt: 'El calendario mostró la suite libre el 2 de agosto y en recepción ya estaba vendida. Casi la comprometemos dos veces.' },
+      { a: 'i', hora: '10:12 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '10:12 AM', txt: 'Reporte creado · SOP-1030 · 10:12 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '10:14 AM', txt: 'Tu reporte quedó registrado como SOP-1030. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '11:30 AM', txt: 'En proceso · 11:30 AM' },
+      { a: 'i', hora: '4:20 PM', txt: 'Resuelto. La sincronización se quedaba atorada cuando la reserva entraba por teléfono. Ya corre cada 5 minutos y quedó probada con tres reservas.' },
+      { a: 'sys', hora: '4:22 PM', txt: 'Resuelto · 4:22 PM' }
+    ] },
+    { id: 'SOP-1028', dt: '2026-07-21', creada: '21 jul, 9:05 AM', titulo: 'Quiero que el resumen semanal llegue los lunes', estado: 'res', fecha: '21 jul', msgs: [
+      { a: 'i', hora: '9:05 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '9:05 AM', txt: 'Ahorita el resumen llega los viernes y lo revisamos hasta el lunes. Nos sirve más que llegue lunes temprano.' },
+      { a: 'i', hora: '9:05 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '9:05 AM', txt: 'Reporte creado · SOP-1028 · 9:05 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '9:06 AM', txt: 'Tu reporte quedó registrado como SOP-1028. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '10:40 AM', txt: 'En proceso · 10:40 AM' },
+      { a: 'i', hora: '1:15 PM', txt: 'Listo. El resumen sale los lunes a las 7 AM y ya te llegó uno de prueba con los datos de la semana pasada.' },
+      { a: 'sys', hora: '1:16 PM', txt: 'Resuelto · 1:16 PM' }
+    ] },
+    { id: 'SOP-1026', dt: '2026-07-17', creada: '17 jul, 5:48 PM', titulo: 'Una persona quedó registrada dos veces', estado: 'res', fecha: '17 jul', msgs: [
+      { a: 'i', hora: '5:48 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '5:48 PM', txt: 'La misma persona aparece dos veces con el mismo teléfono. Una tiene la reserva y la otra está vacía.' },
+      { a: 'i', hora: '5:48 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '5:48 PM', txt: 'Reporte creado · SOP-1026 · 5:48 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '5:50 PM', txt: 'Tu reporte quedó registrado como SOP-1026. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '6:30 PM', txt: 'En proceso · 6:30 PM' },
+      { a: 'i', hora: '9:10 AM', txt: 'Resuelto. Unimos los dos registros y dejamos el que tiene la reserva. Ahora se detecta el duplicado por teléfono antes de crear a la persona.' },
+      { a: 'sys', hora: '9:12 AM', txt: 'Resuelto · 9:12 AM' }
+    ] },
+    { id: 'SOP-1024', dt: '2026-07-14', creada: '14 jul, 11:20 AM', titulo: 'Las fotos del salón se ven cortadas en el catálogo', estado: 'prog', fecha: '14 jul', msgs: [
+      { a: 'i', hora: '11:20 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '11:20 AM', txt: 'Las fotos del salón Jardín salen cortadas de arriba, se pierde el techo de cristal que es lo que más preguntan.' },
+      { a: 'i', hora: '11:20 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '11:20 AM', txt: 'Reporte creado · SOP-1024 · 11:20 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '11:22 AM', txt: 'Tu reporte quedó registrado como SOP-1024. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '2:05 PM', txt: 'En proceso · 2:05 PM' },
+      { a: 'i', hora: '2:40 PM', txt: 'Ya identificamos el recorte: las fotos verticales se ajustan al alto de la tarjeta. Estamos cambiando el encuadre y te mostramos cómo queda antes de aplicarlo.' }
+    ] },
+    { id: 'SOP-1021', dt: '2026-07-09', creada: '9 jul, 8:02 AM', titulo: 'El presupuesto llegó sin el desglose de impuestos', estado: 'res', fecha: '9 jul', msgs: [
+      { a: 'i', hora: '8:02 AM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '8:02 AM', txt: 'El presupuesto que se manda por correo llega con el total pero sin el desglose de IVA e ISH. Contabilidad lo está pidiendo.' },
+      { a: 'i', hora: '8:02 AM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '8:02 AM', txt: 'Reporte creado · SOP-1021 · 8:02 AM' },
+      { a: 'card' },
+      { a: 'i', hora: '8:04 AM', txt: 'Tu reporte quedó registrado como SOP-1021. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '9:15 AM', txt: 'En proceso · 9:15 AM' },
+      { a: 'i', hora: '5:30 PM', txt: 'Resuelto. El presupuesto ya sale con subtotal, IVA e ISH desglosados y con el total al final.' },
+      { a: 'sys', hora: '5:32 PM', txt: 'Resuelto · 5:32 PM' }
+    ] },
+    { id: 'SOP-1019', dt: '2026-07-04', creada: '4 jul, 3:15 PM', titulo: 'No puedo cambiar el precio de un paquete', estado: 'res', fecha: '4 jul', msgs: [
+      { a: 'i', hora: '3:15 PM', txt: 'Cuéntanos qué ocurrió: dónde lo notaste, en qué momento, y qué esperabas que sucediera.' },
+      { a: 'u', hora: '3:15 PM', txt: 'Quiero subir el precio del paquete de bodas y al guardar se queda con el precio anterior.' },
+      { a: 'i', hora: '3:15 PM', txt: 'Si tienes algún archivo que ayude a entender el caso, puedes adjuntarlo. No es obligatorio.' },
+      { a: 'sys', hora: '3:15 PM', txt: 'Reporte creado · SOP-1019 · 3:15 PM' },
+      { a: 'card' },
+      { a: 'i', hora: '3:16 PM', txt: 'Tu reporte quedó registrado como SOP-1019. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.' },
+      { a: 'sys', hora: '3:50 PM', txt: 'En proceso · 3:50 PM' },
+      { a: 'i', hora: '6:05 PM', txt: 'Resuelto. El paquete tenía un precio de temporada que le ganaba al general. Ya se puede editar y el nuevo precio quedó guardado.' },
+      { a: 'sys', hora: '6:07 PM', txt: 'Resuelto · 6:07 PM' }
+    ] }
+  ];
+
+  state = { modo: null, tks: null, pant: 'bandeja', sel: null, filtro: null, q: '', draft: '',
+    paso: 1, nMsgs: null, repregunto: false, nuevoId: null, navCol: false };
+
+  componentDidMount() {
+    this._red = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._emb = !!this.props.tema;
+    this._horaIni = this.hora();
+    this._pop = e => {
+      const s = e.state && e.state.sop;
+      this.setState({ pant: s ? s.pant : 'bandeja', sel: s ? s.sel : null, draft: '' });
+    };
+    this._key = e => { if (this._emb && !this._dentro) return; if (e.key === 'Escape' && (this.state.notiAb || this.state.menuF || this.state.mNotiAb)) { e.preventDefault(); this.setState({ notiAb: false, menuF: false, calOn: false, mNotiAb: false }); return; } if (e.key === 'Escape' && this.state.pant !== 'bandeja') { e.preventDefault(); this.irBandeja(); } };
+    this._fuera = e => {
+      this._dentro = !!(this._raiz && e.target && this._raiz.contains(e.target));
+      if (!this.state.notiAb && !this.state.menuF && !this.state.menuE && !this.state.mNotiAb) return;
+      const t = e.target;
+      if (t && t.closest && t.closest('[data-pop]')) return;
+      this.setState({ notiAb: false, menuF: false, menuE: false, calOn: false, mNotiAb: false });
+    };
+    document.addEventListener('pointerdown', this._fuera, true);
+    window.addEventListener('keydown', this._key);
+    if (!this._emb) {
+      window.addEventListener('popstate', this._pop);
+      try { history.replaceState({ sop: { pant: 'bandeja', sel: null } }, '', location.href); } catch (err) {}
+    }
+    this.alFondo();
+  }
+  avisaBadge() {
+    if (!this.props.onBadge) return;
+    const n = this.tks().filter(t => t.nuevo).length;
+    if (n !== this._badge) { this._badge = n; this.props.onBadge(n); }
+  }
+  componentDidUpdate() {
+    this.avisaBadge(); this.alFondo(); if (this._mNMsgsLen !== (this.state.mNMsgs || []).length) { this._mNMsgsLen = (this.state.mNMsgs || []).length; this.mAlFondo(); } }
+  componentWillUnmount() {
+    document.removeEventListener('pointerdown', this._fuera, true);
+    window.removeEventListener('popstate', this._pop);
+    window.removeEventListener('keydown', this._key);
+    if (this._t) clearTimeout(this._t);
+    if (this._t2) clearTimeout(this._t2);
+  }
+
+  alFondoMovil() {
+    const S = this.state, clave = (S.mPant || 'bandeja') + ':' + (S.mSel || '');
+    if (clave === this._mClave) return;
+    this._mClave = clave;
+    if (this._mScroll) this._mScroll.scrollTop = 0;
+    this.mAlFondo();
+    requestAnimationFrame(() => this.mAlFondo());
+    setTimeout(() => this.mAlFondo(), 60);
+  }
+  mAlFondo() {
+    const baja = () => {
+      const el = (this.state.mPant || 'bandeja') === 'nuevo' ? this._mNuevo : this._mHilo;
+      if (el) el.scrollTop = el.scrollHeight;
+    };
+    baja();
+    requestAnimationFrame(() => { baja(); requestAnimationFrame(baja); });
+  }
+  alFondo() {
+    this.alFondoMovil();
+    if (this._hilo && this._hilo.scrollHeight > this._hilo.clientHeight) this._hilo.scrollTop = this._hilo.scrollHeight;
+  }
+
+  ruta(pant, sel) {
+    const base = location.pathname + location.search;
+    return base + (pant === 'hilo' ? (sel ? '#/soporte/' + sel : '#/soporte/nuevo') : '#/soporte');
+  }
+  ir(pant, sel, extra) {
+    if (!this._emb) { try { history.pushState({ sop: { pant: pant, sel: sel || null } }, '', this.ruta(pant, sel)); } catch (err) {} }
+    this.setState({ pant: pant, sel: sel || null, draft: '', ...(extra || {}) });
+  }
+  irBandeja() { this.ir('bandeja', null, { paso: 1, nMsgs: null, repregunto: false, nuevoId: null, desc: '' }); }
+
+  tks() { return this.state.tks || (this.props.sinReportes ? [] : this.TICKETS); }
+  modo() { return this.props.tema || this.state.modo || this.props.temaInicial || 'dia'; }
+  tema() {
+    const m = this.modo();
+    if (m !== 'auto') return m;
+    const h = new Date().getHours();
+    return h >= 6 && h < 17 ? 'dia' : (h >= 17 && h < 20 ? 'tarde' : 'noche');
+  }
+  mut(fn) { const tks = JSON.parse(JSON.stringify(this.tks())); fn(tks); this.setState({ tks: tks }); }
+
+  abrir(id) {
+    this.mut(tks => { const t = tks.find(x => x.id === id); if (t) t.nuevo = false; });
+    this.ir('hilo', id);
+  }
+
+  autoTitulo(txt) {
+    let t = txt.trim().replace(/\s+/g, ' ');
+    const corte = t.search(/[.!?]/);
+    if (corte > 18) t = t.slice(0, corte);
+    if (t.length > 56) { t = t.slice(0, 56); const sp = t.lastIndexOf(' '); if (sp > 24) t = t.slice(0, sp); }
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  }
+  selloFecha(t) {
+    const abs = t.creada || '', hora = abs.indexOf(',') >= 0 ? abs.slice(abs.indexOf(',') + 2) : '';
+    const rel = t.fecha || '';
+    // relativa sola no dice la hora; absoluta sola no dice qué tan reciente es
+    return /^(ahora|hace|ayer)/.test(rel) ? rel + (hora ? ', ' + hora : '') : abs;
+  }
+  MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  MESES_LG = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  dCorta(iso) { const p = iso.split('-'); return Number(p[2]) + ' ' + this.MESES[Number(p[1]) - 1]; }
+  calendario(tks) {
+    const S = this.state, off = S.calM || 0;
+    const base = new Date(2026, 7 + off, 1), y = base.getFullYear(), m = base.getMonth();
+    const nd = new Date(y, m + 1, 0).getDate(), moff = base.getDay();
+    const iso = (yy, mm, dd) => yy + '-' + String(mm + 1).padStart(2, '0') + '-' + String(dd).padStart(2, '0');
+    const A = S.calA || null, B = S.calB || null, hoyT = this.isoHoy();
+    const porDia = {};
+    tks.forEach(t => { if (t.dt) porDia[t.dt] = (porDia[t.dt] || 0) + 1; });
+    const cellBase = { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', padding: '3px 0 2px', border: 'none', background: 'transparent', fontFamily: 'inherit', borderRadius: '10px' };
+    const pill = { width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '999px', background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)', fontSize: '12px', fontWeight: 700, fontVariantNumeric: 'tabular-nums' };
+    const celdas = [...Array(Math.ceil((moff + nd) / 7) * 7)].map((_, i) => {
+      const dnum = i - moff + 1;
+      if (dnum < 1 || dnum > nd) return { n: '', estilo: { ...cellBase, cursor: 'default' }, numEstilo: { height: '26px' }, dotEstilo: { width: '3px', height: '3px', background: 'transparent' }, tap: () => {} };
+      const t = iso(y, m, dnum), punta = t === A || t === B, dentro = A && B && t > A && t < B;
+      return { n: String(dnum),
+        estilo: { ...cellBase, cursor: 'pointer', background: dentro ? 'var(--tonal,#F1EFE8)' : 'transparent' },
+        numEstilo: punta ? pill : { width: '26px', height: '26px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: t === hoyT ? 700 : 500, fontVariantNumeric: 'tabular-nums', color: t === hoyT ? 'var(--tp,#0A0A0A)' : 'var(--ts,#5E6168)' },
+        dotEstilo: { width: '3px', height: '3px', borderRadius: '999px', background: porDia[t] ? 'var(--gol,#3E7FE6)' : 'transparent' },
+        tap: () => {
+          const sa = this.state.calA, sb = this.state.calB;
+          if (!sa || sb) this.setState({ calA: t, calB: null });
+          else if (t < sa) this.setState({ calA: t, calB: sa });
+          else this.setState({ calB: t });
+        } };
+    });
+    const fmt = x => x ? this.dCorta(x) : '—';
+    return {
+      calTitulo: this.MESES_LG[m] + ' ' + y,
+      calCeldas: celdas,
+      calDows: ['D', 'L', 'M', 'M', 'J', 'V', 'S'].map(t => ({ t: t })),
+      calPrev: () => this.setState({ calM: off - 1 }),
+      calNext: () => this.setState({ calM: off + 1 }),
+      calRangoTxt: fmt(A) + ' → ' + fmt(B || A),
+      calAplicar: () => { if (!A) return; this.setState({ rango: 'custom', rangoC: { a: A, b: B || A }, menuF: false, calOn: false }); },
+      calLimpiar: () => this.setState({ calA: null, calB: null })
+    };
+  }
+  isoHoy() {
+    const d = new Date(), p = n => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+  rangos() {
+    const H = new Date(2026, 7, 11), iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const lun = b => { const x = new Date(b); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
+    const q = Math.floor(H.getMonth() / 3);
+    return {
+      hoy: { t: 'Hoy', a: iso(H), b: iso(H) },
+      semana: { t: 'Esta semana', a: iso(lun(H)), b: iso(H) },
+      mes: { t: 'Este mes', a: iso(new Date(2026, H.getMonth(), 1)), b: iso(H) },
+      mesPrev: { t: 'El mes pasado', a: iso(new Date(2026, H.getMonth() - 1, 1)), b: iso(new Date(2026, H.getMonth(), 0)) },
+      trimestre: { t: 'Este trimestre', a: iso(new Date(2026, q * 3, 1)), b: iso(H) },
+      anio: { t: 'Este año', a: '2026-01-01', b: iso(H) }
+    };
+  }
+  fechaCorta() {
+    const d = new Date(), mes = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getMonth()];
+    return d.getDate() + ' ' + mes;
+  }
+  hora() { return new Date().toLocaleTimeString('es-MX', { hour: 'numeric', minute: '2-digit', hour12: true }).replace('a.m.', 'AM').replace('p.m.', 'PM').toUpperCase(); }
+  nMsgs() { return this.state.nMsgs || [{ a: 'i', txt: this.Q_INICIO, hora: this._horaIni }]; }
+
+  responder(txt, extra) {
+    const push = () => {
+      const m = { a: 'i', txt: txt, hora: this.hora() };
+      if (this.state.sel) {
+        const id = this.state.sel;
+        this.mut(tks => { const t = tks.find(x => x.id === id); if (t) t.msgs.push(m); });
+        if (extra) this.setState(extra);
+      } else {
+        this.setState({ nMsgs: (this.state.nMsgs || this.nMsgs()).concat([m]), ...(extra || {}) });
+      }
+      if (txt === this.Q_ADJUNTOS) {
+        if (this._red) this.setState({ verSaltar: true });
+        else this._t3 = setTimeout(() => this.setState({ verSaltar: true }), 900);
+      }
+    };
+    if (this._red) push(); else this._t = setTimeout(push, 700);
+  }
+
+  enviarNuevo() {
+    const txt = (this.state.draft || '').trim();
+    if (!txt) return;
+    const hilo = this.nMsgs().concat([{ a: 'u', txt: txt, hora: this.hora() }]);
+    const vaga = txt.length < 60 || txt.split(' ').length < 10;
+    this.setState({ nMsgs: hilo, draft: '', desc: this.state.desc || txt });
+    if (this.state.paso === 1 && vaga && !this.state.repregunto) {
+      this.setState({ repregunto: true });
+      this.responder(this.Q_REPREGUNTA);
+      return;
+    }
+    this.setState({ paso: 2 });
+    this.responder(this.Q_ADJUNTOS);
+  }
+
+  cerrarPaso2(sinArch) {
+    if (sinArch) {
+      const previo = (this.state.nMsgs || this.nMsgs()).concat([{ a: 'u', hora: this.hora(), txt: 'Continuar sin archivos' }]);
+      this.setState({ nMsgs: previo, verSaltar: false });
+    } else this.setState({ verSaltar: false });
+    const desc = this.state.desc || '';
+    const nid = 'SOP-' + (1050 + this.tks().filter(t => t.creado).length);
+    const hora = this.hora();
+    const conf = 'Tu reporte quedó registrado como ' + nid + '. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.';
+    const previos = this.nMsgs().slice().concat([{ a: 'sys', txt: 'Reporte creado · ' + nid + ' · ' + hora }, { a: 'card' }]);
+    // el ticket nace con el hilo completo, así el encabezado puede intercambiarse sin que el hilo salte
+    this.mut(tks => tks.unshift({ id: nid, dt: this.isoHoy(), creada: this.fechaCorta() + ', ' + hora, titulo: this.autoTitulo(desc || 'Reporte nuevo'), estado: 'pend', fecha: 'ahora', creado: true, auto: true,
+      msgs: previos.concat([{ a: 'i', hora: hora, txt: conf }]) }));
+    this.setState({ paso: 3, nuevoId: nid, nMsgs: previos });
+    const conf2 = () => this.setState({ nMsgs: previos.concat([{ a: 'i', hora: hora, txt: conf }]) });
+    if (this._red) conf2(); else this._t = setTimeout(conf2, 620);
+  }
+
+  enviarDetalle() {
+    const txt = (this.state.draft || '').trim();
+    if (!txt || !this.state.sel) return;
+    const id = this.state.sel, hora = this.hora();
+    this.mut(tks => { const t = tks.find(x => x.id === id); if (t) t.msgs.push({ a: 'u', hora: hora, txt: txt }); });
+    this.setState({ draft: '' });
+  }
+
+  mIr(p, sel, extra) { this.setState({ mPant: p, mSel: sel || null, mDraft: '', ...(extra || {}) }); }
+  mAbrir(id) { this.mut(tks => { const t = tks.find(x => x.id === id); if (t) t.nuevo = false; }); this.mIr('hilo', id, { mNotiAb: false }); }
+  mNMsgs() { return this.state.mNMsgs || [{ a: 'i', txt: this.Q_INICIO, hora: this._horaIni }]; }
+  mResponder(txt, extra) {
+    const push = () => {
+      this.setState({ mNMsgs: (this.state.mNMsgs || this.mNMsgs()).concat([{ a: 'i', hora: this.hora(), txt: txt }]), ...(extra || {}) });
+      if (txt === this.Q_ADJUNTOS) {
+        if (this._red) this.setState({ mVerSaltar: true });
+        else this._mt2 = setTimeout(() => this.setState({ mVerSaltar: true }), 900);
+      }
+    };
+    if (this._red) push(); else this._mt = setTimeout(push, 700);
+  }
+  mEnviarNuevo() {
+    const txt = (this.state.mDraft || '').trim();
+    if (!txt) return;
+    const hilo = this.mNMsgs().concat([{ a: 'u', hora: this.hora(), txt: txt }]);
+    const vaga = txt.length < 60 || txt.split(' ').length < 10;
+    this.setState({ mNMsgs: hilo, mDraft: '', mDesc: this.state.mDesc || txt });
+    if (this.state.mPaso === 1 && vaga && !this.state.mRepregunto) {
+      this.setState({ mRepregunto: true });
+      this.mResponder(this.Q_REPREGUNTA);
+      return;
+    }
+    this.setState({ mPaso: 2 });
+    this.mResponder(this.Q_ADJUNTOS);
+  }
+  mCerrarPaso2() {
+    const desc = this.state.mDesc || '';
+    const nid = 'SOP-' + (1050 + this.tks().filter(t => t.creado).length);
+    const hora = this.hora();
+    const conf = 'Tu reporte quedó registrado como ' + nid + '. Nuestro equipo lo revisa y te informamos aquí mismo sobre cualquier avance.';
+    const previos = this.mNMsgs().concat([{ a: 'u', hora: hora, txt: 'Continuar sin archivos' }, { a: 'sys', txt: 'Reporte creado · ' + nid + ' · ' + hora }, { a: 'card' }]);
+    this.mut(tks => tks.unshift({ id: nid, dt: this.isoHoy(), creada: this.fechaCorta() + ', ' + hora, titulo: this.autoTitulo(desc || 'Reporte nuevo'), estado: 'pend', fecha: 'ahora', creado: true, auto: true,
+      msgs: previos.concat([{ a: 'i', hora: hora, txt: conf }]) }));
+    this.setState({ mPaso: 3, mNuevoId: nid, mNMsgs: previos, mVerSaltar: false });
+    this.mResponder(conf);
+  }
+  mEnviarHilo() {
+    const txt = (this.state.mDraft || '').trim();
+    if (!txt || !this.state.mSel) return;
+    const id = this.state.mSel, hora = this.hora();
+    this.mut(tks => { const t = tks.find(x => x.id === id); if (t) t.msgs.push({ a: 'u', hora: hora, txt: txt }); });
+    this.setState({ mDraft: '' });
+  }
+
+  min24(h) {
+    const m = /(\d+):(\d+)\s*([AP]M)/i.exec(h || '');
+    if (!m) return 0;
+    let hh = parseInt(m[1], 10) % 12;
+    if (m[3].toUpperCase() === 'PM') hh += 12;
+    return hh * 60 + parseInt(m[2], 10);
+  }
+  hiloConFechas(tk, alt) {
+    const msgs = tk ? tk.msgs : (alt || []);
+    const dias = ((tk && this.DIAS[tk.id]) || ['HOY']).slice();
+    const out = [];
+    let di = 0, prev = -1, ultimo = null;
+    msgs.forEach((m, i) => {
+      const fila = { esUser: m.a === 'u', esIntra: m.a === 'i', esSys: m.a === 'sys', esCard: m.a === 'card', txt: m.txt, hora: m.hora, k: i };
+      if (m.hora) {
+        const t = this.min24(m.hora);
+        if (prev >= 0 && t < prev && di + 1 < dias.length) di++;
+        prev = t;
+        const dia = dias[di] || dias[dias.length - 1];
+        if (dia !== ultimo) { out.push({ esFecha: true, txt: dia, k: 'f' + i }); ultimo = dia; }
+      }
+      out.push(fila);
+    });
+    return out;
+  }
+  pill() {
+    return { flex: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '2px 8px', borderRadius: '6px',
+      background: 'var(--tonal,#F1EFE8)', color: 'var(--chip-tx,#5E6168)', fontSize: '10.5px', fontWeight: 600,
+      letterSpacing: '.04em', whiteSpace: 'nowrap' };
+  }
+  pdot(estado) {
+    return { flex: 'none', width: '5px', height: '5px', borderRadius: '999px', background: this.colorEstado(estado) };
+  }
+  colorEstado(estado) { return estado === 'prog' ? 'var(--ambar,#C8881F)' : (estado === 'res' ? 'var(--verde,#5BD6A0)' : 'var(--tt,#8A8C93)'); }
+
+  navStyle(active, col) {
+    const ease = '0.5s cubic-bezier(0.4,0,0.2,1)';
+    return { display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-start', width: col ? '44px' : '100%', padding: '12px',
+      borderRadius: col ? '14px' : '12px', border: 'none', fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, boxSizing: 'border-box',
+      transition: 'background .15s ease-out, color .15s ease-out, width ' + ease + ', border-radius ' + ease,
+      background: active ? 'var(--seg-track,#EFECE4)' : 'transparent', color: active ? 'var(--tp,#0A0A0A)' : 'var(--ts,#5E6168)',
+      textAlign: 'left', overflow: 'hidden' };
+  }
+
+  renderVals() {
+    const S = this.state, tema = this.tema(), TH = this.THEME[tema];
+    const tks = this.tks();
+    const col = !!S.navCol, ease5 = '0.5s cubic-bezier(0.4,0,0.2,1)';
+    const q = (S.q || '').trim().toLowerCase();
+    const abierta = tks.find(t => t.id === S.sel) || null;
+    const fichaTk = abierta || tks.find(t => t.id === S.nuevoId) || null;
+    const nMsgs = this.nMsgs();
+    const nPorEstado = e => tks.filter(t => t.estado === e).length;
+
+    const TINTA = { pend: 'rgba(255,255,255,.62)', prog: 'var(--ambar,#C8881F)', res: 'var(--verde,#5BD6A0)' };
+    const barra = ['pend', 'prog', 'res'].map((e, i) => {
+      const n = nPorEstado(e), act = S.filtro === e;
+      return {
+        n: String(n), lbl: { pend: 'Pendientes', prog: 'En proceso', res: 'Resueltos' }[e],
+        aria: n + (n === 1 ? ' reporte ' : ' reportes ') + this.ETIQ[e].toLowerCase() + ', filtrar',
+        click: () => this.setState({ filtro: act ? null : e }),
+        enter: () => this.setState({ hoverSeg: e }),
+        leave: () => this.setState({ hoverSeg: null }),
+        estilo: { flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', minWidth: '180px',
+          padding: '2px 34px', border: 'none', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,.12)',
+          borderRadius: '0px', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',
+          opacity: (S.hoverSeg && S.hoverSeg !== e) || (!S.hoverSeg && S.filtro && !act) ? .42 : 1, transition: 'opacity .2s ease-out' },
+        nEstilo: { fontSize: '56px', fontWeight: 600, lineHeight: 1, letterSpacing: '-0.03em', color: '#FFFFFF',
+          textShadow: S.hoverSeg === e ? '0 0 14px rgba(255,255,255,.34), 0 0 30px rgba(255,255,255,.16)' : 'none',
+          transition: 'text-shadow .25s ease-out' },
+        lEstilo: { fontSize: '13px', fontWeight: 400, color: TINTA[e] }
+      };
+    });
+
+    const RANGOS = this.rangos(), rg = S.rango === 'custom' ? (S.rangoC || null) : (S.rango ? RANGOS[S.rango] : null);
+    const enRango = t => !rg || (t.dt && t.dt >= rg.a && t.dt <= rg.b);
+    const lista = tks.filter(t => (!S.filtro || t.estado === S.filtro) && (!q || t.titulo.toLowerCase().indexOf(q) >= 0) && enRango(t));
+    const ORD_EST = { pend: 0, prog: 1, res: 2 };
+    const sortT = S.sort || { k: 'creado', dir: 'desc' };
+    const claveOrden = t => sortT.k === 'titulo' ? t.titulo.toLowerCase()
+      : sortT.k === 'estado' ? String(ORD_EST[t.estado]) + '|' + t.id
+      : (t.dt || '') + '|' + t.id;
+    const listaOrd = lista.slice().sort((a, b) => {
+      const ka = claveOrden(a), kb = claveOrden(b);
+      const x = ka < kb ? -1 : ka > kb ? 1 : 0;
+      return sortT.dir === 'asc' ? x : -x;
+    });
+    const filas = listaOrd.map(t => ({
+      id: t.id, titulo: t.titulo, fecha: t.fecha, nuevo: !!t.nuevo, creada: this.selloFecha(t), click: () => this.abrir(t.id),
+      estilo: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', width: '100%', flex: 'none', height: '68px', padding: '0 20px',
+        borderRadius: '12px', border: 'none', borderBottom: '0.5px solid var(--divider,#EFECE4)', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit',
+        background: 'transparent', transition: 'background .15s ease-out' },
+      pill: this.pill(), pdot: this.pdot(t.estado), pTxt: this.ETIQ[t.estado]
+    }));
+
+    const draft = S.draft || '', activo = draft.trim().length > 0;
+
+    const mPant = S.mPant || 'bandeja';
+    const mComp = !!S.mComp, EASE = 'cubic-bezier(0.22,0.61,0.36,1)';
+    const mAbierta = tks.find(t => t.id === S.mSel) || null;
+    const mQtxt = (S.mQ || '').trim().toLowerCase();
+    const mLista = tks.filter(t => (!S.mFiltro || t.estado === S.mFiltro) && (!mQtxt || t.titulo.toLowerCase().indexOf(mQtxt) >= 0));
+    const mDraft = S.mDraft || '', mActivo = mDraft.trim().length > 0;
+    const mResumenTk = tks.find(t => t.id === S.mNuevoId) || null;
+    const mTabSt = act => ({ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px', height: '56px', minWidth: '54px',
+      border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: '0',
+      color: act ? 'var(--tp,#0A0A0A)' : 'var(--tt,#8A8C93)', fontSize: '10.5px', fontWeight: 600, transition: 'color .45s ease' });
+
+    return {
+      capas: ['dia','tarde','noche'].reduce((acc, t) => acc.concat(this.CAPAS[t].map(c => ({ estilo: {
+        position: 'absolute', inset: '0 -40px', pointerEvents: 'none', transformOrigin: '50% 100%', background: c.bg,
+        animation: (this._red || c.anim === 'none') ? 'none' : c.anim, opacity: t === tema ? 1 : 0, transition: 'opacity .6s ease' } }))), []),
+      raiz: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', display: 'flex', ...TH, background: '#060607', color: 'var(--tp,#0A0A0A)',
+        borderRadius: '24px', border: '1px solid ' + (tema === 'dia' ? '#EFECE4' : 'rgba(255,255,255,.08)'),
+        boxShadow: '0 1px 2px rgba(20,16,8,.05), 0 24px 60px -34px rgba(20,16,8,.3)', overflow: 'hidden' },
+      raizPuente: { position: 'relative', width: '860px', ...TH, background: '#060607', color: 'var(--tp,#0A0A0A)', padding: '28px 32px 32px',
+        borderRadius: '20px', border: '1px solid ' + (tema === 'dia' ? '#EFECE4' : 'rgba(255,255,255,.08)'), boxShadow: '0 1px 2px rgba(20,16,8,.05)' },
+      navCard: { position: 'relative', flex: 'none', boxSizing: 'border-box', width: (col ? 84 : 248) + 'px', margin: '16px 0 16px 16px', height: 'calc(100% - 32px)',
+        transition: 'width ' + ease5 + ', border-radius ' + ease5,
+        background: 'color-mix(in srgb, var(--nav-bg,#F7F5EF) 84%, transparent)', border: '1px solid var(--divider,#EFECE4)', borderRadius: (col ? 42 : 26) + 'px',
+        boxShadow: '0 26px 60px -34px rgba(20,16,8,.45), inset 0 1px 0 rgba(255,255,255,.45)',
+        backdropFilter: 'blur(20px) saturate(1.3)', WebkitBackdropFilter: 'blur(20px) saturate(1.3)', overflow: 'hidden' },
+      gnNavContent: { position: 'absolute', top: '0px', left: '0px', width: '248px', boxSizing: 'border-box', padding: '26px 20px 0', display: 'flex', flexDirection: 'column', gap: '6px' },
+      gnMode: { position: 'absolute', left: '0px', bottom: '74px', width: '248px', boxSizing: 'border-box', padding: '0 20px', display: 'flex', alignItems: 'center' },
+      gnUser: { position: 'absolute', left: '0px', bottom: '20px', width: '248px', boxSizing: 'border-box', padding: '0 26px', display: 'flex', alignItems: 'center', gap: '10px' },
+      navItem: this.navStyle(false, col),
+      navItemAct: this.navStyle(true, col),
+      navLbl: { opacity: col ? '0' : '1', maxWidth: col ? '0px' : '200px', overflow: 'hidden', whiteSpace: 'nowrap', transition: 'opacity .2s ease, max-width .35s ease' },
+      navLblRow: { flex: 1, display: 'flex', alignItems: 'center', opacity: col ? '0' : '1', maxWidth: col ? '0px' : '200px', overflow: 'hidden', whiteSpace: 'nowrap', transition: 'opacity .2s ease, max-width .35s ease' },
+      navCnt: { marginLeft: 'auto', fontSize: '11px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--ts,#5E6168)', background: 'var(--tonal,#F1EFE8)', borderRadius: '6px', padding: '2px 7px' },
+      navLblOp: col ? '0' : '1',
+      navToggle: () => this.setState({ navCol: !col }),
+      navTogLeft: col ? '86px' : '250px',
+      navTogIcon: col ? 'M9 18l6-6-6-6' : 'M15 18l-6-6 6-6',
+      badge: String(tks.filter(t => t.nuevo).length),
+      hayBadge: tks.filter(t => t.nuevo).length > 0,
+
+      ciclaTema: () => { const o = this.ORDEN; this.setState({ modo: o[(o.indexOf(this.modo()) + 1) % o.length] }); },
+      icoTema: { ...(tema === 'noche' ? this.ICO_LUNA : (tema === 'tarde' ? this.ICO_TARDE : this.ICO_SOL)), px: '18px' },
+      labelTema: this.modo() === 'auto' ? 'Auto' : ({ dia: 'Amanecer', tarde: 'Atardecer', noche: 'Noche' }[tema]),
+      modoBtn: { display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', width: col ? '44px' : '100%', boxSizing: 'border-box',
+        padding: '12px', border: 'none', borderRadius: col ? '14px' : '12px', background: 'transparent', cursor: 'pointer', color: 'var(--ts,#5E6168)',
+        transition: 'background .15s ease-out, width ' + ease5 + ', border-radius ' + ease5 },
+      modoLbl: { fontSize: '13px', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', color: 'var(--ts,#5E6168)', opacity: col ? '0' : '1', maxWidth: col ? '0px' : '160px', transition: 'opacity .2s ease, max-width .35s ease' },
+
+      menuItem: { display: 'flex', alignItems: 'center', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13px', fontWeight: 500, background: 'transparent', color: 'var(--tp,#0A0A0A)', textAlign: 'left', boxSizing: 'border-box' },
+      mDark: tema !== 'dia',
+      mRoot: { position: 'relative', height: '100%', overflow: 'hidden', ...TH, background: '#060607', color: 'var(--tp,#0A0A0A)' },
+      mTemaBtn: { flex: 'none', width: '36px', height: '36px', borderRadius: '999px', border: 'none', background: 'transparent',
+        cursor: 'pointer', color: 'var(--ts,#5E6168)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0' },
+      mMono: { fontFamily: this.MONO, fontSize: '11.5px', letterSpacing: '.02em', color: 'var(--tt,#8A8C93)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' },
+      mVBandeja: mPant === 'bandeja', mVHilo: mPant === 'hilo', mVNuevo: mPant === 'nuevo',
+      mVerTabs: mPant === 'bandeja', mVerComposer: mPant !== 'bandeja',
+      mQ: S.mQ || '',
+      mOnQ: e => this.setState({ mQ: e.target.value }),
+      mBarra: ['pend', 'prog', 'res'].map((e, i) => {
+        const n = nPorEstado(e), act = S.mFiltro === e;
+        return {
+          n: String(n), lbl: { pend: 'Pendientes', prog: 'En proceso', res: 'Resueltos' }[e],
+          aria: n + (n === 1 ? ' reporte ' : ' reportes ') + this.ETIQ[e].toLowerCase() + ', filtrar',
+          click: () => this.setState({ mFiltro: act ? null : e }),
+          estilo: { flex: '1 1 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', minWidth: '0',
+            padding: '2px 6px', border: 'none', borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,.12)', borderRadius: '0px',
+            background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center',
+            opacity: S.mFiltro && !act ? .42 : 1, transition: 'opacity .2s ease-out' },
+          nEstilo: { fontSize: mComp ? '22px' : '30px', fontWeight: 600, lineHeight: 1, letterSpacing: '-0.03em', color: '#FFFFFF', fontVariantNumeric: 'tabular-nums', transition: 'font-size .5s cubic-bezier(0.22,0.61,0.36,1)' },
+          lEstilo: { fontSize: '11px', fontWeight: 400, color: TINTA[e], whiteSpace: 'nowrap' }
+        };
+      }),
+      mFilas: mLista.map((t, i) => ({
+        id: t.id, titulo: t.titulo, rel: t.fecha, nuevo: !!t.nuevo, click: () => this.mAbrir(t.id),
+        estilo: { display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', borderRadius: '14px', cursor: 'pointer',
+          borderBottom: i === mLista.length - 1 ? 'none' : '0.5px solid var(--divider,#EFECE4)',
+          transition: 'background .15s ease-out' },
+        pill: this.pill(), pdot: this.pdot(t.estado), pTxt: this.ETIQ[t.estado]
+      })),
+      mIconBtn: { position: 'relative', border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', padding: '8px',
+        color: 'var(--ts,#5E6168)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' },
+      mNuevoBtn: { position: 'relative', flex: 'none', width: '40px', height: '40px', borderRadius: '999px', border: 'none', padding: '0',
+        cursor: 'pointer', fontFamily: 'inherit', background: 'var(--tp,#0A0A0A)', color: 'var(--scrim,#FAF9F5)',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center' },
+      mSinResultados: mLista.length === 0,
+      mLimpiar: () => this.setState({ mFiltro: null, mQ: '' }),
+      mNotis: tks.filter(t => t.nuevo).map(t => {
+        const ult = t.msgs[t.msgs.length - 1], mensaje = ult && ult.a === 'i';
+        return {
+          titulo: t.titulo,
+          txt: mensaje ? 'Equipo intra respondió tu reporte.' : 'Tu reporte pasó a ' + this.ETIQ[t.estado] + '.',
+          click: () => { this.setState({ mNotiAb: false }); this.mAbrir(t.id); },
+          dot: { flex: 'none', width: '6px', height: '6px', borderRadius: '999px', marginTop: '6px', background: this.colorEstado(t.estado) },
+          estilo: { display: 'flex', alignItems: 'flex-start', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none',
+            background: 'transparent', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', boxSizing: 'border-box' }
+        };
+      }),
+      mBtnNoti: { position: 'relative', flex: 'none', width: '40px', height: '40px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)',
+        background: S.mNotiAb ? 'var(--tonal,#F1EFE8)' : 'transparent', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center',
+        justifyContent: 'center', color: 'var(--ts,#5E6168)', transition: 'background .15s ease-out, transform .12s ease-out' },
+      mDotNoti: { position: 'absolute', top: '7px', right: '7px', width: '7px', height: '7px', borderRadius: '999px',
+        background: 'var(--ambar,#D99A2B)', border: '1.5px solid var(--card,#FFFFFF)' },
+      mNotiAb: !!S.mNotiAb,
+      mToggleNoti: () => this.setState({ mNotiAb: !S.mNotiAb }),
+      mNotiBtn: { flex: 'none', position: 'relative', width: '44px', height: '44px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)',
+        background: 'var(--card,#FFFFFF)', cursor: 'pointer', color: 'var(--ts,#5E6168)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0' },
+      mTk: mAbierta ? { titulo: mAbierta.titulo, id: mAbierta.id, sub: this.SUB[mAbierta.estado], pill: this.pill(), pdot: this.pdot(mAbierta.estado), pTxt: this.ETIQ[mAbierta.estado] }
+        : { titulo: '', id: '', sub: '', pill: {}, pdot: {}, pTxt: '' },
+      mVerAppBar: (S.mPant || 'bandeja') === 'bandeja',
+      mPadTabs: '0px',
+      mScrollRef: el => { this._mScroll = el; },
+      mOnScroll: e => { const y = e.target.scrollTop, c = !!this.state.mComp, n = c ? y > 8 : y > 28; if (n !== c) this.setState({ mComp: n }); },
+      mCabecera: { position: 'sticky', top: '0px', zIndex: 20, background: 'transparent', backdropFilter: 'blur(18px) saturate(1.25)', WebkitBackdropFilter: 'blur(18px) saturate(1.25)', paddingBottom: '8px', display: 'flex', flexDirection: 'column' },
+      mWidget: { position: 'relative', overflow: 'hidden', margin: '14px 16px 0', borderRadius: '20px',
+        background: 'linear-gradient(170deg,#151518 0%,#0A0A0C 45%,#060607 100%)',
+        padding: mComp ? '12px 16px 26px' : '22px 16px 52px', transition: 'padding .5s ' + EASE + ', border-radius .5s ' + EASE + ', margin .5s ' + EASE + ', box-shadow .5s ' + EASE + ', height .5s ' + EASE + ', opacity .3s ease-out' },
+      mPlaneta: { position: 'absolute', inset: 0, pointerEvents: 'none', transformOrigin: '50% 100%',
+        transform: mComp ? 'scale(0.66) translateY(6px)' : 'scale(1) translateY(0px)',
+        transition: 'transform .5s ' + EASE, willChange: 'transform' },
+      mWEyebrow: { alignSelf: 'center', fontSize: '10px', fontWeight: 600, letterSpacing: '.15em', textTransform: 'uppercase',
+        color: 'rgba(255,255,255,.55)', opacity: mComp ? 0 : 1, maxHeight: mComp ? '0px' : '14px', overflow: 'hidden',
+        transition: 'opacity .3s ease-out, max-height .5s ' + EASE + ', margin .5s ' + EASE + '' },
+      mWFila: { display: 'flex', alignItems: 'stretch', justifyContent: 'center', gap: '0px', marginTop: mComp ? '0px' : '12px',
+        transition: 'margin-top .5s cubic-bezier(0.22,0.61,0.36,1)' },
+      mHiloRef: el => { if (el) this._mHilo = el; },
+      mNuevoRef: el => { if (el) this._mNuevo = el; },
+      mMsgs: this.hiloConFechas(mAbierta),
+      mNMsgs: this.hiloConFechas(null, this.mNMsgs()),
+      mFichaTk: mAbierta ? { titulo: mAbierta.titulo, id: mAbierta.id, pill: this.pill(), pdot: this.pdot(mAbierta.estado), pTxt: this.ETIQ[mAbierta.estado] } : { titulo: '', id: '', pill: {}, pdot: {}, pTxt: '' },
+      mFichaNueva: mResumenTk ? { titulo: mResumenTk.titulo, id: mResumenTk.id, pill: this.pill(), pdot: this.pdot(mResumenTk.estado), pTxt: this.ETIQ[mResumenTk.estado] } : { titulo: '', id: '', pill: {}, pdot: {}, pTxt: '' },
+      mPaso: String(S.mPaso || 1),
+      mVerSaltar: !!S.mVerSaltar,
+      mPasoFin: (S.mPaso || 1) === 3 && !!mResumenTk,
+      mResumen: mResumenTk ? { titulo: mResumenTk.titulo, id: mResumenTk.id } : { titulo: '', id: '' },
+      mSinArchivos: () => { this.setState({ mVerSaltar: false }); this.mCerrarPaso2(); },
+      mVerReporte: () => { if (mResumenTk) this.mAbrir(mResumenTk.id); },
+      mIrNuevo: () => this.mIr('nuevo', null, { mPaso: 1, mNMsgs: null, mRepregunto: false, mNuevoId: null, mDesc: '', mVerSaltar: false }),
+      mVolver: () => this.mIr('bandeja', null, { mPaso: 1, mNMsgs: null, mRepregunto: false, mNuevoId: null, mDesc: '', mVerSaltar: false }),
+      mBtnVolver: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px', margin: '0 0 0 -12px', padding: '0',
+        border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ts,#5E6168)' },
+      mBtnSec: { alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', height: '44px', padding: '0 18px', borderRadius: '999px',
+        border: '1px solid var(--sec-bd,rgba(20,16,8,.1))', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13px', fontWeight: 600,
+        color: 'var(--ts,#5E6168)', transition: 'background .15s ease-out, transform .12s ease-out' },
+      mBtnPrim: { alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', height: '44px', padding: '0 20px', borderRadius: '999px', border: 'none',
+        cursor: 'pointer', fontFamily: 'inherit', fontSize: '13.5px', fontWeight: 600, background: 'var(--btn-bg,#0A0A0A)', color: 'var(--btn-tx,#FFFFFF)',
+        transition: 'opacity .15s ease-out, transform .12s ease-out' },
+      mFab: { pointerEvents: 'auto', display: 'inline-flex', alignItems: 'center', gap: '8px', height: '44px', padding: '0 20px', borderRadius: '999px', border: 'none',
+        cursor: 'pointer', fontFamily: 'inherit', fontSize: '14px', fontWeight: 500, background: 'var(--tp,#0A0A0A)', color: 'var(--scrim,#FAF9F5)',
+        boxShadow: '0 12px 30px -12px rgba(20,16,8,.5)' },
+      mTbPill: { display: 'flex', alignItems: 'center', gap: '2px', padding: '0 6px', height: '64px',
+        background: 'color-mix(in srgb, var(--tabbar, rgba(250,249,245,.92)) 38%, transparent)', backdropFilter: 'blur(20px) saturate(170%)', WebkitBackdropFilter: 'blur(20px) saturate(170%)',
+        border: '1px solid var(--divider,#EFECE4)', borderRadius: '999px', pointerEvents: 'auto', boxSizing: 'border-box',
+        boxShadow: '0 12px 34px -12px rgba(20,16,8,.34), inset 0 1px 0 rgba(255,255,255,.3)' },
+      mTabLbl: { fontSize: '10.5px', fontWeight: 600, lineHeight: 1, whiteSpace: 'nowrap' },
+      mTabInicio: mTabSt(false), mTabPersonas: mTabSt(false), mTabAgenda: mTabSt(false), mTabSoporte: mTabSt(true), mTabPreguntar: mTabSt(false),
+      mGoInicio: () => {}, mGoPersonas: () => {}, mGoAgenda: () => {}, mGoSoporte: () => this.mIr('bandeja', null), mGoPreguntar: () => {},
+      mDraft: mDraft,
+      mOnDraft: e => this.setState({ mDraft: e.target.value }),
+      mOnKey: e => { if (e.key === 'Enter') { e.preventDefault(); if (mPant === 'nuevo') this.mEnviarNuevo(); else this.mEnviarHilo(); } },
+      mEnviar: () => { if (mPant === 'nuevo') this.mEnviarNuevo(); else this.mEnviarHilo(); },
+      mAdjuntar: () => { if (mPant === 'nuevo' && (S.mPaso || 1) === 2) this.mCerrarPaso2(); },
+      mPhTexto: mPant === 'nuevo' ? 'Cuéntanos qué ocurrió…' : 'Escribe un mensaje…',
+      mPh: { position: 'absolute', left: '34px', top: '24px', transform: 'translateY(-50%)', fontSize: '14px', color: 'var(--tt,#8A8C93)', pointerEvents: 'none', opacity: mActivo ? 0 : .9, transition: 'opacity .2s ease-out' },
+      mSend: { flex: 'none', width: '40px', height: '40px', borderRadius: '999px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '15px', fontWeight: 600,
+        background: mActivo ? '#0A0A0A' : '#E4E0D8', color: mActivo ? '#fff' : '#8A8C93', transition: 'background .25s ease, color .25s ease, transform .12s ease-out' },
+      mClip: { flex: 'none', width: '40px', height: '40px', borderRadius: '999px', border: 'none', cursor: 'pointer', padding: '0',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'var(--tonal,#F1EFE8)', color: 'var(--tt,#8A8C93)', transition: 'background .2s ease, color .2s ease, transform .12s ease-out' },
+
+      raizRef: el => { this._raiz = el; },
+      mono: { fontFamily: this.MONO, fontSize: '12px', letterSpacing: '.02em', color: 'var(--tt,#8A8C93)', fontVariantNumeric: 'tabular-nums' },
+      btnPrimario: { flex: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', height: '40px', padding: '0 20px', borderRadius: '20px',
+        border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '14px', fontWeight: 500,
+        background: 'var(--tp,#0A0A0A)', color: 'var(--scrim,#FAF9F5)', transition: 'opacity .15s ease-out, transform .12s ease-out' },
+      btnVolver: { alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '6px', height: '40px', padding: '0 8px 0 0',
+        border: 'none', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13px', fontWeight: 500,
+        color: 'var(--ts,#5E6168)', transition: 'color .15s ease-out' },
+      btnPar: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', height: '38px', padding: '0 16px', borderRadius: '999px',
+        border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', color: 'var(--tp,#0A0A0A)',
+        fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, cursor: 'pointer', flex: 'none',
+        transition: 'background .15s ease-out, transform .12s ease-out' },
+
+      vBandeja: S.pant === 'bandeja', vHilo: S.pant === 'hilo',
+      vCreando: S.pant === 'hilo' && !S.sel, vReporte: S.pant === 'hilo' && !!abierta,
+      kHilo: 'h' + (S.sel || 'n'),
+      irNuevo: () => this.ir('hilo', null, { paso: 1, nMsgs: null, repregunto: false, nuevoId: null, desc: '' }),
+      irBandeja: () => this.irBandeja(),
+
+      toggleNoti: () => this.setState({ notiAb: !S.notiAb, menuF: false }),
+      notiAb: !!S.notiAb,
+      hayNoti: tks.filter(t => t.nuevo).length > 0,
+      sinNoti: tks.filter(t => t.nuevo).length === 0,
+      btnNoti: { position: 'relative', flex: 'none', width: '40px', height: '40px', borderRadius: '999px', border: '1px solid var(--divider,#EFECE4)',
+        background: S.notiAb ? 'var(--tonal,#F1EFE8)' : 'transparent', cursor: 'pointer', padding: '0', display: 'inline-flex', alignItems: 'center',
+        justifyContent: 'center', color: 'var(--ts,#5E6168)', transition: 'background .15s ease-out, transform .12s ease-out' },
+      dotNoti: { position: 'absolute', top: '9px', right: '10px', width: '7px', height: '7px', borderRadius: '999px',
+        background: 'var(--ambar,#D99A2B)', border: '1.5px solid var(--card,#FFFFFF)' },
+      marcarLeidas: () => { this.mut(x => x.forEach(t => { t.nuevo = false; })); this.setState({ notiAb: false }); },
+      notis: tks.filter(t => t.nuevo).map(t => {
+        const ult = t.msgs[t.msgs.length - 1];
+        const mensaje = ult && ult.a === 'i';
+        return {
+          titulo: t.titulo,
+          txt: mensaje ? 'Equipo intra respondió tu reporte.' : 'Tu reporte pasó a ' + this.ETIQ[t.estado] + '.',
+          fecha: t.fecha, click: () => { this.setState({ notiAb: false }); this.abrir(t.id); },
+          dot: { flex: 'none', width: '6px', height: '6px', borderRadius: '999px', marginTop: '6px', background: this.colorEstado(t.estado) },
+          estilo: { display: 'flex', alignItems: 'flex-start', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none',
+            background: 'transparent', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', boxSizing: 'border-box', transition: 'background .15s ease-out' }
+        };
+      }),
+      barra: barra,
+      conteoFiltro: 'mostrando ' + lista.length + ' de ' + tks.length,
+      chipsOn: !!(S.filtro || rg || (S.q || '').trim()),
+      chips: [
+        S.filtro ? { t: { pend: 'Pendientes', prog: 'En proceso', res: 'Resueltos' }[S.filtro], quitar: () => this.setState({ filtro: null }) } : null,
+        rg ? { t: 'Fechas: ' + (S.rango === 'custom' ? this.dCorta(rg.a) + ' – ' + this.dCorta(rg.b) : RANGOS[S.rango].t), quitar: () => this.setState({ rango: null, rangoC: null }) } : null,
+        (S.q || '').trim() ? { t: '“' + S.q.trim() + '”', quitar: () => this.setState({ q: '' }) } : null
+      ].filter(Boolean),
+      q: S.q,
+      hayFilas: lista.length > 0,
+      headEstilo: { display: 'flex', alignItems: 'center', flex: 'none', gap: '14px', padding: '11px 20px 9px', margin: '0 0 4px', borderBottom: '1px solid var(--divider,#EFECE4)' },
+      colsOrden: [['titulo', 'Reporte', { flex: 1, minWidth: 0 }], ['creado', 'Creado', { flex: 'none', width: '150px' }], ['estado', 'Estado', { flex: 'none', width: '110px' }]].map(([k, label, box]) => {
+        const on = sortT.k === k;
+        return {
+          k: k, label: label, on: on, titulo: 'Ordenar por ' + label.toLowerCase(),
+          flecha: sortT.dir === 'asc' ? '↑' : '↓',
+          ariaSort: on ? (sortT.dir === 'asc' ? 'ascending' : 'descending') : 'none',
+          ordenar: () => this.setState({ sort: { k: k, dir: on ? (sortT.dir === 'asc' ? 'desc' : 'asc') : (k === 'titulo' ? 'asc' : 'desc') } }),
+          thEstilo: { ...box, display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', userSelect: 'none',
+            fontSize: '10.5px', fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase',
+            color: on ? 'var(--tp,#0A0A0A)' : 'var(--tt,#8A8C93)', transition: 'color .15s ease-out' }
+        };
+      }),
+      tgEstados: () => this.setState({ menuE: !S.menuE, menuF: false, calOn: false, notiAb: false }),
+      menuEstados: !!S.menuE,
+      estadoBtnTxt: S.filtro ? 'Estado · ' + { pend: 'Pendientes', prog: 'En proceso', res: 'Resueltos' }[S.filtro] : 'Estado ▾',
+      estadoBtn: { height: '44px', padding: '0 18px', borderRadius: '999px', border: 'none', maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+        background: S.filtro ? 'var(--btn-bg,#0A0A0A)' : 'var(--seg-track,#EFECE4)', color: S.filtro ? 'var(--btn-tx,#FFFFFF)' : 'var(--ts,#5E6168)',
+        fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, cursor: 'pointer', flex: 'none' },
+      popEstados: { position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 50, width: '216px', borderRadius: '14px', background: 'var(--card,#FFFFFF)',
+        boxShadow: '0 12px 40px -12px rgba(0,0,0,.35)', padding: '8px', transformOrigin: 'top right', animation: this._red ? 'none' : 'ih-pop .18s ease-out both', boxSizing: 'border-box' },
+      estadoItems: [[null, 'Todos los estados'], ['pend', 'Pendientes'], ['prog', 'En proceso'], ['res', 'Resueltos']].map(([id, t]) => ({
+        t: t, n: id ? String(nPorEstado(id)) : String(tks.length),
+        tap: () => this.setState({ filtro: id, menuE: false }),
+        dot: { flex: 'none', width: '6px', height: '6px', borderRadius: '999px', background: id ? this.colorEstado(id) : 'var(--tt,#8A8C93)' },
+        cnt: { marginLeft: 'auto', fontSize: '11px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: 'var(--ts,#5E6168)' },
+        estilo: { display: 'flex', alignItems: 'center', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer',
+          fontFamily: 'inherit', fontSize: '13px', fontWeight: 500, textAlign: 'left', boxSizing: 'border-box',
+          background: (S.filtro || null) === id ? 'var(--tonal,#F1EFE8)' : 'transparent', color: 'var(--tp,#0A0A0A)' }
+      })),
+      tgFechas: () => this.setState({ menuF: !S.menuF, notiAb: false, menuE: false }),
+      menuFechas: !!S.menuF,
+      fechaBtnTxt: S.rango === 'custom' ? 'Fechas · ' + (rg ? this.dCorta(rg.a) + ' → ' + this.dCorta(rg.b) : 'personalizado') : (S.rango ? 'Fechas · ' + RANGOS[S.rango].t : 'Fechas ▾'),
+      fechaBtn: { height: '44px', padding: '0 18px', borderRadius: '999px', border: 'none', maxWidth: '260px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+        background: S.rango ? 'var(--btn-bg,#0A0A0A)' : 'var(--seg-track,#EFECE4)', color: S.rango ? 'var(--btn-tx,#FFFFFF)' : 'var(--ts,#5E6168)',
+        fontFamily: 'inherit', fontSize: '13px', fontWeight: 600, cursor: 'pointer', flex: 'none' },
+      popFechas: { position: 'absolute', top: 'calc(100% + 8px)', right: 0, zIndex: 50, width: '268px', borderRadius: '14px', background: 'var(--card,#FFFFFF)',
+        boxShadow: '0 12px 40px -12px rgba(0,0,0,.35)', padding: '8px', transformOrigin: 'top right', animation: this._red ? 'none' : 'ih-pop .18s ease-out both', boxSizing: 'border-box' },
+      fechaItems: [[null, 'Todas las fechas']].concat(Object.keys(RANGOS).map(id => [id, RANGOS[id].t])).map(([id, t]) => ({
+        t: t, tap: () => this.setState({ rango: id, rangoC: null, menuF: false, calOn: false }),
+        estilo: { display: 'flex', alignItems: 'center', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer',
+          fontFamily: 'inherit', fontSize: '13px', fontWeight: (S.rango || null) === id ? 700 : 500,
+          background: (S.rango || null) === id ? 'var(--tonal,#F1EFE8)' : 'transparent', color: 'var(--tp,#0A0A0A)', textAlign: 'left', boxSizing: 'border-box' }
+      })),
+      onQ: e => this.setState({ q: e.target.value }),
+      filas: filas,
+      hayTks: tks.length > 0,
+      vacio: tks.length === 0,
+      sinResultados: filas.length === 0 && tks.length > 0,
+      limpiar: () => this.setState({ filtro: null, q: '', rango: null, rangoC: null }),
+      calOn: !!S.calOn, calOff: !S.calOn,
+      calAbrir: () => this.setState({ calOn: true }),
+      calCerrar: () => this.setState({ calOn: false }),
+      calAbrirEstilo: { display: 'flex', alignItems: 'center', gap: '8px', width: '100%', padding: '9px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer',
+        fontFamily: 'inherit', fontSize: '13px', fontWeight: S.rango === 'custom' ? 700 : 500,
+        background: S.rango === 'custom' ? 'var(--tonal,#F1EFE8)' : 'transparent', color: 'var(--tp,#0A0A0A)', textAlign: 'left', boxSizing: 'border-box' },
+      ...this.calendario(tks),
+
+      paso: String(S.paso),
+      pasoAdj: !!S.verSaltar && S.paso === 2 && !S.sel,
+      btnSaltar: { alignSelf: 'flex-start', marginLeft: '15px', display: 'inline-flex', alignItems: 'center', height: '38px', padding: '0 16px', borderRadius: '19px',
+        border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13.5px', fontWeight: 600, whiteSpace: 'nowrap',
+        color: 'var(--tp,#0A0A0A)', animation: this._red ? 'none' : 'ih-up .34s cubic-bezier(0.34,1.2,0.64,1) both',
+        transition: 'background .18s ease-out, color .18s ease-out, border-color .18s ease-out, transform .12s ease-out' },
+      btnAdjArch: { display: 'inline-flex', alignItems: 'center', gap: '7px', height: '38px', padding: '0 16px', borderRadius: '19px',
+        border: '1px solid transparent', background: 'var(--tonal,#F1EFE8)', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13.5px', fontWeight: 600, whiteSpace: 'nowrap',
+        color: 'var(--tp,#0A0A0A)',
+        transition: 'background .18s ease-out, color .18s ease-out, border-color .18s ease-out, transform .12s ease-out' },
+      btnSaltarPlano: { display: 'inline-flex', alignItems: 'center', height: '38px', padding: '0 16px', borderRadius: '19px',
+        border: '1px solid var(--sec-bd,#D9D5CC)', background: 'transparent', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13.5px', fontWeight: 600, whiteSpace: 'nowrap',
+        color: 'var(--tp,#0A0A0A)',
+        transition: 'background .18s ease-out, color .18s ease-out, border-color .18s ease-out, transform .12s ease-out' },
+      adjuntar: () => { if (S.paso === 2) this.cerrarPaso2(); },
+      sinArchivos: () => this.cerrarPaso2(true),
+      verClip: S.pant === 'hilo' || S.paso <= 2,
+      adjuntarMsg: () => {
+        if (S.pant === 'nuevo' && S.paso === 2) { this.cerrarPaso2(); return; }},
+
+      tk: abierta ? { titulo: abierta.titulo, id: abierta.id, sub: this.SUB[abierta.estado], pill: this.pill(), pdot: this.pdot(abierta.estado), pTxt: this.ETIQ[abierta.estado] }
+        : { titulo: '', id: '', sub: '', pill: {}, pdot: {}, pTxt: '' },      ficha: fichaTk ? { titulo: fichaTk.titulo, id: fichaTk.id, sub: this.SUB[fichaTk.estado], pill: this.pill(), pdot: this.pdot(fichaTk.estado), pTxt: this.ETIQ[fichaTk.estado] }
+        : { titulo: '', id: '', sub: '', pill: {}, pdot: {}, pTxt: '' },
+
+      msgs: this.hiloConFechas(abierta, nMsgs),
+      hiloRef: el => { this._hilo = el; },
+      fechaWrap: { display: 'flex', justifyContent: 'center', padding: '10px 0 4px' },
+      fechaPill: { display: 'inline-flex', alignItems: 'center', height: '24px', padding: '0 12px', borderRadius: '999px',
+        background: 'var(--tonal,#F1EFE8)', color: 'var(--tt,#8A8C93)', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', whiteSpace: 'nowrap' },
+      phTexto: abierta ? 'Escribe un mensaje…' : 'Cuéntanos qué ocurrió…',
+
+      draft: draft,
+      onDraft: e => this.setState({ draft: e.target.value }),
+      onKey: e => { if (e.key === 'Enter') { e.preventDefault(); if (S.sel) this.enviarDetalle(); else this.enviarNuevo(); } },
+      enviar: () => { if (S.sel) this.enviarDetalle(); else this.enviarNuevo(); },
+      phEstilo: { position: 'absolute', left: '34px', top: '24px', transform: 'translateY(-50%)', fontSize: '14px', color: 'var(--tt,#8A8C93)', pointerEvents: 'none', opacity: activo ? 0 : .9, transition: 'opacity .2s ease-out' },
+      sendEstilo: { flex: 'none', width: '48px', height: '48px', borderRadius: '999px', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '18px', fontWeight: 600,
+        background: activo ? '#0A0A0A' : '#E4E0D8', color: activo ? '#fff' : '#8A8C93', transition: 'background .25s ease, color .25s ease, transform .12s ease-out' },
+      clipEstilo: { flex: 'none', width: '48px', height: '48px', borderRadius: '999px', border: 'none', cursor: 'pointer', padding: '0',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        background: 'var(--tonal,#F1EFE8)', color: 'var(--tt,#8A8C93)',
+        transition: 'background .2s ease, color .2s ease, transform .12s ease-out' }
+    };
+  }
+}
+</script>
+</body>
+</html>

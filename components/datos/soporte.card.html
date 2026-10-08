@@ -1,0 +1,32 @@
+<!-- @dsCard group="6 · Componentes" viewport="760x360" name="Soporte" subtitle="HeroReportes, EncabezadoOrdenable, ChipEstado · v1.6" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Soporte</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp)}.fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { HeroReportes, EncabezadoOrdenable, ChipEstado, Card, DotAmbar } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  const [f,setF]=React.useState(null);const [s,setS]=React.useState({k:'creado',dir:'desc'});
+  const o=(k)=>setS(x=>({k,dir:x.k===k&&x.dir==='asc'?'desc':'asc'}));
+  const filas=[['El chatbot de la web pide dos veces los mismos datos','SOP-1046','hace 40 min, 7:40 AM','proceso',true],['No llegó el reporte diario de ocupación','SOP-1045','hace 2 h, 6:15 AM','pendiente'],['Quiero cambiar el saludo del agente','SOP-1036','hace 4 d, 4:05 PM','resuelto']];
+  return (<div style={{display:'flex',flexDirection:'column',gap:14}}>
+    <HeroReportes pendientes={3} enProceso={4} resueltos={8} filtro={f} onFiltrar={setF} style={{padding:'30px 24px'}} />
+    <Card padding="4px 6px">
+      <div style={{display:'flex',gap:14,padding:'11px 20px 9px',borderBottom:'1px solid var(--divider)'}}>
+        <EncabezadoOrdenable activo={s.k==='r'} dir={s.dir} onOrdenar={()=>o('r')} style={{flex:1}}>Reporte</EncabezadoOrdenable>
+        <EncabezadoOrdenable activo={s.k==='creado'} dir={s.dir} onOrdenar={()=>o('creado')} style={{width:180}}>Creado</EncabezadoOrdenable>
+        <EncabezadoOrdenable activo={s.k==='e'} dir={s.dir} onOrdenar={()=>o('e')} style={{width:120}}>Estado</EncabezadoOrdenable>
+      </div>
+      {filas.map(r=>(<div key={r[1]} style={{display:'flex',alignItems:'center',gap:14,padding:'12px 20px',borderBottom:'1px solid var(--divider)'}}>
+        <span style={{flex:1,minWidth:0,display:'flex',flexDirection:'column',gap:3}}><span style={{display:'flex',alignItems:'center',gap:8,fontSize:14}}>{r[4]&&<DotAmbar/>}{r[0]}</span><span style={{fontSize:12,letterSpacing:'.06em',color:'var(--ts)'}}>{r[1]}</span></span>
+        <span style={{width:180,fontSize:13,color:'var(--tt)'}}>{r[2]}</span><span style={{width:120,display:'flex'}}><ChipEstado estado={r[3]} /></span>
+      </div>))}
+    </Card>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

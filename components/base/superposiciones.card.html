@@ -1,0 +1,33 @@
+<!-- @dsCard group="6 · Componentes" viewport="760x720" name="Superposiciones y fondo" subtitle="Ambiente, Scrim, DialogoConfirmar, CapturaResolver" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Superposiciones</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>body{margin:0;padding:22px;font-family:var(--font-sans);background:var(--bg-grad) fixed;color:var(--tp)}.lbl{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--tt);margin:0 0 8px}.g{display:grid;grid-template-columns:1fr 1fr;gap:18px}.box{position:relative;height:170px;border-radius:18px;overflow:hidden;border:1px solid var(--divider)}</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+const { Ambiente, Scrim, DialogoConfirmar, CapturaResolver } = window.IntraHoteleroDesignSystem_27a6ea;
+function Demo(){
+  return (<div className="g">
+    <div><p className="lbl">Ambiente · dia / noche</p>
+      <div style={{display:'flex',gap:10}}>
+        <div className="box" style={{flex:1}}><Ambiente tema="dia" /></div>
+        <div className="box" style={{flex:1}}><Ambiente tema="noche" /></div>
+      </div></div>
+    <div><p className="lbl">Scrim + DialogoConfirmar</p>
+      <div className="box" style={{transform:'translateZ(0)',height:200}}>
+        <Scrim onCerrar={()=>{}} />
+        <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',zIndex:40}}>
+          <DialogoConfirmar abierto pregunta="¿Cambiar el producto genérico?" microcopy="El rol pasará de Oportunidad a Reserva." confirmar="Sí, cambiarlo" cancelar="Cancelar" />
+        </div></div></div>
+    <div style={{gridColumn:'1 / -1'}}><p className="lbl">CapturaResolver · no / sí</p>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
+        <div className="box" style={{height:400,transform:'translateZ(0)'}}><CapturaResolver kind="no" /></div>
+        <div className="box" style={{height:400,transform:'translateZ(0)'}}><CapturaResolver kind="si" /></div>
+      </div></div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script></body></html>
